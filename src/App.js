@@ -21,7 +21,7 @@ export default function App() {
               <Link to="/main">Search</Link>
             </li>
             <li className='non-active-nav'>
-              <Link to="/form-create">Form-create</Link>
+               <Link to="/form-create">Form-create</Link>
             </li>
           </ul>
         </nav>
