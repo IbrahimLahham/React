@@ -1,6 +1,8 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
-//import Login from './pages/BookSearch/BookSearch';
+import { useHistory } from "react-router-dom";
+import parliamentaryTool from './pages/parliamentaryTool';
+
 
 import Login from './pages/loginRegisteration/loginRegisteration';
 import Forgetpassword from './pages/loginRegisteration/forgetpassword';
@@ -20,6 +22,7 @@ export default function App() {
       <div>
         <nav className='all-tabs'>
           <ul>
+<<<<<<< HEAD
           <li className='active-nav'>
               <Link to="/main">Login</Link>
             </li>
@@ -31,6 +34,13 @@ export default function App() {
             </li>
             <li className='non-active-nav'>
               <Link to="/forgetpassword">Forget</Link>
+=======
+            <li className='active-nav'>
+              <Link to="/parliamentaryTool">Search</Link>
+            </li>
+            <li className='non-active-nav'>
+               <Link to="/">Form-create</Link>
+>>>>>>> main
             </li>
           </ul>
         </nav>
@@ -38,17 +48,10 @@ export default function App() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-        <Route path="/haverkneset">
-            <Haver />
+          <Route path="/parliamentaryTool">
+            <FormCreate />
           </Route>
-          <Route path="/resetpassword">
-
-            <Resetpassword />
-          </Route>
-          <Route path="/forgetpassword">
-            <Forgetpassword/>
-          </Route>
-          <Route path="/main">
+          <Route path="/">
 
             <Login />
           </Route>
