@@ -1,8 +1,11 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
-import Login from './pages/BookSearch/BookSearch';
-import FormCreate from './pages/FormCreate/FormCreate';
+//import Login from './pages/BookSearch/BookSearch';
 
+import Login from './pages/loginRegisteration/loginRegisteration';
+import Forgetpassword from './pages/loginRegisteration/forgetpassword';
+import Resetpassword from './pages/resetPassword/resetPassword';
+import Haver from './pages/haverKnesset/haverKnesset';
 import {
   BrowserRouter as Router,
   Switch,
@@ -17,20 +20,23 @@ export default function App() {
       <div>
         <nav className='all-tabs'>
           <ul>
-            <li className='active-nav'>
-              <Link to="/main">Search</Link>
-            </li>
-            <li className='non-active-nav'>
-               <Link to="/form-create">Form-create</Link>
-            </li>
+            
+           
           </ul>
         </nav>
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/form-create">
-            <FormCreate />
+        <Route path="/haverkneset">
+            <Haver />
+          </Route>
+          <Route path="/resetpassword">
+
+            <Resetpassword />
+          </Route>
+          <Route path="/forgetpassword">
+            <Forgetpassword/>
           </Route>
           <Route path="/main">
 
