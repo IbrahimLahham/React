@@ -4,118 +4,93 @@ const Book = require("../schema/Book");
 
 exports.getSuggestionsByKnessetMember = async (req, res) => {
 
+    console.log("getSuggestionsByKnessetMember");
+    res.send([suggestion, suggestion, suggestion]);
 };
+
+
 exports.getSuggestionsByUserSuggest = async (req, res) => {
 
+    console.log("getSuggestionsByUserSuggest");
+    res.send([suggestion, suggestion, suggestion]);
 };
+
+
 exports.getSuggestionsParliamentaryTool = async (req, res) => {
 
+    console.log("getSuggestionsParliamentaryTool");
+    res.send([suggestion, suggestion, suggestion]);
 };
+
+
 exports.getSuggestionsByDate = async (req, res) => {
 
+    console.log("getSuggestionsByDate");
+    res.send([suggestion, suggestion, suggestion]);
 };
+
+
 exports.getSuggestionsByStatus = async (req, res) => {
 
+    console.log("getSuggestionsByStatus");
+    res.send([suggestion, suggestion, suggestion]);
 };
+
+
 exports.getAllSuggestions = async (req, res) => {
 
+    console.log("getAllSuggestions");
+    res.send([suggestion, suggestion, suggestion]);
 };
 
 
 
 
+const user = {
+    email: "email@gmail.com",
+    password: "password123",
+    firstName: "moshe",
+    lastName: "dayan",
+    phone: "050111111111",
+    company: "company name",
+    type: "ezrah",
+    active: true,
+    suggestions: null,
+    language: "Hebrow"
+}
+
+const knessetMember = {
+    email: "knesset@gmail.com",
+    password: "password123",
+    firstName: "yossi",
+    lastName: "grenbirg",
+    phone: "050222222222",
+    company: "company name",
+    type: "knessetMember",
+    active: true,
+    suggestions: null,
+    language: "Hebrow"
+}
 
 
+const tool = {
+    type: "tool type",
+    title: "tool title",
+    subTitle: "tool subTitle",
+    term: "this is the tool term",
+    language: "Hebrow"
+}
 
-exports.getBooks = async (req, res) => {
-    try {
-        Book.find({}, function (err, books) {
-            res.send({ success: true, books });
-
-            console.log("all the books :", books);
-        });
-    } catch (error) {
-        console.log("error", error);
-        res.send({ success: false, msg: error.message });
-    }
-};
-
-exports.getBookByNameOrAuthor = async (req, res) => {
-    const { name } = req.params;
-    const regex = new RegExp(name, "i"); // i for case insensitive
-
-    var criteria = {
-        $or: [{ name: { $regex: regex } }, { author: { $regex: regex } }],
-    };
-
-    const book = await Book.find(criteria);
-
-    if (book === null) {
-        res.send({ success: false, message: "couldn't find such a book" });
-    } else {
-        res.send({ books: book });
-    }
-};
-
-exports.createBook = (req, res) => {
-    console.log("body", req.body);
-    try {
-        let newBook = new Book({
-            name: req.body.name,
-            author: req.body.author,
-            releaseDate: req.body.releaseDate,
-        });
-        newBook.save(function (err, addedBook) {
-            if (err) {
-                console.error(err);
-                res.status(500).json({
-                    success: false,
-                    message: "we faced a problem try again.",
-                    error: err.message,
-                });
-            } else {
-                console.log("has been added to the db successfully ...", addedBook);
-                res.status(201).json({
-                    success: true,
-                    message: "the book has been added to the db successfully ...",
-                    addedBook: { addedBook: addedBook.name },
-                });
-            }
-        });
-    } catch (error) {
-        console.log(error);
-    }
-};
-exports.updateBook = (req, res) => {
-    res.status(200).json({
-        status: "error",
-        message: "This route is not yet defined!",
-    });
-};
-exports.deleteBook = async (req, res) => {
-    const { name } = req.params;
-    let id = name;
-
-    // Book.remove({ _id: id }, function (err) {
-    //        if (err) return handleError(err);
-    //        // deleted at most one tank document
-    //      });
-    try {
-        const book = await Book.deleteOne({ _id: id });
-        if (book === null) {
-            res.send({ success: false, message: "couldn't find such a book" });
-        } else {
-            res.send({
-                success: true,
-                message: "the book has been deleted sucssefuly",
-                books: book,
-            });
-        }
-    } catch (error) {
-        console.log(error);
-        res.send({
-            success: false,
-            message: error.message,
-        });
-    }
+const suggestion = {
+    subject: "suggestion subject",
+    date: Date.now,
+    description: "suggestion description",
+    status: { status: "open", date: Date.now },
+    knessetMembers: [knessetMember, knessetMember],
+    toolType: tool,
+    submittedBy: user,
+    question: "suggestion question",
+    governmentOffice: "suggestion governmentOffice",
+    files: null,
+    additionalQuestionAfterMembersReply: "suggestion additionalQuestionAfterMembersReply",
 };
