@@ -1,7 +1,11 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import parliamentaryTool from './pages/parliamentaryTool';
+import parliamentaryTool from './pages/parliamentaryTool/parliamentaryTool';
+import kenosKnesset from './pages/kenosKnesset/kenosKnesset';
+import normalquery from './pages/normalquery/normalquery';
+import oneMinuteSpeech from './pages/oneMinuteSpeech/oneMinuteSpeech';
+import trackingBoard from './pages/trackingBoard/trackingBoard';
 
 
 import Login from './pages/loginRegisteration/loginRegisteration';
@@ -36,11 +40,15 @@ export default function App() {
               <Link to="/forgetpassword">Forget</Link>
 =======
             <li className='active-nav'>
-              <Link to="/parliamentaryTool">Search</Link>
+              <Link to="/parliamentaryTool">parliamentaryTools</Link>
             </li>
             <li className='non-active-nav'>
+<<<<<<< Updated upstream
                <Link to="/">Form-create</Link>
 >>>>>>> main
+=======
+               <Link to="/normalquery">normalquery</Link>
+>>>>>>> Stashed changes
             </li>
           </ul>
         </nav>
@@ -51,7 +59,7 @@ export default function App() {
           <Route path="/parliamentaryTool">
             <FormCreate />
           </Route>
-          <Route path="/">
+          <Route path="/normalquery">
 
             <Login />
           </Route>
