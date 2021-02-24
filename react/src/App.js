@@ -1,7 +1,8 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
-import Login from './pages/BookSearch/BookSearch';
-import FormCreate from './pages/FormCreate/FormCreate';
+import { useHistory } from "react-router-dom";
+import parliamentaryTool from './pages/parliamentaryTool';
+
 
 import {
   BrowserRouter as Router,
@@ -18,10 +19,10 @@ export default function App() {
         <nav className='all-tabs'>
           <ul>
             <li className='active-nav'>
-              <Link to="/main">Search</Link>
+              <Link to="/parliamentaryTool">Search</Link>
             </li>
             <li className='non-active-nav'>
-               <Link to="/form-create">Form-create</Link>
+               <Link to="/">Form-create</Link>
             </li>
           </ul>
         </nav>
@@ -29,10 +30,10 @@ export default function App() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/form-create">
+          <Route path="/parliamentaryTool">
             <FormCreate />
           </Route>
-          <Route path="/main">
+          <Route path="/">
 
             <Login />
           </Route>
