@@ -28,6 +28,15 @@ export default function App() {
             <li className='non-active-nav'>
                <Link to="/">Form-create</Link>
             </li>
+            <li className='non-active-nav'>
+               <Link to="/Forgetpassword">Forgetpassword</Link>
+            </li>
+            <li className='non-active-nav'>
+               <Link to="/Resetpassword">Resetpassword</Link>
+            </li>
+            <li className='non-active-nav'>
+               <Link to="/Haver">Haver</Link>
+            </li>
           </ul>
         </nav>
 
