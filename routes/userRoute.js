@@ -17,7 +17,7 @@ router
 
   router
   .route("/SavePassword")
-  .get(userController.SavePassword);
+  .post(userController.SavePassword);
 
   router
   .route("/GetUsersByType")
