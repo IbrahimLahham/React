@@ -31,7 +31,7 @@ db.once("open", () => {
 
 
 //routes
-app.use("/Suggestion", SuggestionsRouter);
+app.use("/suggestion", SuggestionsRouter);
 app.use("/parliamentaryTools", parliamentaryToolsRouter);
 
 
