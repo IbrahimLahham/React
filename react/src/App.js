@@ -20,8 +20,18 @@ export default function App() {
       <div>
         <nav className='all-tabs'>
           <ul>
-            
-           
+          <li className='active-nav'>
+              <Link to="/main">Login</Link>
+            </li>
+            <li className='non-active-nav'>
+              <Link to="/haverkneset">Haver</Link>
+            </li>
+            <li className='non-active-nav'>
+              <Link to="/resetpassword">reset</Link>
+            </li>
+            <li className='non-active-nav'>
+              <Link to="/forgetpassword">Forget</Link>
+            </li>
           </ul>
         </nav>
 
