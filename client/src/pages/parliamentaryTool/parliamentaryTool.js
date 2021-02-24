@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 
 import './parliamentaryTool.css'
@@ -16,4 +15,4 @@ const parliamentaryTool = () => {
     )
 }
 
-export default FormCreate
+export default parliamentaryTool
