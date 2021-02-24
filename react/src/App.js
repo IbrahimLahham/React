@@ -1,13 +1,17 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import parliamentaryTool from './pages/parliamentaryTool';
+import ParliamentaryTool from './pages/parliamentaryTool/parliamentaryTool';
+import KenosKnesset from './pages/kenosKnesset/kenosKnesset';
+import Normalquery from './pages/normalquery/normalquery';
+import OneMinuteSpeech from './pages/oneMinuteSpeech/oneMinuteSpeech';
+import TrackingBoard from './pages/trackingBoard/trackingBoard';
 
 
 import Login from './pages/loginRegisteration/loginRegisteration';
 import Forgetpassword from './pages/loginRegisteration/forgetpassword';
 import Resetpassword from './pages/resetPassword/resetPassword';
-import Haver from './pages/haverKnesset/haverKnesset';
+import HaverKnesset from './pages/haverKnesset/haverKnesset';
 import {
   BrowserRouter as Router,
   Switch,
@@ -23,11 +27,34 @@ export default function App() {
         <nav className='all-tabs'>
           <ul>
             <li className='active-nav'>
-              <Link to="/parliamentaryTool">Search</Link>
+              <Link to="/parliamentaryTool">parliamentaryTools</Link>
             </li>
             <li className='non-active-nav'>
-               <Link to="/">Form-create</Link>
+               <Link to="/normalquery">normalquery</Link>
             </li>
+            <li className='non-active-nav'>
+               <Link to="/kenosKnesset">kenosKnesset</Link>
+            </li>
+            <li className='non-active-nav'>
+               <Link to="/oneMinuteSpeech">oneMinuteSpeech</Link>
+            </li>
+            <li className='non-active-nav'>
+               <Link to="/trackingBoard">trackingBoard</Link>
+            </li>
+            <li className='non-active-nav'>
+               <Link to="/loginRegisteration">loginRegisteration</Link>
+            </li>
+            <li className='non-active-nav'>
+               <Link to="/forgetpassword">forgetpassword</Link>
+            </li>
+            <li className='non-active-nav'>
+               <Link to="/resetPassword">resetPassword</Link>
+            </li>
+            <li className='non-active-nav'>
+               <Link to="/haverKnesset">haverKnesset</Link>
+            </li>
+
+
           </ul>
         </nav>
 
@@ -35,12 +62,33 @@ export default function App() {
             renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/parliamentaryTool">
-            <FormCreate />
+            <ParliamentaryTool />
           </Route>
-          <Route path="/">
-
+          <Route path="/normalquery">
+            <Normalquery />
+          </Route>
+          <Route path="/kenosKnesset">
+            <KenosKnesset />
+          </Route>
+          <Route path="/oneMinuteSpeech">
+            <OneMinuteSpeech />
+          </Route>
+          <Route path="/trackingBoard">
+            <TrackingBoard />
+          </Route>
+          <Route path="/loginRegisteration">
             <Login />
           </Route>
+          <Route path="/forgetpassword">
+            <Forgetpassword />
+          </Route>
+          <Route path="/resetPassword">
+            <Resetpassword />
+          </Route>
+          <Route path="/haverKnesset">
+            <HaverKnesset />
+          </Route>
+
         </Switch>
       </div>
     </Router>

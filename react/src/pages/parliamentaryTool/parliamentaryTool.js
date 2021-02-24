@@ -16,4 +16,4 @@ const parliamentaryTool = () => {
     )
 }
 
-export default FormCreate
+export default parliamentaryTool
