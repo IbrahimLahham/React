@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const SuggestionsRouter = require("./routes/SuggestionsRoute");
+const parliamentaryToolsRouter = require("./routes/parliamentaryToolsRoute");
 
 
 var cookieParser = require("cookie-parser");
@@ -28,6 +29,7 @@ db.once("open", () => {
 
 //routes
 app.use("/Suggestion", SuggestionsRouter);
+app.use("/parliamentaryTools", parliamentaryToolsRouter);
 
 
 
