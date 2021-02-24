@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const booksRouter = require("./routes/booksRoute");
+const SuggestionsRouter = require("./routes/SuggestionsRoute");
 
 
 var cookieParser = require("cookie-parser");
@@ -14,17 +14,23 @@ app.use(cookieParser());
 
 //connecting to the database
 mongoose.connect(
-  "mongodb+srv://hosen:yPDENenci6FWVa4h@first-cluster.s9zoz.mongodb.net/books",
-  { useNewUrlParser: true, useUnifiedTopology: true }
+    "mongodb+srv://hosen:yPDENenci6FWVa4h@first-cluster.s9zoz.mongodb.net/books",
+    { useNewUrlParser: true, useUnifiedTopology: true }
 );
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
-  console.log("we are connected to DB");
+    console.log("we are connected to DB");
 });
 
+
+
+
 //routes
-app.use("/books", booksRouter);
+app.use("/Suggestion", SuggestionsRouter);
+
+
+
 
 // Server run
 const port = process.env.PORT || 3001;
