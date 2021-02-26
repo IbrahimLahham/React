@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './loginRegisteration.css'
 import Forgetpassword from './forgetpassword';
 import Header from '../../components/Header'
+import Footer from '../../components/Footer'
 
 
 import {
@@ -100,6 +101,7 @@ function LoginRegisteration() {
                 </div>
 
             </div>
+            <Footer />
         </div>
     )
 }
