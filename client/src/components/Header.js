@@ -1,5 +1,14 @@
 import "./Header.css";
 
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
+
 function Header(props) {
   let currentTabName = "כלים פרלמנטריים";
   let userType = "לוח מעקב";
@@ -33,9 +42,9 @@ function Header(props) {
       <section className="secondary-nav-bar">
         <div className="path">
           <a href="https://oknesset.org/"> דף הבית </a>/
-          <span className="current-tab-name"> {currentTabName} </span>
+          <Link to="/parliamentaryTool">כלים פרלמנטריים</Link>
         </div>
-
+        
         <div className="user-links">
           <a className="disconnect" href="#">
             {" "}
