@@ -42,24 +42,22 @@ function LoginRegisteration() {
             <div className="user-login-div">
                 <h1 className="title-bold-big">כניסה</h1>
                 <div className="user-login-flex">
-                    <a className="title-bold">דוא"ל:</a>
+                    <label className="title-bold">דוא"ל:</label>
                     <input type="text" className="input-field" onChange={(e) => {
                         setLoginEmail(e.target.value);
                     }}></input>
                 </div>
                 <div className="user-login-flex">
-                    <a className="title-bold">סיסמה:</a>
+                    <label className="title-bold">סיסמה:</label>
                     <input type="password" className="input-field" onChange={(e) => {
                         setLoginPassword(e.target.value);
                     }}></input>
                 </div>
-                
-                <Router>
-                    <Link to="/forgetpassword">שכחתי סיסמה</Link>
-                    <Switch>
-                        <Route path="/forgetpassword" />
-                    </Switch>
-                </Router>
+
+
+                <Link to="/forgetpassword">שכחתי סיסמה</Link>
+
+
 
                 <button className="user-button" onClick={handleLogin}>התחברות</button>
             </div>
