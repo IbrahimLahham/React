@@ -10,7 +10,7 @@ const loginRegisteration = () => {
 
     return (
         <div>
-            <h1>loginRegisteration page</h1>
+            
         </div>
     )
 }
