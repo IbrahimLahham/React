@@ -31,6 +31,8 @@ router
     .route("/all")
     .get(booksController.getAllSuggestions);
 
-
+    router
+    .route("/addSuggestion")
+    .post(SuggestionsController.GetUsersByType);
 
 module.exports = router;

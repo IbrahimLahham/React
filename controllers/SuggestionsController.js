@@ -43,6 +43,12 @@ exports.getAllSuggestions = async (req, res) => {
     res.send([suggestion, suggestion, suggestion]);
 };
 
+// add new suggestion
+exports.createSuggestions = async (req, res) => {
+
+    console.log("createSuggestions");
+    res.send({success :true ,createdSuggestion : 'sugestion data ' });
+};
 
 
 
