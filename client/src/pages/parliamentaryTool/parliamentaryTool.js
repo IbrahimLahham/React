@@ -35,20 +35,6 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <section className="secondary-nav-bar">
-        <div className="path">
-          <a href="https://oknesset.org/"> דף הבית </a>/
-          <span className="current-tab-name"> {currentTabName} </span>
-        </div>
-
-        <div className="user-links">
-          <a className="disconnect" href="#">
-            {" "}
-            התנתק{" "}
-          </a>
-          |<a className="link"> {userType} </a>
-        </div>
-      </section>
       <Cards tools={data} />
       <Footer />
     </div>
