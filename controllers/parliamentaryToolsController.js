@@ -1,5 +1,3 @@
-const Book = require("../schema/Book");
-
 // handlers
 
 let tempParliamentaryTools = [

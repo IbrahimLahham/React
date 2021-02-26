@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 //import './normalquery.css'
 
 
-const forgetpassword = () => {
+function Forgetpassword() {
 
   // const [book, setbook] = useState([]);
   
@@ -15,4 +15,4 @@ const forgetpassword = () => {
     )
 }
 
-export default forgetpassword
+export default Forgetpassword
