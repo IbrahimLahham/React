@@ -48,7 +48,19 @@ function LoginRegisteration() {
             </div>
 
             <div className="user-login-div">
-                <h1 className="title-bold-big">כניסה</h1>
+                <h1 className="title-bold-big">התחברות</h1>
+                <div className="user-login-flex">
+                    <a className="title-bold">שם פרטי:</a>
+                    <input type="text" className="input-field" onChange={(e) => {
+                        setEmail(e.target.value);
+                    }}></input>
+                </div>
+                <div className="user-login-flex">
+                    <a className="title-bold">שם משפחה:</a>
+                    <input type="password" className="input-field" onChange={(e) => {
+                        setPassword(e.target.value);
+                    }}></input>
+                </div>
                 <div className="user-login-flex">
                     <a className="title-bold">דוא"ל:</a>
                     <input type="text" className="input-field" onChange={(e) => {
@@ -56,9 +68,15 @@ function LoginRegisteration() {
                     }}></input>
                 </div>
                 <div className="user-login-flex">
-                    <a className="title-bold">סיסמה:</a>
-                    <input type="password" className="input-field" onChange={(e) => {
-                        setPassword(e.target.value);
+                    <a className="title-bold">אירגון/חברה:</a>
+                    <input type="text" className="input-field" onChange={(e) => {
+                        setEmail(e.target.value);
+                    }}></input>
+                </div>
+                <div className="user-login-flex">
+                    <a className="title-bold">טלפון:</a>
+                    <input type="text" className="input-field" onChange={(e) => {
+                        setEmail(e.target.value);
                     }}></input>
                 </div>
                 <button className="user-button" onClick={handleLogin}>התחברות</button>
