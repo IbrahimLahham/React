@@ -80,6 +80,7 @@ function LoginRegisteration() {
                         setTelephon(e.target.value);
                     }}></input>
                 </div>
+                <a id="required" className="paragraph-regular">*חובה למלא פרטים המסומנים בכוכבית</a>
                 <button className="user-button" onClick={handleRegister}>הרשמה</button>
             </div>
 
