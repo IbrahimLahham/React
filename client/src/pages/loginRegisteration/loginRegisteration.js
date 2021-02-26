@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import './loginRegisteration.css'
+import Forgetpassword from './forgetpassword';
 
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
 
 
 function LoginRegisteration() {
+
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
     const [email, setEmail] = useState("");
@@ -21,12 +29,12 @@ function LoginRegisteration() {
 
     function handleLogin(e) {
         e.preventDefault();
-        console.log({email: loginEmail, password:loginPassword})
+        console.log({ email: loginEmail, password: loginPassword })
     }
 
-    function handleRegister(e){
+    function handleRegister(e) {
         e.preventDefault();
-        console.log({firstName: firstName, lastName:lastName, email: email, organization:organization, telephon:telephon})
+        console.log({ firstName: firstName, lastName: lastName, email: email, organization: organization, telephon: telephon })
     }
 
     return (
@@ -45,6 +53,14 @@ function LoginRegisteration() {
                         setLoginPassword(e.target.value);
                     }}></input>
                 </div>
+                
+                <Router>
+                    <Link to="/forgetpassword">שכחתי סיסמה</Link>
+                    <Switch>
+                        <Route path="/forgetpassword" />
+                    </Switch>
+                </Router>
+
                 <button className="user-button" onClick={handleLogin}>התחברות</button>
             </div>
 
