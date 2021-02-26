@@ -54,10 +54,7 @@ function LoginRegisteration() {
                     }}></input>
                 </div>
 
-
                 <Link to="/forgetpassword">שכחתי סיסמה</Link>
-
-
 
                 <button className="user-button" onClick={handleLogin}>התחברות</button>
             </div>
@@ -65,36 +62,36 @@ function LoginRegisteration() {
             <div className="user-login-div">
                 <h1 className="title-bold-big">התחברות</h1>
                 <div className="user-login-flex">
-                    <a className="title-bold">*שם פרטי:</a>
+                    <label className="title-bold">*שם פרטי:</label>
                     <input type="text" className="input-field" onChange={(e) => {
                         setFirstName(e.target.value);
                     }}></input>
                 </div>
                 <div className="user-login-flex">
-                    <a className="title-bold">*שם משפחה:</a>
+                    <label className="title-bold">*שם משפחה:</label>
                     <input type="text" className="input-field" onChange={(e) => {
                         setLastName(e.target.value);
                     }}></input>
                 </div>
                 <div className="user-login-flex">
-                    <a className="title-bold">*דוא"ל:</a>
+                    <label className="title-bold">*דוא"ל:</label>
                     <input type="text" className="input-field" onChange={(e) => {
                         setEmail(e.target.value);
                     }}></input>
                 </div>
                 <div className="user-login-flex">
-                    <a className="title-bold">אירגון/חברה:</a>
+                    <label className="title-bold">אירגון/חברה:</label>
                     <input type="text" className="input-field" onChange={(e) => {
                         setOrganization(e.target.value);
                     }}></input>
                 </div>
                 <div className="user-login-flex">
-                    <a className="title-bold">טלפון:</a>
+                    <label className="title-bold">טלפון:</label>
                     <input type="number" className="input-field" onChange={(e) => {
                         setTelephon(e.target.value);
                     }}></input>
                 </div>
-                <a id="required" className="paragraph-regular">*חובה למלא פרטים המסומנים בכוכבית</a>
+                <label id="required" className="paragraph-regular">*חובה למלא פרטים המסומנים בכוכבית</label>
                 <button className="user-button" onClick={handleRegister}>הרשמה</button>
             </div>
 
