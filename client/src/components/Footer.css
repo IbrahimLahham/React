@@ -11,6 +11,10 @@ footer {
   margin-top: 15px;
 }
 
+.foot{
+  border: 1px solid black;
+}
+
 .foot > ul > li {
   display: inline;
   padding-left: 10px;
