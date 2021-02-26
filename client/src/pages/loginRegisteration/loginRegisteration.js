@@ -54,7 +54,7 @@ function LoginRegisteration() {
                     }}></input>
                 </div>
 
-                <Link to="/forgetpassword">שכחתי סיסמה</Link>
+                <Link id="forgot-pass" to="/forgetpassword">שכחתי סיסמה</Link>
 
                 <button className="user-button" onClick={handleLogin}>התחברות</button>
             </div>
