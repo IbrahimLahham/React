@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './loginRegisteration.css'
 import Forgetpassword from './forgetpassword';
 
+
 import {
     BrowserRouter as Router,
     Switch,
