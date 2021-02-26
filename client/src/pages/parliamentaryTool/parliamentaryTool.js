@@ -2,8 +2,8 @@ import './parliamentaryTool.css';
 import React, { useState, useEffect } from "react";
 
 //components
-import Cards from './components/Cards.js';
-import Header from './components/Header.js';
+import Cards from '../../components/Cards.js';
+import Header from '../../components/Header.js';
 
 
 const datas = [
