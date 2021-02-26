@@ -3,7 +3,7 @@ const router = express.Router();
 const parliamentaryToolsController = require("../controllers/parliamentaryToolsController");
 
 router
-    .route("/ParliamentaryTools")
+    .route("/")
     .get(parliamentaryToolsController.getAllParliamentaryTools);
 
 
