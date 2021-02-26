@@ -5,7 +5,7 @@ const ToolSchema = new mongoose.Schema({
     type: String,
     title: String,
     subTitle: String,
-    term: String,
+    term: Number,
     language: String
 });
 
