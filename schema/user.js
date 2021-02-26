@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+const SuggestionSchema = require("./SuggestionSchema.js");
 
 const UserSchema = new mongoose.Schema({
     email: String,

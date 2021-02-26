@@ -1,5 +1,3 @@
-const Book = require("../schema/Book");
-
 // handlers
 
 exports.getSuggestionsByKnessetMember = async (req, res) => {
