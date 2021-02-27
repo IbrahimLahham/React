@@ -42,7 +42,7 @@ function LoginRegisteration() {
 
     return (
         <div>
-            <Header />
+            {/* <Header /> */}
             <div className="user-container">
                 <div className="user-login-div">
                     <h1 className="title-bold-big">כניסה</h1>
@@ -101,7 +101,7 @@ function LoginRegisteration() {
                 </div>
 
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }
