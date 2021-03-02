@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-//import './normalquery.css'
+import './forgetpassword.css'
 
 
 function Forgetpassword() {
