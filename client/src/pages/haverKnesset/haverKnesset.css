@@ -18,3 +18,15 @@ caption{
     text-align: right;
     font-weight: 900;
 }
+
+#V{
+  background-color: greenyellow;
+}
+
+#X{
+  background-color: red;
+}
+
+.drop-down-menu{
+  width: 200px;
+}
