@@ -44,3 +44,11 @@
 #required{
     text-align: center;
 }
+
+#forgot-pass{
+    position: relative;
+    text-align: center;
+    color: blue;
+    font-weight: 500;
+    text-decoration: underline;
+}

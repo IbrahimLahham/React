@@ -4,35 +4,35 @@ const SuggestionsController = require("./../controllers/SuggestionsController");
 
 router
     .route("/byKnessetMemberValidate")
-    .get(booksController.getSuggestionsByKnessetMember);
+    .get(SuggestionsController.getSuggestionsByKnessetMember);
 
 
 router
     .route("/byUserSuggest")
-    .get(booksController.getSuggestionsByUserSuggest);
+    .get(SuggestionsController.getSuggestionsByUserSuggest);
 
 
 router
     .route("/byParliamentaryTool")
-    .get(booksController.getSuggestionsParliamentaryTool);
+    .get(SuggestionsController.getSuggestionsParliamentaryTool);
 
 
 router
     .route("/byDate")
-    .get(booksController.getSuggestionsByDate);
+    .get(SuggestionsController.getSuggestionsByDate);
 
 
 router
     .route("/byStatus")
-    .get(booksController.getSuggestionsByStatus);
+    .get(SuggestionsController.getSuggestionsByStatus);
 
 
 router
     .route("/all")
-    .get(booksController.getAllSuggestions);
+    .get(SuggestionsController.getAllSuggestions);
 
     router
-    .route("/addSuggestion")
-    .post(SuggestionsController.GetUsersByType);
+    .route("/createSuggestions")
+    .post(SuggestionsController.createSuggestions);
 
 module.exports = router;
