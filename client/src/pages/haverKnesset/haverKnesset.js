@@ -6,15 +6,38 @@ function HaverKnesset() {
 
     // const [book, setbook] = useState([]);
     const myNewSuggestions = [
-        { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" },
+        { date: "21.11.21", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" },
         { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" }
     ];
     const activeSuggestions = [
         { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" }
     ];
     const allNewSuggestions = [
+        { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" },
+        { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" },
         { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" }
     ];
+
+    function handleVmySug(e) {
+        console.log("e: ", e);
+        console.log("Suggestions selected!");
+    }
+
+    function handleXmySug(e) {
+        console.log("e: ", e);
+        console.log("Suggestions removed!");
+    }
+
+    function handleVallSug(e) {
+        console.log("e: ", e);
+        console.log("Suggestions selected!");
+    }
+
+    function handleXallSug(e) {
+        console.log("e: ", e);
+        console.log("Suggestions removed!");
+    }
+
     return (
         <div>
             <table>
@@ -33,7 +56,10 @@ function HaverKnesset() {
                             <td className="title-large">{elem.per}</td>
                             <td className="title-large">{elem.sub}</td>
                             <td className="title-large">{elem.offer}</td>
-                            <td className="title-large">{elem.rejection}</td>
+                            <td className="title-large">
+                                <button id="V" onClick={(e) => { handleVmySug(elem) }}>v</button>
+                                <button id="X" onClick={(e) => { handleXmySug(elem) }}>x</button>
+                            </td>
                         </tr>
                     );
                 })}
@@ -46,7 +72,7 @@ function HaverKnesset() {
                     <th className="title-bold">כלי פרלמנטרי</th>
                     <th className="title-bold">נושא</th>
                     <th className="title-bold">מציע</th>
-                    <th className="title-bold">אימוץ/דחיה</th>
+                    <th className="title-bold">עדכון סטטוס</th>
                 </tr>
                 {activeSuggestions.map((elem) => {
                     return (
@@ -55,7 +81,10 @@ function HaverKnesset() {
                             <td className="title-large">{elem.per}</td>
                             <td className="title-large">{elem.sub}</td>
                             <td className="title-large">{elem.offer}</td>
-                            <td className="title-large">{elem.rejection}</td>
+                            <select id="status" className="drop-down-menu">
+                                <option value="havir">חבר</option>
+                                <option value="user">אזרח</option>
+                            </select>
                         </tr>
                     );
                 })}
@@ -77,7 +106,10 @@ function HaverKnesset() {
                             <td className="title-large">{elem.per}</td>
                             <td className="title-large">{elem.sub}</td>
                             <td className="title-large">{elem.offer}</td>
-                            <td className="title-large">{elem.rejection}</td>
+                            <td className="title-large">
+                                <button id="V" onClick={(e) => { handleVallSug(elem) }}>v</button>
+                                <button id="X" onClick={(e) => { handleXallSug(elem) }}>x</button>
+                            </td>
                         </tr>
                     );
                 })}

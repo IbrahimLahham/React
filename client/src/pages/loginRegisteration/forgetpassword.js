@@ -19,11 +19,11 @@ function Forgetpassword() {
         }).then(r => r.json())
             .then(data => {
                 console.log(data);
-                if (data.email === true) {
-                    setSuccess("check out your email to reset password")
+                if (data.ok === true) {
+                    setSuccess("הודעה נשלחה לדוא״ל!");
                 }
                 else{
-                    setSuccess("email not exist please sign up!")
+                    setSuccess("הדוא״ל לא קיים!");
                 }
 
             })
