@@ -2,8 +2,13 @@
     position: relative;
     display: flex;
     flex-wrap: wrap;
+    margin: 0 auto;
 }
 
+.message{
+    color:red;
+    text-align: center;
+}
 .user-login-div {
     background-color: white;
     border-radius: 20px;
