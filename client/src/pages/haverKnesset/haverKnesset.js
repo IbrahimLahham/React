@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+// Table from react-bootstrap
 import './haverKnesset.css'
 
 function HaverKnesset() {
 
     // const [book, setbook] = useState([]);
     const myNewSuggestions = [
+        { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" },
         { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" }
     ];
     const activeSuggestions = [
@@ -83,6 +85,7 @@ function HaverKnesset() {
 
 
         </div>
+
     )
 }
 
