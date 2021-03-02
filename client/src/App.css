@@ -14,10 +14,10 @@
 
 .input-field{
     border-radius: 20px;
+    border-color: black;
     width: 200px;
     height: 30px;
     font-size: 15px;
-    background-color: #c3c3c3;
 }
 
 .title-bold-big{
