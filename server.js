@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const SuggestionsRouter = require("./routes/SuggestionsRoute");
 const parliamentaryToolsRouter = require("./routes/parliamentaryToolsRoute");
+const userRouter = require('./routes/userRoute');
 
 
 var cookieParser = require("cookie-parser");
@@ -33,7 +34,7 @@ db.once("open", () => {
 //routes
 app.use("/suggestion", SuggestionsRouter);
 app.use("/parliamentaryTools", parliamentaryToolsRouter);
-
+app.use("/user", userRouter);
 
 
 
