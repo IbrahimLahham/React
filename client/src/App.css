@@ -12,20 +12,11 @@
   font-weight: 900;
 }
 
-<<<<<<< HEAD
-.input-field{
-    border-radius: 20px;
-    border-color: black;
-    width: 200px;
-    height: 30px;
-    font-size: 15px;
-=======
 .input-field {
   border-radius: 20px;
   width: 200px;
   height: 30px;
   font-size: 15px;
->>>>>>> khalil
 }
 
 .title-bold-big {
