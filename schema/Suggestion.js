@@ -10,6 +10,7 @@ const SuggestionSchema = new mongoose.Schema({
     description: String,
     status: [SuggestionStatus],
     knessetMembers: [User],
+    activeKnesset: User,
     toolType: Tool,
     submittedBy: User,
     question: String,
@@ -18,7 +19,6 @@ const SuggestionSchema = new mongoose.Schema({
     additionalQuestionAfterMembersReply: String,
     // history 
 });
-
 const Suggestion = mongoose.model("Suggestion", SuggestionSchema);
 module.exports = Suggestion;
 

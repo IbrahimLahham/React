@@ -30,6 +30,7 @@ function LoginRegisteration() {
     }, []);
 
     function handleLogin(e) {
+        e.preventDefault();
         fetch('/user/Login', {
             method: 'POST',
             headers: {
@@ -81,7 +82,8 @@ function LoginRegisteration() {
         <div>
             {/* <Header /> */}
             <div className="user-container">
-                <div className="user-login-div">
+
+                <form onSubmit={handleLogin} className="user-login-div">
                     <h1 className="title-bold-big">כניסה</h1>
                     <div className="user-login-flex">
                         <label className="title-bold">דוא"ל:</label>
@@ -93,17 +95,17 @@ function LoginRegisteration() {
                         <label className="title-bold">סיסמה:</label>
                         <input type="password" className="input-field" onChange={(e) => {
                             setLoginPassword(e.target.value);
-                        }}></input>
+                        }} required></input>
                     </div>
 
                     <Link id="forgot-pass" to="/forgetpassword">שכחתי סיסמה</Link>
 
-                    <button className="user-button" onClick={handleLogin}>התחברות</button>
+                    <button className="user-button" type="submit">התחברות</button>
                     <label className="message">{error}</label>
-                </div>
+                </form>
 
                 <div className="user-login-div">
-                    <h1 className="title-bold-big">התחברות</h1>
+                    <h1 className="title-bold-big">הרשמה</h1>
                     <div className="user-login-flex">
                         <label className="title-bold">*שם פרטי:</label>
                         <input type="text" className="input-field" onChange={(e) => {
