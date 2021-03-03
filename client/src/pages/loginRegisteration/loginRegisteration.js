@@ -42,8 +42,8 @@ function LoginRegisteration() {
                 console.log("sent data: ", { loginEmail: loginEmail, password: loginPassword });
                 console.log("server data: ", data);
                 // if login true - redirect to forms creation page;
-                if (data.login === true) {
-                    if (data.type === "citizen")
+                if (data.ok === true) {
+                    if (data.user === "ezrah")
                         history.push('/parliamentaryTool')
                     else {
                         history.push('/haverKnesset')
@@ -104,25 +104,25 @@ function LoginRegisteration() {
                     <label className="message">{error}</label>
                 </form>
 
-                <div className="user-login-div">
+                <form onSubmit={handleRegister} className="user-login-div">
                     <h1 className="title-bold-big">הרשמה</h1>
                     <div className="user-login-flex">
                         <label className="title-bold">*שם פרטי:</label>
                         <input type="text" className="input-field" onChange={(e) => {
                             setFirstName(e.target.value);
-                        }}></input>
+                        }} required></input>
                     </div>
                     <div className="user-login-flex">
                         <label className="title-bold">*שם משפחה:</label>
                         <input type="text" className="input-field" onChange={(e) => {
                             setLastName(e.target.value);
-                        }}></input>
+                        }} required></input>
                     </div>
                     <div className="user-login-flex">
                         <label className="title-bold">*דוא"ל:</label>
                         <input type="text" className="input-field" onChange={(e) => {
                             setEmail(e.target.value);
-                        }}></input>
+                        }} required></input>
                     </div>
                     <div className="user-login-flex">
                         <label className="title-bold">אירגון/חברה:</label>
@@ -137,9 +137,9 @@ function LoginRegisteration() {
                         }}></input>
                     </div>
                     <label id="required" className="paragraph-regular">*חובה למלא פרטים המסומנים בכוכבית</label>
-                    <button className="user-button" onClick={handleRegister}>הרשמה</button>
+                    <button className="user-button" type="submit">הרשמה</button>
                     <label className="message">{registermessage}</label>
-                </div>
+                </form>
 
             </div>
             {/* <Footer /> */}
