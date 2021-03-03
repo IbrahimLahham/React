@@ -5,26 +5,27 @@
 exports.Login = async (req, res) => {
   // const {email, password} = req.body;
   console.log("Login");
-  res.send({User:user});
+  res.send({ user: user.type, ok: true });
 
 };
 
 
 exports.Registration = (req, res) => {
   console.log("Registration");
-  res.send({User:user});
+  const { firstName, lastName, email, company, phone } = req.body;
+  res.send({ user: user });
 
 };
 
 exports.ForgetPassword = async (req, res) => {
   console.log("ForgetPassword");
-  res.send({User:user.email});
+  res.send({ user: user.email, ok: true });
 
 };
 
 exports.SavePassword = async (req, res) => {
   console.log("SavePassword");
-  res.send({User:user});
+  res.send({ user: user });
 
 };
 

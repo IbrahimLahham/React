@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const SuggestionSchema = require("./SuggestionSchema.js");
+const SuggestionSchema = require("./Suggestion.js");
 
 const UserSchema = new mongoose.Schema({
     email: String,
@@ -11,7 +11,6 @@ const UserSchema = new mongoose.Schema({
     company: String,
     type: String,
     active: { type: Boolean, default: true },
-    suggestions: [SuggestionSchema],
     language: String
 });
 

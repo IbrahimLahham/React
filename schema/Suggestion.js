@@ -10,6 +10,7 @@ const SuggestionSchema = new mongoose.Schema({
     description: String,
     status: [SuggestionStatus],
     knessetMembers: [User],
+    activeKnesset: User,
     toolType: Tool,
     submittedBy: User,
     question: String,
