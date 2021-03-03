@@ -19,7 +19,6 @@ const SuggestionSchema = new mongoose.Schema({
     additionalQuestionAfterMembersReply: String,
     // history 
 });
-
 const Suggestion = mongoose.model("Suggestion", SuggestionSchema);
 module.exports = Suggestion;
 
