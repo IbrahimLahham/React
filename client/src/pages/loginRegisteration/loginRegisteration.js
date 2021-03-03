@@ -38,7 +38,8 @@ function LoginRegisteration() {
             body: JSON.stringify({ email: loginEmail, password: loginPassword })
         }).then(r => r.json())
             .then(data => {
-                console.log(data);
+                console.log("sent data: ", { loginEmail: loginEmail, password: loginPassword });
+                console.log("server data: ", data);
                 // if login true - redirect to forms creation page;
                 if (data.login === true) {
                     if (data.type === "citizen")
@@ -50,7 +51,6 @@ function LoginRegisteration() {
                 else {
                     setError("דוא״ל או סיסמה שגויים!");
                 }
-
             })
     }
 
@@ -78,70 +78,70 @@ function LoginRegisteration() {
     }
 
     return (
-            <div>
-                {/* <Header /> */}
-                <div className="user-container">
-                    <div className="user-login-div">
-                        <h1 className="title-bold-big">כניסה</h1>
-                        <div className="user-login-flex">
-                            <label className="title-bold">דוא"ל:</label>
-                            <input type="text" className="input-field" onChange={(e) => {
-                                setLoginEmail(e.target.value);
-                            }}></input>
-                        </div>
-                        <div className="user-login-flex">
-                            <label className="title-bold">סיסמה:</label>
-                            <input type="password" className="input-field" onChange={(e) => {
-                                setLoginPassword(e.target.value);
-                            }}></input>
-                        </div>
-
-                        <Link id="forgot-pass" to="/forgetpassword">שכחתי סיסמה</Link>
-
-                        <button className="user-button" onClick={handleLogin}>התחברות</button>
-                        <label className="message">{error}</label>
+        <div>
+            {/* <Header /> */}
+            <div className="user-container">
+                <div className="user-login-div">
+                    <h1 className="title-bold-big">כניסה</h1>
+                    <div className="user-login-flex">
+                        <label className="title-bold">דוא"ל:</label>
+                        <input type="text" className="input-field" onChange={(e) => {
+                            setLoginEmail(e.target.value);
+                        }}></input>
+                    </div>
+                    <div className="user-login-flex">
+                        <label className="title-bold">סיסמה:</label>
+                        <input type="password" className="input-field" onChange={(e) => {
+                            setLoginPassword(e.target.value);
+                        }}></input>
                     </div>
 
-                    <div className="user-login-div">
-                        <h1 className="title-bold-big">התחברות</h1>
-                        <div className="user-login-flex">
-                            <label className="title-bold">*שם פרטי:</label>
-                            <input type="text" className="input-field" onChange={(e) => {
-                                setFirstName(e.target.value);
-                            }}></input>
-                        </div>
-                        <div className="user-login-flex">
-                            <label className="title-bold">*שם משפחה:</label>
-                            <input type="text" className="input-field" onChange={(e) => {
-                                setLastName(e.target.value);
-                            }}></input>
-                        </div>
-                        <div className="user-login-flex">
-                            <label className="title-bold">*דוא"ל:</label>
-                            <input type="text" className="input-field" onChange={(e) => {
-                                setEmail(e.target.value);
-                            }}></input>
-                        </div>
-                        <div className="user-login-flex">
-                            <label className="title-bold">אירגון/חברה:</label>
-                            <input type="text" className="input-field" onChange={(e) => {
-                                setOrganization(e.target.value);
-                            }}></input>
-                        </div>
-                        <div className="user-login-flex">
-                            <label className="title-bold">טלפון:</label>
-                            <input type="text" className="input-field" onChange={(e) => {
-                                setTelephon(e.target.value);
-                            }}></input>
-                        </div>
-                        <label id="required" className="paragraph-regular">*חובה למלא פרטים המסומנים בכוכבית</label>
-                        <button className="user-button" onClick={handleRegister}>הרשמה</button>
-                        <label className="message">{registermessage}</label>
-                    </div>
+                    <Link id="forgot-pass" to="/forgetpassword">שכחתי סיסמה</Link>
 
+                    <button className="user-button" onClick={handleLogin}>התחברות</button>
+                    <label className="message">{error}</label>
                 </div>
-                {/* <Footer /> */}
+
+                <div className="user-login-div">
+                    <h1 className="title-bold-big">התחברות</h1>
+                    <div className="user-login-flex">
+                        <label className="title-bold">*שם פרטי:</label>
+                        <input type="text" className="input-field" onChange={(e) => {
+                            setFirstName(e.target.value);
+                        }}></input>
+                    </div>
+                    <div className="user-login-flex">
+                        <label className="title-bold">*שם משפחה:</label>
+                        <input type="text" className="input-field" onChange={(e) => {
+                            setLastName(e.target.value);
+                        }}></input>
+                    </div>
+                    <div className="user-login-flex">
+                        <label className="title-bold">*דוא"ל:</label>
+                        <input type="text" className="input-field" onChange={(e) => {
+                            setEmail(e.target.value);
+                        }}></input>
+                    </div>
+                    <div className="user-login-flex">
+                        <label className="title-bold">אירגון/חברה:</label>
+                        <input type="text" className="input-field" onChange={(e) => {
+                            setOrganization(e.target.value);
+                        }}></input>
+                    </div>
+                    <div className="user-login-flex">
+                        <label className="title-bold">טלפון:</label>
+                        <input type="text" className="input-field" onChange={(e) => {
+                            setTelephon(e.target.value);
+                        }}></input>
+                    </div>
+                    <label id="required" className="paragraph-regular">*חובה למלא פרטים המסומנים בכוכבית</label>
+                    <button className="user-button" onClick={handleRegister}>הרשמה</button>
+                    <label className="message">{registermessage}</label>
+                </div>
+
             </div>
+            {/* <Footer /> */}
+        </div>
 
     )
 }
