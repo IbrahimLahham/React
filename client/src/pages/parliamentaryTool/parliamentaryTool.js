@@ -34,9 +34,9 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
+      {/* <Header /> */}
       <Cards tools={data} />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
