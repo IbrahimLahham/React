@@ -4,23 +4,23 @@ const userController = require("./../controllers/userControllers");
 
 
 router
-  .route("/Login")
+  .route("/login")
   .post(userController.Login);
 
   router
-  .route("/Registration")
+  .route("/registration")
   .post(userController.Registration);
 
   router
-  .route("/ForgetPassword")
+  .route("/forgetPassword")
   .post(userController.ForgetPassword);
 
   router
-  .route("/SavePassword")
+  .route("/savePassword")
   .post(userController.SavePassword);
 
   router
-  .route("/GetUsersByType")
+  .route("/getUsersByType")
   .get(userController.GetUsersByType);
 
 module.exports = router;
