@@ -9,7 +9,7 @@ function Forgetpassword() {
     const[success,setSuccess]=useState("");
     function handleForgot(e){
         e.preventDefault();
-        console.log(email);
+        console.log("sent data: ", {email:email});
         fetch('/user/ForgetPassword', {
             method: 'POST',
             headers: {

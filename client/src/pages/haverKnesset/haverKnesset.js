@@ -10,7 +10,17 @@ function HaverKnesset() {
         { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" }
     ];
     const activeSuggestions = [
-        { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" }
+        {
+            date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא",
+            options: ["חבר", "אזרח"]
+        },
+        {
+            date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא",
+            options: ["חבר", "אזרח"]
+        }, {
+            date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא",
+            options: ["חבר", "אזרח"]
+        }
     ];
     const allNewSuggestions = [
         { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" },
@@ -82,8 +92,7 @@ function HaverKnesset() {
                             <td className="title-large">{elem.sub}</td>
                             <td className="title-large">{elem.offer}</td>
                             <select id="status" className="drop-down-menu">
-                                <option value="havir">חבר</option>
-                                <option value="user">אזרח</option>
+                                {elem.options.map((op) => { return <option value="havir">{op}</option> })}
                             </select>
                         </tr>
                     );
