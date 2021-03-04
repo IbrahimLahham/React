@@ -1,18 +1,38 @@
-import React, { useState } from 'react';
-
-//import './normalquery.css'
-
-
-const kenosKnesset = () => {
-
-  // const [book, setbook] = useState([]);
-  
-
-    return (
-        <div>
-            <h1>kenosKnesset page</h1>
+import React from "react";
+import "./kenosKnesset.css";
+import Header from "../../components/Header";
+import Naom from "../../components/Naom";
+import Taknon from "../../components/Taknon";
+import Time from "../../components/Time";
+// import AcUnitIcon from "@material-ui/icons/AcUnit";
+import Recomend from "../../components/Recomend";
+import Footer from "../../components/Footer";
+function kenosKnesset() {
+  return (
+    <div>
+      {/* Header */}
+      {/* <Header /> */}
+      <div className="container">
+        <div className="up">
+          <Taknon />
+          <Naom />
         </div>
-    )
+        <div className="down">
+          <Time data={timeHistoryData} text="היסטוריה" />
+          <Time data={timeFutreData} text="עתיד" />
+        </div>
+        <Recomend />
+      </div>
+      {/* <Footer /> */}
+    </div>
+  );
 }
-
-export default kenosKnesset
+let timeHistoryData = [
+  { date: "17.8.19", first: "ישיבת המליאה", second: "נאומים בני דקה" },
+  { date: "12.8.19", first: "ישיבת המליאה", second: "נאומים בני דקה" },
+  { date: "08.8.19", first: "ישיבת המליאה", second: "נאומים בני דקה" },
+];
+let timeFutreData = [
+  { date: "22.8.19", first: "ישיבת המליאה", second: "נאומים בני דקה" },
+];
+export default kenosKnesset;
