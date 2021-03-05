@@ -45,7 +45,7 @@ exports.getAllSuggestions = async (req, res) => {
 exports.createSuggestions = async (req, res) => {
 
     console.log("createSuggestions");
-    res.send({success :true ,createdSuggestion : 'sugestion data ' });
+    res.send({success :true ,body : req.body });
 };
 
 
@@ -60,7 +60,7 @@ const user = {
     type: "ezrah",
     active: true,
     suggestions: null,
-    language: "Hebrow"
+    language: "Hebrew"
 }
 
 const knessetMember = {
@@ -73,7 +73,7 @@ const knessetMember = {
     type: "knessetMember",
     active: true,
     suggestions: null,
-    language: "Hebrow"
+    language: "Hebrew"
 }
 
 
@@ -82,7 +82,7 @@ const tool = {
     title: "tool title",
     subTitle: "tool subTitle",
     term: "this is the tool term",
-    language: "Hebrow"
+    language: "Hebrew"
 }
 
 const suggestion = {
