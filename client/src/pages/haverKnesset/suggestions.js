@@ -13,16 +13,16 @@ import './suggestions.css';
 function Suggestions(props) {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen)
-    console.log(isOpen);
-    function handleVallSug(e) {
-        console.log("e: ", e);
-        console.log("Suggestions selected!");
-    }
+    const {add , remove } = props;
+    // function handleVallSug(e) {
+    //     console.log("e: ", e);
+    //     console.log("Suggestions selected!");
+    // }
 
-    function handleXallSug(e) {
-        console.log("e: ", e);
-        console.log("Suggestions removed!");
-    }
+    // function handleXallSug(e) {
+    //     console.log("e: ", e);
+    //     console.log("Suggestions removed!");
+    // }
     return (<>
         <tr>
             <td className="title-large">{props.date}
@@ -33,17 +33,17 @@ function Suggestions(props) {
             <td className="title-large">{props.sub}</td>
             <td className="title-large">{props.offer}</td>
             <td className="title-large">
-                <CheckBoxIcon style={{ color: 'green' }} onClick={(e) => { handleVallSug(props) }}>v</CheckBoxIcon>
-                <CloseIcon style={{ color: 'red' }} onClick={(e) => { handleXallSug(props) }}>x</CloseIcon>
+                <CheckBoxIcon style={{ color: 'green' }} onClick={(e) => { add(props) }}>v</CheckBoxIcon>
+                <CloseIcon style={{ color: 'red' }} onClick={(e) => { remove(props) }}>x</CloseIcon>
             </td>
         </tr>
         {isOpen === false ?
             <div></div> : <div></div>}
         {isOpen === true ?
-            <tr>
+            <tr className="test">
                 <td><KeyboardReturnIcon /></td>
                 <td></td>
-                <td colSpan="2" className="paragraph-regular">hihihihihihihi hihihihihihihihihihihi hihihihihihihihihihihihihi</td>
+                <td colSpan="2" className="paragraph-regular">דוגמא</td>
                 <td></td>
             </tr> : <div></div>}
 
