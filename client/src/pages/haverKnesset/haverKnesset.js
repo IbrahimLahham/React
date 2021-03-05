@@ -61,36 +61,21 @@ function HaverKnesset() {
                 <caption id="title" className="title-bold">הצעות חדשות עבורי:</caption>
                 <tr id="header">
                     <th className="title-bold">תאריך</th>
-                    <th className="title-bold"></th>
                     <th className="title-bold">כלי פרלמנטרי</th>
                     <th className="title-bold">נושא</th>
                     <th className="title-bold">מציע</th>
                     <th className="title-bold">אימוץ/דחיה</th>
-
                 </tr>
 
                 {myNewSuggestions.map((elem, index) => {
 
                     return (
-<<<<<<< HEAD
                         <Suggestion
                             key={index}
                             date={elem.date}
                             per={elem.per}
                             sub={elem.sub}
                             offer={elem.offer} />)
-=======
-                    <Suggestion
-                        key={index}
-                        date={elem.date}
-                        per={elem.per}
-                        sub={elem.sub}
-                        offer={elem.offer}
-                        ></Suggestion>)
-
-                        
-                
->>>>>>> havirKnesset
                 })}
 
             </table>
