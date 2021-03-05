@@ -52,17 +52,17 @@ function Forgetpassword() {
 
     return (
         <div className="user-container">
-            <div className="user-login-div">
-                <h1 className="title-bold-big">פרטי חשבון</h1>
+            <form onSubmit={handleForgot} className="user-login-div">
+                <h1 className="title-bold-big">שכחתי סיסמה</h1>
                 <div className="user-login-flex">
                     <label className="title-bold">דוא"ל:</label>
-                    <input type="text" className="input-field" onChange={(e) => {
+                    <input type="email" className="input-field" onChange={(e) => {
                         setEmail(e.target.value);
-                    }}></input>
+                    }} required></input>
                 </div>
-                <button className="user-button" onClick={handleForgot}>שחזור</button>
+                <button className="user-button" type="submit">שחזור</button>
                 <label className="message">{success}</label>
-            </div>
+            </form>
         </div>
     )
 }
