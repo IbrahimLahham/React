@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 // Table from react-bootstrap
 import './haverKnesset.css'
+import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import { Collapse, CardBody, Card } from 'reactstrap';
+import Suggestion from './suggestions';
 
 function HaverKnesset() {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggle = () => setIsOpen(!isOpen);
 
     // const [book, setbook] = useState([]);
     const myNewSuggestions = [
@@ -59,26 +66,25 @@ function HaverKnesset() {
                     <th className="title-bold">מציע</th>
                     <th className="title-bold">אימוץ/דחיה</th>
                 </tr>
-                {myNewSuggestions.map((elem) => {
+
+                {myNewSuggestions.map((elem, index) => {
+
                     return (
-                        <tr>
-                            <td className="title-large">{elem.date}</td>
-                            <td className="title-large">{elem.per}</td>
-                            <td className="title-large">{elem.sub}</td>
-                            <td className="title-large">{elem.offer}</td>
-                            <td className="title-large">
-                                <button id="V" onClick={(e) => { handleVmySug(elem) }}>v</button>
-                                <button id="X" onClick={(e) => { handleXmySug(elem) }}>x</button>
-                            </td>
-                        </tr>
-                    );
+                        <Suggestion
+                            key={index}
+                            date={elem.date}
+                            per={elem.per}
+                            sub={elem.sub}
+                            offer={elem.offer} />)
                 })}
+
             </table>
 
             <table>
                 <caption id="title" className="title-bold">הצעות בטיפול:</caption>
                 <tr id="header">
                     <th className="title-bold">תאריך</th>
+
                     <th className="title-bold">כלי פרלמנטרי</th>
                     <th className="title-bold">נושא</th>
                     <th className="title-bold">מציע</th>
