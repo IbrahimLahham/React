@@ -85,7 +85,6 @@ function LoginRegisteration() {
 
     return (
         <div>
-            {/* <Header /> */}
             <div className="user-container">
 
                 <form onSubmit={handleLogin} className="user-login-div">
@@ -147,7 +146,6 @@ function LoginRegisteration() {
                 </form>
 
             </div>
-            {/* <Footer /> */}
         </div>
 
     )
