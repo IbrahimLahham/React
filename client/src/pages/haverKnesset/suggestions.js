@@ -1,3 +1,4 @@
+import './suggestions.css'
 import React, { useState } from 'react';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -36,6 +37,19 @@ function Suggestions(props) {
                 <CloseIcon style={{ color: 'red' }} onClick={(e) => { handleXallSug(props) }}>x</CloseIcon>
             </td>
         </tr>
+<<<<<<< HEAD
+        {isOpen===false?
+                  <div></div>:<div></div>}
+                {isOpen===true?
+                 <tr>
+                     <td>hi</td>
+                     <td></td>
+                     <td></td>
+                     <td colspan="2">lsdkjfleshfleahflfhlfhwifhwisldhfleafel</td>
+                     <td></td>
+                   </tr>:<div></div>}
+      
+=======
         {isOpen === false ?
             <div></div> : <div></div>}
         {isOpen === true ?
@@ -46,6 +60,7 @@ function Suggestions(props) {
                 <td></td>
             </tr> : <div></div>}
 
+>>>>>>> havirKnesset
     </>
     );
 }
