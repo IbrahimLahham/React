@@ -11,24 +11,43 @@ function Forgetpassword() {
     function handleForgot(e){
         e.preventDefault();
         console.log("sent data: ", {email:email});
-        fetch('/user/ForgetPassword', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email })
-        }).then(r => r.json())
-            .then(data => {
-                console.log(data);
-                if (data.ok === true) {
-                    history.push('/resetPassword')
-                    setSuccess("הודעה נשלחה לדוא״ל!");
-                }
-                else{
-                    setSuccess("הדוא״ל לא קיים!");
-                }
+        // fetch('/user/ForgetPassword', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ email })
+        // }).then(r => r.json())
+        //     .then(data => {
+        //         console.log(data);
+        //         if (data.ok === true) {
+        //             history.push('/resetPassword')
+        //             setSuccess("הודעה נשלחה לדוא״ל!");
+        //         }
+        //         else{
+        //             setSuccess("הדוא״ל לא קיים!");
+        //         }
 
-            })
+        //     })
+            fetch('/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ from: "openknessetdev@gmail.com", to:email, subject:"hello yara", text:"localhost:3000/resetPassword" })
+            }).then(r => r.json())
+                .then(data => {
+                    console.log(data);
+                    // if (data.ok === true) {
+                    //     // history.push('/resetPassword')
+                    //     setSuccess("הודעה נשלחה לדוא״ל!");
+                    // }
+                    // else{
+                    //     setSuccess("הדוא״ל לא קיים!");
+                    // }
+    
+                })
+            
     }
 
     return (
