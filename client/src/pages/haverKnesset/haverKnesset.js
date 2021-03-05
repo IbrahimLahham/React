@@ -8,7 +8,7 @@ import Suggestion from './suggestions';
 
 function HaverKnesset() {
     const [isOpen, setIsOpen] = useState(false);
-    
+
     const toggle = () => setIsOpen(!isOpen);
 
     // const [book, setbook] = useState([]);
@@ -68,26 +68,25 @@ function HaverKnesset() {
                     <th className="title-bold">אימוץ/דחיה</th>
 
                 </tr>
-                {myNewSuggestions.map((elem,index) => {
-                    return (
-                    <div><Suggestion
-                        key={index}
-                        date={elem.date}
-                        per={elem.per}
-                        sub={elem.sub}
-                        offer={elem.offer}
-                        ></Suggestion><tr></tr></div>)
 
-                        
-                
+                {myNewSuggestions.map((elem, index) => {
+
+                    return (
+                        <Suggestion
+                            key={index}
+                            date={elem.date}
+                            per={elem.per}
+                            sub={elem.sub}
+                            offer={elem.offer} />)
                 })}
+
             </table>
 
             <table>
                 <caption id="title" className="title-bold">הצעות בטיפול:</caption>
                 <tr id="header">
                     <th className="title-bold">תאריך</th>
-                    
+
                     <th className="title-bold">כלי פרלמנטרי</th>
                     <th className="title-bold">נושא</th>
                     <th className="title-bold">מציע</th>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { Collapse} from 'reactstrap';
+
 function Suggestions(props) {
     const [isOpen, setIsOpen] =useState(false);
     const toggle = () => setIsOpen(!isOpen)
@@ -26,7 +27,7 @@ function Suggestions(props) {
             <td>{isOpen===false?
                   <div></div>:<div></div>}
                 {isOpen===true?
-                 <td>hi</td>:<div></div>}</td>
+                 <tr><td>hi</td></tr>:<div></div>}</td>
             <td className="title-large">{props.per}</td>
             <td className="title-large">{props.sub}</td>
             <td className="title-large">{props.offer}</td>
