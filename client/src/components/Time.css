@@ -3,7 +3,6 @@
   background-color: white;
   border-radius: 2px;
   text-align: right;
-
   padding-left: 10px;
   padding-bottom: 10px;
 }
@@ -11,7 +10,27 @@
   display: flex;
   margin-left: 140px;
   width: 500px;
+  line-height: 0px;
 }
 .time__info > h5 {
+  /* margin-top:0px; */
+  margin-bottom: 0px;
+  margin-left:0;
   margin-right: 10px;
+  line-height: 0px;
+}
+
+.time__info > p {
+  /* margin-right: 10px;
+  margin: 10px 0 10px 0; */
+  margin-top:auto;
+  margin-bottom: auto;
+  margin-left:0;
+  margin-right: 10px;
+  line-height: 0px;
+}
+
+.h5-new {
+  font-weight: normal;
+  font-style: normal;
 }
