@@ -72,12 +72,25 @@ function HaverKnesset() {
                 {myNewSuggestions.map((elem, index) => {
 
                     return (
+<<<<<<< HEAD
                         <Suggestion
                             key={index}
                             date={elem.date}
                             per={elem.per}
                             sub={elem.sub}
                             offer={elem.offer} />)
+=======
+                    <Suggestion
+                        key={index}
+                        date={elem.date}
+                        per={elem.per}
+                        sub={elem.sub}
+                        offer={elem.offer}
+                        ></Suggestion>)
+
+                        
+                
+>>>>>>> havirKnesset
                 })}
 
             </table>
