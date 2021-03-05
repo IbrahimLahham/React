@@ -3,7 +3,7 @@ import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { Collapse} from 'reactstrap';
 function Suggestions(props) {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] =useState(false);
     const toggle = () => setIsOpen(!isOpen)
     console.log(isOpen);
     function handleVallSug(e) {
@@ -15,7 +15,7 @@ function Suggestions(props) {
         console.log("e: ", e);
         console.log("Suggestions removed!");
     }
-    return (
+    return (<>
         <tr>
             <td className="title-large">{props.date}
                 {isOpen === false ?
@@ -35,7 +35,12 @@ function Suggestions(props) {
                 <button id="X" onClick={(e) => { handleXallSug(props) }}>x</button>
             </td>
         </tr>
-    
+        {isOpen===false?
+                  <div></div>:<div></div>}
+                {isOpen===true?
+                 <tr><td>hi</td></tr>:<div></div>}
+      
+    </>
     );
 }
 export default Suggestions

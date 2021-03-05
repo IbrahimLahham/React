@@ -69,13 +69,14 @@ function HaverKnesset() {
 
                 </tr>
                 {myNewSuggestions.map((elem,index) => {
-                    return (<Suggestion
+                    return (
+                    <div><Suggestion
                         key={index}
                         date={elem.date}
                         per={elem.per}
                         sub={elem.sub}
                         offer={elem.offer}
-                        />)
+                        ></Suggestion><tr></tr></div>)
 
                         
                 
