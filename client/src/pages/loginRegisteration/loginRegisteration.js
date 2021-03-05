@@ -31,6 +31,7 @@ function LoginRegisteration() {
 
     function handleLogin(e) {
         e.preventDefault();
+
         fetch('/user/Login', {
             method: 'POST',
             headers: {
@@ -58,6 +59,10 @@ function LoginRegisteration() {
     function handleRegister(e) {
         e.preventDefault();
         console.log({ firstName: firstName, lastName: lastName, email: email, organization: organization, telephon: telephon })
+
+        // firstName doesn't contrains numbers 
+
+
         fetch('/user/Registration', {
             method: 'POST',
             headers: {
@@ -87,7 +92,7 @@ function LoginRegisteration() {
                     <h1 className="title-bold-big">כניסה</h1>
                     <div className="user-login-flex">
                         <label className="title-bold">דוא"ל:</label>
-                        <input type="text" className="input-field" onChange={(e) => {
+                        <input type="email" className="input-field" onChange={(e) => {
                             setLoginEmail(e.target.value);
                         }}></input>
                     </div>
@@ -120,7 +125,7 @@ function LoginRegisteration() {
                     </div>
                     <div className="user-login-flex">
                         <label className="title-bold">*דוא"ל:</label>
-                        <input type="text" className="input-field" onChange={(e) => {
+                        <input type="email" className="input-field" onChange={(e) => {
                             setEmail(e.target.value);
                         }} required></input>
                     </div>
