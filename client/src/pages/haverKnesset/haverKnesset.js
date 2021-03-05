@@ -5,6 +5,7 @@ import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { Collapse, CardBody, Card } from 'reactstrap';
 import Suggestion from './suggestions';
+import ActiveSuggestions from '../../components/activeSuggestion';
 
 function HaverKnesset() {
     const [isOpen, setIsOpen] = useState(false);
@@ -37,22 +38,22 @@ function HaverKnesset() {
 
     function handleVmySug(e) {
         console.log("e: ", e);
-        console.log("Suggestions selected!");
+        console.log("my Suggestions selected!");
     }
 
     function handleXmySug(e) {
         console.log("e: ", e);
-        console.log("Suggestions removed!");
+        console.log("my Suggestions removed!");
     }
 
     function handleVallSug(e) {
         console.log("e: ", e);
-        console.log("Suggestions selected!");
+        console.log("all Suggestions selected!");
     }
 
     function handleXallSug(e) {
         console.log("e: ", e);
-        console.log("Suggestions removed!");
+        console.log("all Suggestions removed!");
     }
 
     return (
@@ -75,7 +76,10 @@ function HaverKnesset() {
                             date={elem.date}
                             per={elem.per}
                             sub={elem.sub}
-                            offer={elem.offer} />)
+                            offer={elem.offer}
+                            add={handleVmySug}
+                            remove={handleXmySug}
+                        />)
                 })}
 
             </table>
@@ -90,17 +94,16 @@ function HaverKnesset() {
                     <th className="title-bold">מציע</th>
                     <th className="title-bold">עדכון סטטוס</th>
                 </tr>
-                {activeSuggestions.map((elem) => {
+                {activeSuggestions.map((elem, index) => {
                     return (
-                        <tr>
-                            <td className="title-large">{elem.date}</td>
-                            <td className="title-large">{elem.per}</td>
-                            <td className="title-large">{elem.sub}</td>
-                            <td className="title-large">{elem.offer}</td>
-                            <select id="status" className="drop-down-menu">
-                                {elem.options.map((op) => { return <option value="havir">{op}</option> })}
-                            </select>
-                        </tr>
+                        <ActiveSuggestions
+                            key={index}
+                            date={elem.date}
+                            per={elem.per}
+                            sub={elem.sub}
+                            offer={elem.offer}
+                            options={elem.options}
+                        />
                     );
                 })}
             </table>
@@ -116,12 +119,15 @@ function HaverKnesset() {
                 </tr>
                 {allNewSuggestions.map((elem, index) => {
                     return (
-                            <Suggestion
-                                key={index}
-                                date={elem.date}
-                                per={elem.per}
-                                sub={elem.sub}
-                                offer={elem.offer} />
+                        <Suggestion
+                            key={index}
+                            date={elem.date}
+                            per={elem.per}
+                            sub={elem.sub}
+                            offer={elem.offer} 
+                            add={handleVallSug}
+                            remove={handleXallSug}
+                            />
                     );
                 })}
             </table>
