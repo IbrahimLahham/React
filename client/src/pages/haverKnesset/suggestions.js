@@ -1,3 +1,4 @@
+import './suggestions.css'
 import React, { useState } from 'react';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -38,7 +39,13 @@ function Suggestions(props) {
         {isOpen===false?
                   <div></div>:<div></div>}
                 {isOpen===true?
-                 <tr><td>hi</td></tr>:<div></div>}
+                 <tr>
+                     <td>hi</td>
+                     <td></td>
+                     <td></td>
+                     <td colspan="2">lsdkjfleshfleahflfhlfhwifhwisldhfleafel</td>
+                     <td></td>
+                   </tr>:<div></div>}
       
     </>
     );
