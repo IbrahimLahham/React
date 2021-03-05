@@ -114,18 +114,14 @@ function HaverKnesset() {
                     <th className="title-bold">מציע</th>
                     <th className="title-bold">אימוץ/דחיה</th>
                 </tr>
-                {allNewSuggestions.map((elem) => {
+                {allNewSuggestions.map((elem, index) => {
                     return (
-                        <tr>
-                            <td className="title-large">{elem.date}</td>
-                            <td className="title-large">{elem.per}</td>
-                            <td className="title-large">{elem.sub}</td>
-                            <td className="title-large">{elem.offer}</td>
-                            <td className="title-large">
-                                <button id="V" onClick={(e) => { handleVallSug(elem) }}>v</button>
-                                <button id="X" onClick={(e) => { handleXallSug(elem) }}>x</button>
-                            </td>
-                        </tr>
+                            <Suggestion
+                                key={index}
+                                date={elem.date}
+                                per={elem.per}
+                                sub={elem.sub}
+                                offer={elem.offer} />
                     );
                 })}
             </table>
