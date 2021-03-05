@@ -24,11 +24,12 @@ body {
 }
 .up,
 .down {
-  width: 60%;
+  width: 70%;
   justify-content: space-between;
   display: flex;
   margin-top: 15px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   margin-left: auto;
   margin-right: auto;
+
 }
