@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-
+import { useHistory } from 'react-router-dom';
+    
 import './forgetpassword.css'
 
 
 function Forgetpassword() {
-
+    const history = useHistory();
     const [email, setEmail] = useState("");
     const[success,setSuccess]=useState("");
     function handleForgot(e){
@@ -20,6 +21,7 @@ function Forgetpassword() {
             .then(data => {
                 console.log(data);
                 if (data.ok === true) {
+                    history.push('/resetPassword')
                     setSuccess("הודעה נשלחה לדוא״ל!");
                 }
                 else{
