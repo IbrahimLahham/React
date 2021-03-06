@@ -1,30 +1,29 @@
 import React from "react";
 import "./kenosKnesset.css";
-import Header from "../../components/Header";
 import Naom from "../../components/Naom";
 import Taknon from "../../components/Taknon";
 import Time from "../../components/Time";
-// import AcUnitIcon from "@material-ui/icons/AcUnit";
 import Recomend from "../../components/Recomend";
-import Footer from "../../components/Footer";
+import RulesCard from "../../components/RulesCard"
+
 function kenosKnesset() {
   return (
     <div>
-      {/* Header */}
-      {/* <Header /> */}
       <div className="container">
         <div className="up">
-          <Taknon />
           <Naom />
+          <Taknon />
         </div>
         <div className="down">
-          <Time data={timeHistoryData} text="היסטוריה" />
           <Time data={timeFutreData} text="עתיד" />
+          <Time data={timeHistoryData} text="היסטוריה" />
         </div>
         <Recomend />
       </div>
-      {/* <Footer /> */}
     </div>
+    // <div>
+    //   <RulesCard></RulesCard>
+    // </div>
   );
 }
 let timeHistoryData = [

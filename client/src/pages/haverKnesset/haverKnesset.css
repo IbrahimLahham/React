@@ -1,14 +1,16 @@
 table{
     width: 80%;
     margin-top: 20px;
+    direction: rtl;
 }
 table, th, td {
+    /* border: 1px solid black; */
     border: 1px solid black;
     border-collapse: collapse;
+    text-align: right;
   }
   th, td {
     padding: 5px;
-    text-align: left;
   }
 
   #header{
@@ -29,4 +31,20 @@ caption{
 
 .drop-down-menu{
   width: 200px;
+}
+
+#status{
+  width: 10vw;
+}
+
+#test{
+  position: relative;
+  width: 10vw;
+}
+
+.suggestions-container {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }

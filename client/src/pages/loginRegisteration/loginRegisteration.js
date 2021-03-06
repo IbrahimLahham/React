@@ -31,6 +31,7 @@ function LoginRegisteration() {
 
     function handleLogin(e) {
         e.preventDefault();
+
         fetch('/user/Login', {
             method: 'POST',
             headers: {
@@ -58,6 +59,10 @@ function LoginRegisteration() {
     function handleRegister(e) {
         e.preventDefault();
         console.log({ firstName: firstName, lastName: lastName, email: email, organization: organization, telephon: telephon })
+
+        // firstName doesn't contrains numbers 
+
+
         fetch('/user/Registration', {
             method: 'POST',
             headers: {
@@ -68,11 +73,21 @@ function LoginRegisteration() {
             .then(data => {
                 console.log(data);
                 //if login true - redirect to forms creation page;
-                if (data.register === true) {
-                    setRegisterMessage("צעד אחד נותר, תבדוק הדוא״ל.")
+                if (data.ok === true) {
+                    setRegisterMessage("צעד אחד נותר, תבדוק הדוא״ל.");
+                    fetch('/send-email', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ from: "openknessetdev@gmail.com", to: email, subject: "OpenKnesset Registeration", text: "your temporary password: 1234\nreset password via the link: localhost:3000/resetPassword" })
+                    }).then(r => r.json())
+                        .then(data => {
+                            console.log(data);
+                        })
                 }
                 else {
-                    setRegisterMessage("הדוא״ל קיים כבר!")
+                    setRegisterMessage("הדוא״ל כבר קיים !")
                 }
 
             })
@@ -80,14 +95,13 @@ function LoginRegisteration() {
 
     return (
         <div>
-            {/* <Header /> */}
             <div className="user-container">
 
                 <form onSubmit={handleLogin} className="user-login-div">
                     <h1 className="title-bold-big">כניסה</h1>
                     <div className="user-login-flex">
                         <label className="title-bold">דוא"ל:</label>
-                        <input type="text" className="input-field" onChange={(e) => {
+                        <input type="email" className="input-field" onChange={(e) => {
                             setLoginEmail(e.target.value);
                         }}></input>
                     </div>
@@ -120,7 +134,7 @@ function LoginRegisteration() {
                     </div>
                     <div className="user-login-flex">
                         <label className="title-bold">*דוא"ל:</label>
-                        <input type="text" className="input-field" onChange={(e) => {
+                        <input type="email" className="input-field" onChange={(e) => {
                             setEmail(e.target.value);
                         }} required></input>
                     </div>
@@ -142,7 +156,6 @@ function LoginRegisteration() {
                 </form>
 
             </div>
-            {/* <Footer /> */}
         </div>
 
     )
