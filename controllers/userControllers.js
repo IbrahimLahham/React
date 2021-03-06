@@ -35,7 +35,7 @@ exports.Registration = async (req, res) => {
   const userToAdd = new user({firstName, lastName, email, company, phone, type, active, language});
   userToAdd.save().then(()=>{console.log('user saved')})
 
-  res.send({user: userToAdd.type , ok: true , message: 'The User Is Registered'});
+  res.send({user: userToAdd.email , ok: true , message: 'The User Is Registered'});
   }else{
     res.send({ ok: false , message: 'The User Is Already Exist'});
   }
@@ -49,6 +49,17 @@ exports.ForgetPassword = async (req, res) => {
 
 exports.SavePassword = async (req, res) => {
   console.log("SavePassword");
+  const {email, password} = req.body;
+  console.log(email, password)
+  const userToFind = await user.findOne({ email });
+
+  if (userToFind === null) {
+    res.send({ok: false , message: 'Process Failed'})
+} else {
+      //update the user amd set his password****
+      res.send({user: userToFind.type , ok: true , message: 'The Password Saved'})
+}
+
   res.send({ user: user });
 
 };
@@ -57,10 +68,9 @@ exports.GetUsersByType = async (req, res) => {
   console.log("GetUsersByType");
 
   const {type} = req.body;
-  console.log(type)
 
-  const userToFind = await user.findAll({ type });
-  res.send([user, user, user]);
+  const userToFind = await user.find({ type });
+  res.send({users:userToFind});
 
 };
 
