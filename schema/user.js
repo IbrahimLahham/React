@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-
-const SuggestionSchema = require("./Suggestion.js");
+// const  mongoose  = require('../server');
 
 const UserSchema = new mongoose.Schema({
     email: String,
@@ -15,5 +14,5 @@ const UserSchema = new mongoose.Schema({
 });
 
 
-const User = mongoose.model("User", UserSchema);
+const User = mongoose.model("users", UserSchema);
 module.exports = User;
