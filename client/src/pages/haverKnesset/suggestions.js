@@ -1,4 +1,3 @@
-import './suggestions.css'
 import React, { useState } from 'react';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -32,13 +31,11 @@ function Suggestions(props) {
             <td className="title-large">{props.per}</td>
             <td className="title-large">{props.sub}</td>
             <td className="title-large">{props.offer}</td>
-            <td className="title-large">
-                <CheckBoxIcon style={{ color: 'green' }} onClick={(e) => { add(props) }}>v</CheckBoxIcon>
+            <td className="title-large" id="accept-decline">
+                <CheckBoxIcon id="v-box" style={{ color: 'green' }} onClick={(e) => { add(props) }}>v</CheckBoxIcon>
                 <CloseIcon style={{ color: 'red' }} onClick={(e) => { remove(props) }}>x</CloseIcon>
             </td>
         </tr>
-        {isOpen === false ?
-            <div></div> : <div></div>}
         {isOpen === true ?
             <tr className="test">
                 <td><KeyboardReturnIcon /></td>
@@ -48,7 +45,7 @@ function Suggestions(props) {
                     <h4>סטטוס מפורט:</h4>
                     <p>{props.status.status}</p>
                 </td>
-            </tr> : <div></div>}
+            </tr> : null}
 
     </>
     );

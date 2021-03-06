@@ -7,7 +7,12 @@ import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 function ActiveSuggestions(props) {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen)
-    
+
+    function test_select(e) {
+        e.preventDefault();
+        console.log("e: ", document.getElementById("status").value);
+    }
+
     return (<>
         <tr>
             <td className="title-large">{props.date}
@@ -18,13 +23,13 @@ function ActiveSuggestions(props) {
             <td className="title-large">{props.sub}</td>
             <td className="title-large">{props.offer}</td>
             <td id="test" className="title-large">
-                <select id="status" className="drop-down-menu">
-                    {props.options.map((op, index) => { return <option value="havir">{op}</option> })}
-                </select>
+                <form onChange={test_select}>
+                    <select id="status" className="drop-down-menu">
+                        {props.options.map((op, index) => { return <option value={op}>{op}</option> })}
+                    </select>
+                </form>
             </td>
         </tr>
-        {isOpen === false ?
-            <div></div> : <div></div>}
         {isOpen === true ?
             <tr className="test">
                 <td><KeyboardReturnIcon /></td>
@@ -37,7 +42,7 @@ function ActiveSuggestions(props) {
                     <a>סטטוס מפורט:</a>
                     <p>עם השמועות על הקדמת ...</p>
                 </td>
-            </tr> : <div></div>}
+            </tr> : null}
 
     </>
     );

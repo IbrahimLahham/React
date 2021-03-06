@@ -12,36 +12,38 @@ function HaverKnesset() {
     const toggle = () => setIsOpen(!isOpen);
 
     useEffect(() => {
-        fetch('/suggestion/byUserSuggest')
+            fetch('/suggestion/byUserSuggest')
             .then(r => r.json())
             .then(data => {
                 console.log(data);
-                data.map((elem, index) =>{
-                    setMyNewSuggestions([...myNewSuggestions, { key:index, date: "21.11.21", per: "נאום בן דקה", sub: elem.subject, offer: "בלאבלא", rejection: "true", description:elem.description, status: elem.status }])
+                let arr = [];
+                data.map((elem, index) => {
+                    arr = [...arr, { key: index, date: "21.11.21", per: "נאום בן דקה", sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status }];
                 })
-                setActiveSuggestions([
-                    {
-                        date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא",
-                        options: ["חבר", "אזרח"]
-                    },
-                    {
-                        date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא",
-                        options: ["חבר", "אזרח"]
-                    }, {
-                        date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא",
-                        options: ["חבר", "אזרח"]
-                    }
-                ]);
-                setAllNewSuggestions([
-                    { date: "21.11.21", per: "נאום בן דקה", sub: data[0].subject, offer: "בלאבלא", rejection: "true", description:data[0].description, status: data[0].status },
-                    { date: "21.11.21", per: "נאום בן דקה", sub: data[0].subject, offer: "בלאבלא", rejection: "true", description:data[0].description, status: data[0].status },
-                    { date: "21.11.21", per: "נאום בן דקה", sub: data[0].subject, offer: "בלאבלא", rejection: "true", description:data[0].description, status: data[0].status }                ]);
+                setMyNewSuggestions(arr);
             })
-            
+        fetch('/suggestion/byKnessetMemberValidate')
+            .then(r => r.json())
+            .then(data => {
+                console.log(data);
+                let arr = [];
+                data.map((elem, index) => {
+                    arr = [...arr, { key: index, date: "21.11.21", per: "נאום בן דקה", sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status, options: ["חבר", "אזרח"] }];
+                })
+                setActiveSuggestions(arr);
+            })
+        fetch('/suggestion/byParliamentaryTool')
+            .then(r => r.json())
+            .then(data => {
+                console.log(data);
+                let arr = [];
+                data.map((elem, index) => {
+                    arr = [...arr, { key: index, date: "21.11.21", per: "נאום בן דקה", sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status }];
+                })
+                setAllNewSuggestions(arr);
+            })
+
     }, [])
-    // const [book, setbook] = useState([]);
-    
-    
 
     function handleVmySug(e) {
         console.log("e: ", e);
@@ -64,7 +66,7 @@ function HaverKnesset() {
     }
 
     return (
-        <div>
+        <div className="suggestions-container">
             <table>
                 <caption id="title" className="title-bold">הצעות חדשות עבורי:</caption>
                 <tr id="header">
@@ -86,7 +88,7 @@ function HaverKnesset() {
                             offer={elem.offer}
                             add={handleVmySug}
                             remove={handleXmySug}
-                            description= {elem.description}
+                            description={elem.description}
                             status={elem.status}
                         />)
                 })}
@@ -136,10 +138,10 @@ function HaverKnesset() {
                             offer={elem.offer}
                             add={handleVallSug}
                             remove={handleXallSug}
-                            description= {elem.description}
+                            description={elem.description}
                             status={elem.status}
                         />
-                        
+
                     );
                 })}
             </table>
