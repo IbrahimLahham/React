@@ -51,7 +51,6 @@
   margin-left: 30px;
   width: 45%;
   padding: 16px;
-  line-height: 0px;
 }
 .reomnde__SecindHalf > input {
   padding: 10px;
@@ -145,8 +144,4 @@ form {
 
 .additional-query-div > p {
   font-size: smaller;
-}
-
-.question-title {
-  font-weight: bold;
 }

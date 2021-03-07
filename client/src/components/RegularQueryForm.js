@@ -54,10 +54,8 @@ function RegularQueryForm() {
             <h4>שאלה: (נכלל בספירת 50 מילים)</h4>
             <input type="text" name="query" />
             <div className="additional-query-div">
-              <p>
-                <span>שאלת המשך: </span> (אופציונלי, תשאל רק במעמד המענה במליאת
-                הכנסת)
-              </p>
+              <h4>שאלת המשך: </h4>
+              <p>(אופציונלי, תשאל רק במעמד המענה במליאת הכנסת)</p>
             </div>
             <input type="text" name="query-additional" />
           </div>
