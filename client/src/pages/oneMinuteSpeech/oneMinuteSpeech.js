@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React from "react";
+import "./oneMinuteSpeech.css";
+import OneMinuteForm from "../../components/OneMinuteForm";
+import TopCards from "../../components/TopCards";
 
 //import './normalquery.css'
 
-
 const oneMinuteSpeech = () => {
-
   // const [book, setbook] = useState([]);
-  
 
-    return (
-        <div>
-            <h1>oneMinuteSpeech page</h1>
-        </div>
-    )
-}
+  return (
+    <div>
+      <div className="container">
+        <TopCards toolType={"4"} />
+        <OneMinuteForm />
+      </div>
+    </div>
+  );
+};
 
-export default oneMinuteSpeech
+export default oneMinuteSpeech;
