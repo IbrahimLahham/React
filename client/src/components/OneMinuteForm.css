@@ -115,7 +115,7 @@ form {
   width: fit-content;
   line-height: 0px;
   background-color: white;
-  font-size: 11px;
+  font-size: x-small;
 }
 .attachment > img {
   max-height: 16px;
