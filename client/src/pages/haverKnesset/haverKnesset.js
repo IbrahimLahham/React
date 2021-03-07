@@ -15,7 +15,7 @@ function HaverKnesset() {
             fetch('/suggestion/byUserSuggest')
             .then(r => r.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 let arr = [];
                 data.map((elem, index) => {
                     arr = [...arr, { key: index, date: "21.11.21", per: "נאום בן דקה", sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status }];
@@ -25,7 +25,7 @@ function HaverKnesset() {
         fetch('/suggestion/byKnessetMemberValidate')
             .then(r => r.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 let arr = [];
                 data.map((elem, index) => {
                     arr = [...arr, { key: index, date: "21.11.21", per: "נאום בן דקה", sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status, options: ["חבר", "אזרח"] }];
@@ -35,7 +35,7 @@ function HaverKnesset() {
         fetch('/suggestion/byParliamentaryTool')
             .then(r => r.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 let arr = [];
                 data.map((elem, index) => {
                     arr = [...arr, { key: index, date: "21.11.21", per: "נאום בן דקה", sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status }];
