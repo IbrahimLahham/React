@@ -8,8 +8,9 @@ function ActiveSuggestions(props) {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen)
 
-    function test_select(e) {
-        e.preventDefault();
+    function test_select() {
+        console.log("e: ", props);
+        console.log("status changed!");
         console.log("e: ", document.getElementById("status").value);
     }
 
