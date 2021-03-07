@@ -18,7 +18,7 @@ function HaverKnesset() {
                 // console.log(data);
                 let arr = [];
                 data.map((elem, index) => {
-                    arr = [...arr, { key: index, date: "21.11.21", per: "נאום בן דקה", sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status }];
+                    arr = [...arr, { key: index, date: "21.11.21", per: elem.toolType.type, sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status }];
                 })
                 setMyNewSuggestions(arr);
             })
@@ -28,7 +28,7 @@ function HaverKnesset() {
                 // console.log(data);
                 let arr = [];
                 data.map((elem, index) => {
-                    arr = [...arr, { key: index, date: "21.11.21", per: "נאום בן דקה", sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status, options: ["חבר", "אזרח"] }];
+                    arr = [...arr, { key: index, date: "21.11.21", per: elem.toolType.type, sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status, options: ["חבר", "אזרח"] }];
                 })
                 setActiveSuggestions(arr);
             })
@@ -38,7 +38,7 @@ function HaverKnesset() {
                 // console.log(data);
                 let arr = [];
                 data.map((elem, index) => {
-                    arr = [...arr, { key: index, date: "21.11.21", per: "נאום בן דקה", sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status }];
+                    arr = [...arr, { key: index, date: "21.11.21", per: elem.toolType.type, sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status }];
                 })
                 setAllNewSuggestions(arr);
             })
@@ -113,7 +113,9 @@ function HaverKnesset() {
                             per={elem.per}
                             sub={elem.sub}
                             offer={elem.offer}
+                            description={elem.description}
                             options={elem.options}
+                            status={elem.status}
                         />
                     );
                 })}

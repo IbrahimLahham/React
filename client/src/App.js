@@ -26,78 +26,87 @@ import {
 export default function App() {
 
   return (
-      <Router>
-        <div>
-          <nav className='all-tabs'>
-            <ul>
-              <li className='active-nav'>
-                <Link to="/parliamentaryTool">parliamentaryTools</Link>
-              </li>
-              <li className='non-active-nav'>
-                <Link to="/normalquery">normalquery</Link>
-              </li>
-              <li className='non-active-nav'>
-                <Link to="/kenosKnesset">kenosKnesset</Link>
-              </li>
-              <li className='non-active-nav'>
-                <Link to="/oneMinuteSpeech">oneMinuteSpeech</Link>
-              </li>
-              <li className='non-active-nav'>
-                <Link to="/trackingBoard">trackingBoard</Link>
-              </li>
-              <li className='non-active-nav'>
-                <Link to="/loginRegisteration">loginRegisteration</Link>
-              </li>
-              <li className='non-active-nav'>
-                <Link to="/forgetpassword">forgetpassword</Link>
-              </li>
-              <li className='non-active-nav'>
-                <Link to="/resetPassword">resetPassword</Link>
-              </li>
-              <li className='non-active-nav'>
-                <Link to="/haverKnesset">haverKnesset</Link>
-              </li>
+    <Router>
+      <div>
+        <nav className='all-tabs'>
+          <ul>
+            <li className='active-nav'>
+              <Link to="/parliamentaryTool">parliamentaryTools</Link>
+            </li>
+            <li className='non-active-nav'>
+              <Link to="/normalquery">normalquery</Link>
+            </li>
+            <li className='non-active-nav'>
+              <Link to="/kenosKnesset">kenosKnesset</Link>
+            </li>
+            <li className='non-active-nav'>
+              <Link to="/oneMinuteSpeech">oneMinuteSpeech</Link>
+            </li>
+            <li className='non-active-nav'>
+              <Link to="/trackingBoard">trackingBoard</Link>
+            </li>
+            <li className='non-active-nav'>
+              <Link to="/loginRegisteration">loginRegisteration</Link>
+            </li>
+            <li className='non-active-nav'>
+              <Link to="/forgetpassword">forgetpassword</Link>
+            </li>
+            <li className='non-active-nav'>
+              <Link to="/resetPassword">resetPassword</Link>
+            </li>
+            <li className='non-active-nav'>
+              <Link to="/haverKnesset">haverKnesset</Link>
+            </li>
 
 
-            </ul>
-          </nav>
-          <Header />
+          </ul>
+        </nav>
 
-          {/* A <Switch> looks through its children <Route>s and
+        {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-          <Switch>
-            <Route path="/parliamentaryTool">
-              <ParliamentaryTool />
-            </Route>
-            <Route path="/normalquery">
-              <Normalquery />
-            </Route>
-            <Route path="/kenosKnesset">
-              <KenosKnesset />
-            </Route>
-            <Route path="/oneMinuteSpeech">
-              <OneMinuteSpeech />
-            </Route>
-            <Route path="/trackingBoard">
-              <TrackingBoard />
-            </Route>
-            <Route path="/loginRegisteration">
-              <Login />
-            </Route>
-            <Route path="/forgetpassword">
-              <Forgetpassword />
-            </Route>
-            <Route path="/resetPassword">
-              <Resetpassword />
-            </Route>
-            <Route path="/haverKnesset">
-              <HaverKnesset />
-            </Route>
+        <Switch>
+          <Route path="/parliamentaryTool">
+            <Header pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }]} />
+            <ParliamentaryTool />
+          </Route>
+          <Route path="/normalquery">
+            <Header pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }, { text: "שיאלתה רגילה", url: "normalquery" }]} />
+            <Normalquery />
+          </Route>
+          <Route path="/kenosKnesset">
+            <Header pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }, { text: "כינוס הכנסת בזמן הפגרה", url: "kenosKnesset" }]} />
+            <KenosKnesset />
+          </Route>
+          <Route path="/oneMinuteSpeech">
+            <Header pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }, { text: "נאום בן דקה", url: "oneMinuteSpeech" }]} />
+            <OneMinuteSpeech />
+          </Route>
+          <Route path="/trackingBoard">
+            <Header pages={[{ text: "לוח מעקב", url: "trackingBoard" }]} />
+            <TrackingBoard />
+          </Route>
+          <Route path="/loginRegisteration">
+            <Header pages={[{ text: "הרשמה והתחברות", url: "loginRegisteration" }]} />
+            <Login />
+          </Route>
+          <Route path="/forgetpassword">
+            <Header pages={[{ text: "הרשמה והתחברות", url: "loginRegisteration" }, { text: "שכחתי סיסמה", url: "forgetpassword" }]} />
+            <Forgetpassword />
+          </Route>
+          <Route path="/resetPassword">
+            <Header pages={[{ text: "הרשמה והתחברות", url: "loginRegisteration" }, { text: "שינוי סיסמה", url: "resetPassword" }]} />
+            <Resetpassword />
+          </Route>
+          <Route path="/haverKnesset">
+            <Header pages={[{ text: "מערכת ח״כ", url: "haverKnesset" }]} />
+            <HaverKnesset />
+          </Route>
 
-          </Switch>
-          <Footer />
-        </div>
-      </Router>
+        </Switch>
+
+        <Footer />
+      </div>
+    </Router>
   );
 }
 

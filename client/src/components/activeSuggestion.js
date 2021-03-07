@@ -36,11 +36,11 @@ function ActiveSuggestions(props) {
                 <td></td>
                 <td colSpan="2" className="paragraph-regular">
                     <a>תוכן השיאלתה:</a>
-                    <p>עם השמועות על הקדמת ...</p>
+                    <p>{props.description}</p>
                 </td>
                 <td>
                     <a>סטטוס מפורט:</a>
-                    <p>עם השמועות על הקדמת ...</p>
+                    <p>{props.status.status}</p>
                 </td>
             </tr> : null}
 

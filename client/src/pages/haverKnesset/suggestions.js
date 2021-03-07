@@ -40,9 +40,12 @@ function Suggestions(props) {
             <tr className="test">
                 <td><KeyboardReturnIcon /></td>
                 <td></td>
-                <td colSpan="2" className="paragraph-regular">{props.description}</td>
+                <td colSpan="2" className="paragraph-regular">
+                    <a>תוכן השיאלתה:</a>
+                    <p>{props.description}</p>
+                </td>
                 <td>
-                    <h4>סטטוס מפורט:</h4>
+                    <a>סטטוס מפורט:</a>
                     <p>{props.status.status}</p>
                 </td>
             </tr> : null}
