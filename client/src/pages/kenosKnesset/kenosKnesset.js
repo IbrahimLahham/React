@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React from "react";
+import "./kenosKnesset.css";
+import KennosForm from "../../components/KennosForm";
+import TopCards from "../../components/TopCards"
 
-//import './normalquery.css'
 
-
-const kenosKnesset = () => {
-
-  // const [book, setbook] = useState([]);
-  
-
-    return (
-        <div>
-            <h1>kenosKnesset page</h1>
-        </div>
-    )
+function kenosKnesset() {
+  return (
+    <div>
+      <div className="container">
+        <TopCards toolType={"4"}/>
+        <KennosForm />
+      </div>
+    </div>
+  );
 }
 
-export default kenosKnesset
+export default kenosKnesset;

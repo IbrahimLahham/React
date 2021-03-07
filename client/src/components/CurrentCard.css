@@ -1,0 +1,22 @@
+.naom {
+  width: 45%;
+  background-color: white;
+  padding: 5px;
+  border-radius: 2px;
+  text-align: right;
+  height: 100px;
+  overflow: hidden;
+}
+
+.naom > h2 {
+  line-height: 0px;
+}
+
+.naom > p {
+  font-size: 14px;
+}
+
+.naom > p > span {
+  color: rgb(5, 124, 235);
+  font-size: 14px;
+}

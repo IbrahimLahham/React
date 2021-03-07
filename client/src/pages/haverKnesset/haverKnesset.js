@@ -1,55 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // Table from react-bootstrap
 import './haverKnesset.css'
+import Suggestion from './suggestions';
+import ActiveSuggestions from '../../components/activeSuggestion';
 
 function HaverKnesset() {
+    const [isOpen, setIsOpen] = useState(false);
+    const [myNewSuggestions, setMyNewSuggestions] = useState([]);
+    const [activeSuggestions, setActiveSuggestions] = useState([]);
+    const [allNewSuggestions, setAllNewSuggestions] = useState([]);
+    const toggle = () => setIsOpen(!isOpen);
 
-    // const [book, setbook] = useState([]);
-    const myNewSuggestions = [
-        { date: "21.11.21", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" },
-        { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" }
-    ];
-    const activeSuggestions = [
-        {
-            date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא",
-            options: ["חבר", "אזרח"]
-        },
-        {
-            date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא",
-            options: ["חבר", "אזרח"]
-        }, {
-            date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא",
-            options: ["חבר", "אזרח"]
-        }
-    ];
-    const allNewSuggestions = [
-        { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" },
-        { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" },
-        { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" }
-    ];
+    useEffect(() => {
+            fetch('/suggestion/byUserSuggest')
+            .then(r => r.json())
+            .then(data => {
+                // console.log(data);
+                let arr = [];
+                data.map((elem, index) => {
+                    arr = [...arr, { key: index, date: "21.11.21", per: "נאום בן דקה", sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status }];
+                })
+                setMyNewSuggestions(arr);
+            })
+        fetch('/suggestion/byKnessetMemberValidate')
+            .then(r => r.json())
+            .then(data => {
+                // console.log(data);
+                let arr = [];
+                data.map((elem, index) => {
+                    arr = [...arr, { key: index, date: "21.11.21", per: "נאום בן דקה", sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status, options: ["חבר", "אזרח"] }];
+                })
+                setActiveSuggestions(arr);
+            })
+        fetch('/suggestion/byParliamentaryTool')
+            .then(r => r.json())
+            .then(data => {
+                // console.log(data);
+                let arr = [];
+                data.map((elem, index) => {
+                    arr = [...arr, { key: index, date: "21.11.21", per: "נאום בן דקה", sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status }];
+                })
+                setAllNewSuggestions(arr);
+            })
+
+    }, [])
 
     function handleVmySug(e) {
         console.log("e: ", e);
-        console.log("Suggestions selected!");
+        console.log("my Suggestions selected!");
     }
 
     function handleXmySug(e) {
         console.log("e: ", e);
-        console.log("Suggestions removed!");
+        console.log("my Suggestions removed!");
     }
 
     function handleVallSug(e) {
         console.log("e: ", e);
-        console.log("Suggestions selected!");
+        console.log("all Suggestions selected!");
     }
 
     function handleXallSug(e) {
         console.log("e: ", e);
-        console.log("Suggestions removed!");
+        console.log("all Suggestions removed!");
     }
 
     return (
-        <div>
+        <div className="suggestions-container">
             <table>
                 <caption id="title" className="title-bold">הצעות חדשות עבורי:</caption>
                 <tr id="header">
@@ -59,42 +76,45 @@ function HaverKnesset() {
                     <th className="title-bold">מציע</th>
                     <th className="title-bold">אימוץ/דחיה</th>
                 </tr>
-                {myNewSuggestions.map((elem) => {
+
+                {myNewSuggestions.map((elem, index) => {
+
                     return (
-                        <tr>
-                            <td className="title-large">{elem.date}</td>
-                            <td className="title-large">{elem.per}</td>
-                            <td className="title-large">{elem.sub}</td>
-                            <td className="title-large">{elem.offer}</td>
-                            <td className="title-large">
-                                <button id="V" onClick={(e) => { handleVmySug(elem) }}>v</button>
-                                <button id="X" onClick={(e) => { handleXmySug(elem) }}>x</button>
-                            </td>
-                        </tr>
-                    );
+                        <Suggestion
+                            key={index}
+                            date={elem.date}
+                            per={elem.per}
+                            sub={elem.sub}
+                            offer={elem.offer}
+                            add={handleVmySug}
+                            remove={handleXmySug}
+                            description={elem.description}
+                            status={elem.status}
+                        />)
                 })}
+
             </table>
 
             <table>
                 <caption id="title" className="title-bold">הצעות בטיפול:</caption>
                 <tr id="header">
                     <th className="title-bold">תאריך</th>
+
                     <th className="title-bold">כלי פרלמנטרי</th>
                     <th className="title-bold">נושא</th>
                     <th className="title-bold">מציע</th>
                     <th className="title-bold">עדכון סטטוס</th>
                 </tr>
-                {activeSuggestions.map((elem) => {
+                {activeSuggestions.map((elem, index) => {
                     return (
-                        <tr>
-                            <td className="title-large">{elem.date}</td>
-                            <td className="title-large">{elem.per}</td>
-                            <td className="title-large">{elem.sub}</td>
-                            <td className="title-large">{elem.offer}</td>
-                            <select id="status" className="drop-down-menu">
-                                {elem.options.map((op) => { return <option value="havir">{op}</option> })}
-                            </select>
-                        </tr>
+                        <ActiveSuggestions
+                            key={index}
+                            date={elem.date}
+                            per={elem.per}
+                            sub={elem.sub}
+                            offer={elem.offer}
+                            options={elem.options}
+                        />
                     );
                 })}
             </table>
@@ -108,18 +128,20 @@ function HaverKnesset() {
                     <th className="title-bold">מציע</th>
                     <th className="title-bold">אימוץ/דחיה</th>
                 </tr>
-                {allNewSuggestions.map((elem) => {
+                {allNewSuggestions.map((elem, index) => {
                     return (
-                        <tr>
-                            <td className="title-large">{elem.date}</td>
-                            <td className="title-large">{elem.per}</td>
-                            <td className="title-large">{elem.sub}</td>
-                            <td className="title-large">{elem.offer}</td>
-                            <td className="title-large">
-                                <button id="V" onClick={(e) => { handleVallSug(elem) }}>v</button>
-                                <button id="X" onClick={(e) => { handleXallSug(elem) }}>x</button>
-                            </td>
-                        </tr>
+                        <Suggestion
+                            key={index}
+                            date={elem.date}
+                            per={elem.per}
+                            sub={elem.sub}
+                            offer={elem.offer}
+                            add={handleVallSug}
+                            remove={handleXallSug}
+                            description={elem.description}
+                            status={elem.status}
+                        />
+
                     );
                 })}
             </table>
