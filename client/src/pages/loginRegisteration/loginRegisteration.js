@@ -73,11 +73,21 @@ function LoginRegisteration() {
             .then(data => {
                 console.log(data);
                 //if login true - redirect to forms creation page;
-                if (data.register === true) {
-                    setRegisterMessage("צעד אחד נותר, תבדוק הדוא״ל.")
+                if (data.ok === true) {
+                    setRegisterMessage("צעד אחד נותר, תבדוק הדוא״ל.");
+                    fetch('/send-email', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ from: "openknessetdev@gmail.com", to: email, subject: "OpenKnesset Registeration", text: "your temporary password: 1234\nreset password via the link: localhost:3000/resetPassword" })
+                    }).then(r => r.json())
+                        .then(data => {
+                            console.log(data);
+                        })
                 }
                 else {
-                    setRegisterMessage("הדוא״ל קיים כבר!")
+                    setRegisterMessage("הדוא״ל כבר קיים !")
                 }
 
             })
@@ -85,7 +95,6 @@ function LoginRegisteration() {
 
     return (
         <div>
-            {/* <Header /> */}
             <div className="user-container">
 
                 <form onSubmit={handleLogin} className="user-login-div">
@@ -147,7 +156,6 @@ function LoginRegisteration() {
                 </form>
 
             </div>
-            {/* <Footer /> */}
         </div>
 
     )

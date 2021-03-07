@@ -41,3 +41,10 @@ caption{
   position: relative;
   width: 10vw;
 }
+
+.suggestions-container {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
