@@ -53,15 +53,9 @@ function RegularQueryForm() {
             <textarea name="" id="" cols="47" rows="12"></textarea>
             <h4>שאלה: (נכלל בספירת 50 מילים)</h4>
             <input type="text" name="query" />
-            <div
-              style={{
-                display: "flex",
-                "flex-direction": "row",
-                "align-items": "baseline",
-              }}
-            >
+            <div className="additional-query-div">
               <h4>שאלת המשך: </h4>
-              <p>ֿ(אופציונלי, תשאל רק במעמד המענה במליאת הכנסת)</p>
+              <p>(אופציונלי, תשאל רק במעמד המענה במליאת הכנסת)</p>
             </div>
             <input type="text" name="query-additional" />
           </div>

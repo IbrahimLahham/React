@@ -115,7 +115,7 @@ form {
   width: fit-content;
   line-height: 0px;
   background-color: white;
-  font-size: 11px;
+  font-size: smaller;
 }
 .attachment > img {
   max-height: 16px;
@@ -134,4 +134,15 @@ form {
   margin-bottom: auto;
   margin-top: auto;
   margin-right: 30px;
+}
+
+.additional-query-div {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  width: fit-content;
+}
+
+.additional-query-div > p {
+  font-size: smaller;
 }
