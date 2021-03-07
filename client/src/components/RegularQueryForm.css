@@ -146,3 +146,7 @@ form {
 .additional-query-div > p {
   font-size: smaller;
 }
+
+.question-title {
+  font-weight: bold;
+}
