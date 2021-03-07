@@ -85,7 +85,7 @@ form {
   display: flex;
   flex-direction: row;
   height: 41px;
-  line-height: 0px;
+  align-items: center;
   margin-top: auto;
   margin-bottom: auto;
 }

@@ -84,8 +84,8 @@ form {
 .attach-title-div {
   display: flex;
   flex-direction: row;
+  align-items: center;
   height: 41px;
-  line-height: 0px;
   margin-top: auto;
   margin-bottom: auto;
 }
