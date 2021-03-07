@@ -4,7 +4,7 @@ import Subject from "./Subject";
 import at from "./Images/at.PNG";
 import { Multiselect } from "multiselect-react-dropdown";
 
-import AttachIcon from "./Images/attach.png";
+import AttachIcon from "./Images/attach-icon.png";
 import AttachmentsIcon from "./Images/attacments-icon.png";
 import PeopleIcon from "./Images/people.png";
 
