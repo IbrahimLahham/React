@@ -1,21 +1,46 @@
-// const user= require("../schema/user");
+const user= require("../schema/user");
 
 const nodemailer = require('nodemailer');
 
 // handlers
 exports.Login = async (req, res) => {
-  // const {email, password} = req.body;
+  const {email, password} = req.body;
+  console.log(email, password)
+
   console.log("Login");
-  res.send({ user: user.type, ok: true });
+  
+  const userToFind = await user.findOne({ email });
+  if (userToFind === null) {
+      res.send({ok: false , message: 'Login Failed'})
+  } else {
+
+      if(userToFind.password == password){
+        res.send({user: userToFind.type , ok: true , message: 'The User Is Logged In'})
+      }else{
+        res.send({ok: false , message: 'Login Failed'})
+      }
+  }
 
 };
 
 
-exports.Registration = (req, res) => {
-  console.log("Registration");
-  const { firstName, lastName, email, company, phone } = req.body;
-  res.send({ user: user });
+exports.Registration = async (req, res) => {
 
+  console.log("Registration");
+
+  const { firstName, lastName, email, company, phone, type, active, language } = req.body;
+  console.log(firstName, lastName, email, company, phone, type, active, language)
+
+  const searchUser = await user.findOne({ email });
+
+  if (searchUser === null) {
+  const userToAdd = new user({firstName, lastName, email, company, phone, type, active, language});
+  userToAdd.save().then(()=>{console.log('user saved')})
+
+  res.send({user: userToAdd.email , ok: true , message: 'The User Is Registered'});
+  }else{
+    res.send({ ok: false , message: 'The User Is Already Exist'});
+  }
 };
 
 exports.ForgetPassword = async (req, res) => {
@@ -48,29 +73,44 @@ exports.ForgetPassword = async (req, res) => {
 
 exports.SavePassword = async (req, res) => {
   console.log("SavePassword");
+  const {email, password} = req.body;
+  console.log(email, password)
+  const userToFind = await user.findOne({ email });
+
+  if (userToFind === null) {
+    res.send({ok: false , message: 'Process Failed'})
+} else {
+      //update the user amd set his password****
+      res.send({user: userToFind.type , ok: true , message: 'The Password Saved'})
+}
+
   res.send({ user: user });
 
 };
 
 exports.GetUsersByType = async (req, res) => {
   console.log("GetUsersByType");
-  res.send([user, user, user]);
+
+  const {type} = req.body;
+
+  const userToFind = await user.find({ type });
+  res.send({users:userToFind});
 
 };
 
 
-const user = {
-  email: "email@gmail.com",
-  password: "password123",
-  firstName: "moshe",
-  lastName: "dayan",
-  phone: "050111111111",
-  company: "company name",
-  type: "ezrah",
-  active: true,
-  suggestions: null,
-  language: "Hebrow"
-}
+// const user = {
+  // email: "email@gmail.com",
+  // password: "password123",
+  // firstName: "moshe",
+  // lastName: "dayan",
+  // phone: "050111111111",
+  // company: "company name",
+  // type: "ezrah",
+  // active: true,
+  // suggestions: null,
+  // language: "Hebrow"
+// }
 
 const knessetMember = {
   email: "knesset@gmail.com",
