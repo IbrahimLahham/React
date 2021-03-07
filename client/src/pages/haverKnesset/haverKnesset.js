@@ -1,40 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // Table from react-bootstrap
 import './haverKnesset.css'
-import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { Collapse, CardBody, Card } from 'reactstrap';
 import Suggestion from './suggestions';
 import ActiveSuggestions from '../../components/activeSuggestion';
 
 function HaverKnesset() {
     const [isOpen, setIsOpen] = useState(false);
-
+    const [myNewSuggestions, setMyNewSuggestions] = useState([]);
+    const [activeSuggestions, setActiveSuggestions] = useState([]);
+    const [allNewSuggestions, setAllNewSuggestions] = useState([]);
     const toggle = () => setIsOpen(!isOpen);
 
-    // const [book, setbook] = useState([]);
-    const myNewSuggestions = [
-        { date: "21.11.21", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" },
-        { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" }
-    ];
-    const activeSuggestions = [
-        {
-            date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא",
-            options: ["חבר", "אזרח"]
-        },
-        {
-            date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא",
-            options: ["חבר", "אזרח"]
-        }, {
-            date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא",
-            options: ["חבר", "אזרח"]
-        }
-    ];
-    const allNewSuggestions = [
-        { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" },
-        { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" },
-        { date: "21.11.20", per: "נאום בן דקה", sub: "בלאבלא", offer: "בלאבלא", rejection: "true" }
-    ];
+    useEffect(() => {
+            fetch('/suggestion/byUserSuggest')
+            .then(r => r.json())
+            .then(data => {
+                // console.log(data);
+                let arr = [];
+                data.map((elem, index) => {
+                    arr = [...arr, { key: index, date: "21.11.21", per: "נאום בן דקה", sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status }];
+                })
+                setMyNewSuggestions(arr);
+            })
+        fetch('/suggestion/byKnessetMemberValidate')
+            .then(r => r.json())
+            .then(data => {
+                // console.log(data);
+                let arr = [];
+                data.map((elem, index) => {
+                    arr = [...arr, { key: index, date: "21.11.21", per: "נאום בן דקה", sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status, options: ["חבר", "אזרח"] }];
+                })
+                setActiveSuggestions(arr);
+            })
+        fetch('/suggestion/byParliamentaryTool')
+            .then(r => r.json())
+            .then(data => {
+                // console.log(data);
+                let arr = [];
+                data.map((elem, index) => {
+                    arr = [...arr, { key: index, date: "21.11.21", per: "נאום בן דקה", sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status }];
+                })
+                setAllNewSuggestions(arr);
+            })
+
+    }, [])
 
     function handleVmySug(e) {
         console.log("e: ", e);
@@ -57,7 +66,7 @@ function HaverKnesset() {
     }
 
     return (
-        <div>
+        <div className="suggestions-container">
             <table>
                 <caption id="title" className="title-bold">הצעות חדשות עבורי:</caption>
                 <tr id="header">
@@ -79,6 +88,8 @@ function HaverKnesset() {
                             offer={elem.offer}
                             add={handleVmySug}
                             remove={handleXmySug}
+                            description={elem.description}
+                            status={elem.status}
                         />)
                 })}
 
@@ -124,10 +135,13 @@ function HaverKnesset() {
                             date={elem.date}
                             per={elem.per}
                             sub={elem.sub}
-                            offer={elem.offer} 
+                            offer={elem.offer}
                             add={handleVallSug}
                             remove={handleXallSug}
-                            />
+                            description={elem.description}
+                            status={elem.status}
+                        />
+
                     );
                 })}
             </table>

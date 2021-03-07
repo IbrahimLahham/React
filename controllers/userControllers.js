@@ -1,5 +1,6 @@
 // const user= require("../schema/user");
 
+const nodemailer = require('nodemailer');
 
 // handlers
 exports.Login = async (req, res) => {
@@ -19,8 +20,30 @@ exports.Registration = (req, res) => {
 
 exports.ForgetPassword = async (req, res) => {
   console.log("ForgetPassword");
+  const { from, to, subject, text } = req.body;
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASS,
+    }
+  });
+  const mailOptions = {
+    from: from,
+    to: to,
+    subject: subject,
+    text: text
+  };
+ transporter.sendMail(mailOptions, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.send('Error occurs');
+    }
+    else {
+      res.send(`email sent to ${to} sucessfuly`);
+    }
+  });
   res.send({ user: user.email, ok: true });
-
 };
 
 exports.SavePassword = async (req, res) => {
