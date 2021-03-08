@@ -8,10 +8,10 @@ function ActiveSuggestions(props) {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen)
 
-    function test_select() {
+    function test_select(e) {
+        console.log("status: ", e.target.value);
         console.log("e: ", props);
         console.log("status changed!");
-        console.log("e: ", document.getElementById("status").value);
     }
 
     return (<>
@@ -39,9 +39,14 @@ function ActiveSuggestions(props) {
                     <a>תוכן השיאלתה:</a>
                     <p>{props.description}</p>
                 </td>
-                <td>
+                <td id="status-lines">
                     <a>סטטוס מפורט:</a>
-                    <p>{props.status.status}</p>
+                    <a>תאריך אימוץ:</a>
+                    <label>{props.status.status}</label>
+                    <a>תאריך העברה למשרד:</a>
+                    <label>{props.status.status}</label>
+                    <a>תאריך קבלת למשרד:</a>
+                    <label>{props.status.status}</label>
                 </td>
             </tr> : null}
 
