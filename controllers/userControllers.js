@@ -1,5 +1,5 @@
 const user= require("../schema/user");
-
+const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 
 // handlers
@@ -14,7 +14,8 @@ exports.Login = async (req, res) => {
       res.send({ok: false , message: 'Login Failed'})
   } else {
 
-      if(userToFind.password == password){
+      const vaildPass = await bcrypt.compare(password, userToFind.password);
+      if(vaildPass){
         res.send({user: userToFind.type , ok: true , message: 'The User Is Logged In'})
       }else{
         res.send({ok: false , message: 'Login Failed'})
@@ -28,13 +29,25 @@ exports.Registration = async (req, res) => {
 
   console.log("Registration");
 
-  const { firstName, lastName, email, company, phone, type, active, language } = req.body;
-  console.log(firstName, lastName, email, company, phone, type, active, language)
+  const { firstName, lastName, email, password, company, phone, type, active, language } = req.body;
 
   const searchUser = await user.findOne({ email });
-
+  
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password , salt);
+  console.log(hashPassword);
   if (searchUser === null) {
-  const userToAdd = new user({firstName, lastName, email, company, phone, type, active, language});
+  const userToAdd = new user({
+    firstName:firstName,
+    lastName:lastName,
+    email:email,
+    password: hashPassword,
+    company:company, 
+    phone:phone, 
+    type:type, 
+    active:active, 
+    language:language
+  });
   userToAdd.save().then(()=>{console.log('user saved')})
 
   res.send({user: userToAdd.email , ok: true , message: 'The User Is Registered'});
@@ -71,20 +84,39 @@ exports.ForgetPassword = async (req, res) => {
   res.send({ user: user.email, ok: true });
 };
 
+
 exports.SavePassword = async (req, res) => {
   console.log("SavePassword");
   const {email, password} = req.body;
   console.log(email, password)
-  const userToFind = await user.findOne({ email });
 
+  const userToFind = await user.findOne({ email });
+  
   if (userToFind === null) {
     res.send({ok: false , message: 'Process Failed'})
 } else {
-      //update the user amd set his password****
-      res.send({user: userToFind.type , ok: true , message: 'The Password Saved'})
+
+  user.updateOne({ email: email }, {
+    password: password
+  });
+  // user.findByIdAndUpdate({ email },{password: password}, function(err, result){
+
+  //   if(err){
+  //       console.log("nooo");
+  //       res.send(err)
+  //   }
+  //   else{
+  //     console.log("yees");
+  //       res.send(result)
+  //   }
+
+// })
+            // user.updateOne({ email }, { password: password });
+          res.send({ ok: true })
+      // res.send({user: userToFind.type , ok: true , message: 'The Password Saved'})
 }
 
-  res.send({ user: user });
+  // res.send({ user: user });
 
 };
 
