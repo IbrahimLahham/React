@@ -1,22 +1,27 @@
 const user= require("../schema/user");
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
 
 // handlers
 exports.Login = async (req, res) => {
   const {email, password} = req.body;
-  console.log(email, password)
 
   console.log("Login");
   
   const userToFind = await user.findOne({ email });
+
   if (userToFind === null) {
       res.send({ok: false , message: 'Login Failed'})
   } else {
 
       const vaildPass = await bcrypt.compare(password, userToFind.password);
       if(vaildPass){
-        res.send({user: userToFind.type , ok: true , message: 'The User Is Logged In'})
+
+        const token = jwt.sign({ role: userToFind.type }, process.env.TOKEN_SECRET);
+        res.cookie('cookie', token, { maxAge: 900000, httpOnly: true });
+        res.send({ role: userToFind.type ,ok: true , message: 'The User Is Logged In'});
+
       }else{
         res.send({ok: false , message: 'Login Failed'})
       }
