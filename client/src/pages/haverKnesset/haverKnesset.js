@@ -12,7 +12,7 @@ function HaverKnesset() {
     const toggle = () => setIsOpen(!isOpen);
 
     useEffect(() => {
-            fetch('/suggestion/byUserSuggest')
+        fetch('/suggestion/byUserSuggest')
             .then(r => r.json())
             .then(data => {
                 // console.log(data);
