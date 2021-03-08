@@ -48,3 +48,9 @@ caption{
   flex-wrap: wrap;
   justify-content: center;
 }
+
+#status-lines{
+  display: flex;
+  flex-direction: column;
+  border: 0px;
+}

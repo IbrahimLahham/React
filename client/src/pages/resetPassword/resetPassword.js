@@ -23,6 +23,7 @@ const ResetPassword = () => {
                     console.log(data);
                     setSuccess(" הסיסמה שונתה בהצלחה");
                 })
+
         } else {
             setSuccess("לא אותו דבר!")
         }
