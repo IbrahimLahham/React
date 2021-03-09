@@ -44,9 +44,9 @@ function LoginRegisteration() {
                 console.log("server data: ", data);
                 // if login true - redirect to forms creation page;
                 if (data.ok === true) {
-                    if (data.user === "ezrah")
+                    if (data.role === "citizen")
                         history.push('/parliamentaryTool')
-                    else {
+                    else if(data.role === "knessetMember") {
                         history.push('/haverKnesset')
                     }
                 }
