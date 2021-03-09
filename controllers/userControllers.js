@@ -107,7 +107,7 @@ exports.ForgetPassword = async (req, res) => {
   // const token = jwt.sign({ user: to }, process.env.TOKEN_SECRET);
   // res.send({ token: token, ok: true });
 }else{
-  res.send({ ok: false , message: "There's No Email Like This " });
+  res.send({ ok: false , message: "Invalid Email " });
 }
 };
 
@@ -137,5 +137,15 @@ exports.GetUsersByType = async (req, res) => {
 
 };
 
+exports.DeleteCookie = async (req, res) => {
+  const cookieToDelete = req.cookies.cookie;
+  console.log("DeleteCookie");
+
+  cookieToDelete.maxAge = 0;
+ 
+  res.send({ok: false});
+  
+
+};
 
 
