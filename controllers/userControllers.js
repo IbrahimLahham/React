@@ -40,7 +40,7 @@ exports.Registration = async (req, res) => {
   
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password , salt);
-  console.log(hashPassword);
+
   if (searchUser === null) {
   const userToAdd = new user({
     firstName:firstName,
@@ -64,6 +64,14 @@ exports.Registration = async (req, res) => {
 exports.ForgetPassword = async (req, res) => {
   console.log("ForgetPassword");
   const { from, to, subject, text } = req.body;
+  
+  const userToCheck = await user.findOne({ email: to });
+
+  const randomPassword = Math.random().toString(36).slice(-8);
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword =  await bcrypt.hash(randomPassword , salt);
+
+  if(!(userToCheck === null)){
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -75,7 +83,7 @@ exports.ForgetPassword = async (req, res) => {
     from: from,
     to: to,
     subject: subject,
-    text: text
+    text: randomPassword
   };
  transporter.sendMail(mailOptions, (err, data) => {
     if (err) {
@@ -83,45 +91,39 @@ exports.ForgetPassword = async (req, res) => {
       res.send('Error occurs');
     }
     else {
-      res.send(`email sent to ${to} sucessfuly`);
+    
+        user.updateOne({ email: userToCheck.email  }, { password: hashPassword }, function(
+          err,
+          result
+          ) {
+          if (err) {
+            res.send(err);
+          } else {
+            res.send(`email sent to ${to} sucessfuly`);
+          }
+        });
     }
   });
-  res.send({ user: user.email, ok: true });
+  // const token = jwt.sign({ user: to }, process.env.TOKEN_SECRET);
+  // res.send({ token: token, ok: true });
+}else{
+  res.send({ ok: false , message: "There's No Email Like This " });
+}
 };
 
 
 exports.SavePassword = async (req, res) => {
   console.log("SavePassword");
-  const {email, password} = req.body;
-  console.log(email, password)
+  const {token, password} = req.body;
 
-  const userToFind = await user.findOne({ email });
-  
-  if (userToFind === null) {
-    res.send({ok: false , message: 'Process Failed'})
-} else {
+  const users = await user.find({});
+  // users.forEach(user => { 
+  //   const email =  bcrypt.compare(user, user.email);
+  // });
+  res.send({ token: token, ok: true });
 
-  user.updateOne({ email: email }, {
-    password: password
-  });
-  // user.findByIdAndUpdate({ email },{password: password}, function(err, result){
-
-  //   if(err){
-  //       console.log("nooo");
-  //       res.send(err)
-  //   }
-  //   else{
-  //     console.log("yees");
-  //       res.send(result)
-  //   }
-
-// })
-            // user.updateOne({ email }, { password: password });
-          res.send({ ok: true })
-      // res.send({user: userToFind.type , ok: true , message: 'The Password Saved'})
-}
-
-  // res.send({ user: user });
+//   const salt = await bcrypt.genSalt(10);
+//   const hashPassword = await bcrypt.hash(password , salt);
 
 };
 
@@ -136,51 +138,4 @@ exports.GetUsersByType = async (req, res) => {
 };
 
 
-// const user = {
-  // email: "email@gmail.com",
-  // password: "password123",
-  // firstName: "moshe",
-  // lastName: "dayan",
-  // phone: "050111111111",
-  // company: "company name",
-  // type: "ezrah",
-  // active: true,
-  // suggestions: null,
-  // language: "Hebrow"
-// }
 
-const knessetMember = {
-  email: "knesset@gmail.com",
-  password: "password123",
-  firstName: "yossi",
-  lastName: "grenbirg",
-  phone: "050222222222",
-  company: "company name",
-  type: "knessetMember",
-  active: true,
-  suggestions: null,
-  language: "Hebrow"
-}
-
-
-const tool = {
-  type: "tool type",
-  title: "tool title",
-  subTitle: "tool subTitle",
-  term: "this is the tool term",
-  language: "Hebrow"
-}
-
-const suggestion = {
-  subject: "suggestion subject",
-  date: Date.now,
-  description: "suggestion description",
-  status: { status: "open", date: Date.now },
-  knessetMembers: [knessetMember, knessetMember],
-  toolType: tool,
-  submittedBy: user,
-  question: "suggestion question",
-  governmentOffice: "suggestion governmentOffice",
-  files: null,
-  additionalQuestionAfterMembersReply: "suggestion additionalQuestionAfterMembersReply",
-};
