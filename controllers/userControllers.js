@@ -138,12 +138,10 @@ exports.GetUsersByType = async (req, res) => {
 };
 
 exports.DeleteCookie = async (req, res) => {
-  const cookieToDelete = req.cookies.cookie;
   console.log("DeleteCookie");
 
-  cookieToDelete.maxAge = 0;
- 
-  res.send({ok: false});
+  res.clearCookie('cookie');
+  res.send({ok: true});
   
 
 };
