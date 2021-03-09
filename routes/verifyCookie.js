@@ -8,7 +8,7 @@ module.exports = function ( req, res, next) {
         jwt.verify(authcookie, process.env,TOKEN_SECRET, (err, data) => {
           if (err) {
             console.log(err);
-            res.send(err);
+            // res.send(err);
           }
           else {
             console.log(data);
