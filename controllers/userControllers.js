@@ -2,6 +2,7 @@ const user= require("../schema/user");
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
+const userTest= require("../schema/userTest");
 
 // handlers
 exports.Login = async (req, res) => {
@@ -9,7 +10,7 @@ exports.Login = async (req, res) => {
 
   console.log("Login");
   
-  const userToFind = await user.findOne({ email });
+  const userToFind = await userTest.findOne({ email });
 
   if (userToFind === null) {
       res.send({ok: false , message: 'Login Failed'})
@@ -36,13 +37,13 @@ exports.Registration = async (req, res) => {
 
   const { firstName, lastName, email, password, company, phone, type, active, language } = req.body;
 
-  const searchUser = await user.findOne({ email });
+  const searchUser = await userTest.findOne({ email });
   
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password , salt);
   console.log(hashPassword);
   if (searchUser === null) {
-  const userToAdd = new user({
+  const userToAdd = new userTest({
     firstName:firstName,
     lastName:lastName,
     email:email,
@@ -86,7 +87,7 @@ exports.ForgetPassword = async (req, res) => {
       res.send(`email sent to ${to} sucessfuly`);
     }
   });
-  res.send({ user: user.email, ok: true });
+  res.send({ user: userTest.email, ok: true });
 };
 
 
@@ -95,16 +96,16 @@ exports.SavePassword = async (req, res) => {
   const {email, password} = req.body;
   console.log(email, password)
 
-  const userToFind = await user.findOne({ email });
+  const userToFind = await userTest.findOne({ email });
   
   if (userToFind === null) {
     res.send({ok: false , message: 'Process Failed'})
 } else {
 
-  user.updateOne({ email: email }, {
+  userTest.updateOne({ email: email }, {
     password: password
   });
-  // user.findByIdAndUpdate({ email },{password: password}, function(err, result){
+  // userTest.findByIdAndUpdate({ email },{password: password}, function(err, result){
 
   //   if(err){
   //       console.log("nooo");
@@ -116,7 +117,7 @@ exports.SavePassword = async (req, res) => {
   //   }
 
 // })
-            // user.updateOne({ email }, { password: password });
+            // userTest.updateOne({ email }, { password: password });
           res.send({ ok: true })
       // res.send({user: userToFind.type , ok: true , message: 'The Password Saved'})
 }
@@ -130,7 +131,7 @@ exports.GetUsersByType = async (req, res) => {
 
   const {type} = req.body;
 
-  const userToFind = await user.find({ type });
+  const userToFind = await userTest.find({ type });
   res.send({users:userToFind});
 
 };
