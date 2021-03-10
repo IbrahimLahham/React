@@ -33,7 +33,7 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
       ],
     });
     console.log(
-      "suggestionKnessetMemberCanSee ->>",
+      "suggestionKnessetMemberCanSee ----g>>>",
       suggestionKnessetMemberCanSee
     );
     res.send({ suggestions: suggestionKnessetMemberCanSee, success: true });
