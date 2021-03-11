@@ -219,9 +219,44 @@ const knessetMember = {
 };
 
 const tool = {
+<<<<<<< HEAD
   type: "tool type",
   title: "tool title",
   subTitle: "tool subTitle",
   term: "this is the tool term",
   language: "Hebrew",
 };
+=======
+    type: "tool type",
+    title: "tool title",
+    subTitle: "tool subTitle",
+    term: "this is the tool term",
+    language: "Hebrew"
+}
+
+const suggestion = {
+    subject: "suggestion subject",
+    date: Date.now,
+    description: "suggestion description",
+    status: { status: "open", date: Date.now },
+    knessetMembers: [knessetMember, knessetMember],
+    toolType: tool,
+    submittedBy: user,
+    question: "suggestion question",
+    governmentOffice: "suggestion governmentOffice",
+    files: null,
+    additionalQuestionAfterMembersReply: "suggestion additionalQuestionAfterMembersReply",
+};
+
+
+const suggestion = {
+    subject: "suggestion subject",
+    description: "suggestion description",
+    knessetMembers: [knessetMember, {emsil:'knset member email' ,firstName:'firstName',lastName:'lastName'} ],
+    toolType: tool,
+    submittedBy:  {emsil:'knset member email' ,firstName:'firstName',lastName:'lastName'},
+    question: "suggestion question",
+    governmentOffice: "suggestion governmentOffice",
+    files: null,
+};
+>>>>>>> server

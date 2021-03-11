@@ -20,6 +20,10 @@ router
   .post(userController.SavePassword);
 
   router
+  .route("/deleteCookie")
+  .post(userController.DeleteCookie);
+
+  router
   .route("/getUsersByType")
   .get(userController.GetUsersByType);
 
