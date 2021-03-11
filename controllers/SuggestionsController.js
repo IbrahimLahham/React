@@ -54,7 +54,8 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
       newGeneralSuggestions: newGeneralSuggestions,
       success: true,
     });
-    // res.send({ s: "s" });
+
+
   } catch (error) {
     console.log(error);
     res.send({
