@@ -3,36 +3,28 @@ const router = express.Router();
 const SuggestionsController = require("./../controllers/SuggestionsController");
 
 router
-    .route("/byKnessetMemberValidate")
-    .get(SuggestionsController.getSuggestionsByKnessetMember);
-
-
-router
-    .route("/byUserSuggest")
-    .get(SuggestionsController.getSuggestionsByUserSuggest);
-
+  .route("/byKnessetMemberValidate")
+  .get(SuggestionsController.getSuggestionsByKnessetMember);
 
 router
-    .route("/byParliamentaryTool")
-    .get(SuggestionsController.getSuggestionsParliamentaryTool);
-
-
-router
-    .route("/byDate")
-    .get(SuggestionsController.getSuggestionsByDate);
-
+  .route("/byUserSuggest")
+  .get(SuggestionsController.getSuggestionsByUserSuggest);
 
 router
-    .route("/byStatus")
-    .get(SuggestionsController.getSuggestionsByStatus);
+  .route("/byParliamentaryTool")
+  .get(SuggestionsController.getSuggestionsParliamentaryTool);
 
+router.route("/byDate").get(SuggestionsController.getSuggestionsByDate);
+
+router.route("/byStatus").get(SuggestionsController.getSuggestionsByStatus);
+
+router.route("/all").get(SuggestionsController.getAllSuggestions);
 
 router
-    .route("/all")
-    .get(SuggestionsController.getAllSuggestions);
-
-    router
-    .route("/createSuggestions")
-    .post(SuggestionsController.createSuggestions);
+  .route("/createSuggestion")
+  .post(SuggestionsController.createSuggestions);
+router
+  .route("/updateSuggestion")
+  .patch(SuggestionsController.createSuggestions);
 
 module.exports = router;
