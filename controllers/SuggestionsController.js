@@ -1,48 +1,67 @@
 // handlers
 const Suggestion = require("../schema/Suggestion");
-const user = require("../schema/user");
+const User = require("../schema/user");
 const userTest = require("../schema/userTest");
 
 exports.getSuggestionsByKnessetMember = async (req, res) => {
-  console.log("getSuggestionsByKnessetMember");
   const { email = "" } = req.body;
+  console.log("email", email);
   try {
-    const suggestionKnessetMemberCanSee = await Suggestion.find({
-      $or: [
-        { "whoIsWorkingOnIt.email": email },
-        {
-          $and: [
-            { $or: [{ "whoIsWorkingOnIt.email": null }] },
-            {
-              $or: [
-                {
-                  "preferredKnessetMembers.email": { $in: [email] },
-                },
-                {
-                  preferredKnessetMembers: {
-                    $size: 0,
-                  },
-                },
-              ],
+    Promise.all([
+      Suggestion.find({ "whoIsWorkingOnIt.email": email }),
+      Suggestion.find({
+        $and: [
+          { "whoIsWorkingOnIt.email": null },
+          {
+            "preferredKnessetMembers.email": { $in: [email] },
+          },
+        ],
+      }),
+      Suggestion.find({
+        $and: [
+          { $or: [{ "whoIsWorkingOnIt.email": null }] },
+          {
+            $or: [{ "knessetMembersWhoRejected.email": { $nin: [email] } }],
+          },
+          {
+            preferredKnessetMembers: {
+              $size: 0,
             },
-            {
-              $or: [{ "knessetMembersWhoRejected.email": { $nin: [email] } }],
-            },
-          ],
-        },
-      ],
+          },
+        ],
+      }),
+    ])
+      .then((results) => {
+        //results return an array
+        const [
+          newSuggestions,
+          adoptedSuggestions,
+          newGeneralSuggestions,
+        ] = results;
+
+        console.log("newSuggestions", newSuggestions);
+        console.log("adoptedSuggestions", adoptedSuggestions);
+        console.log("newGeneralSuggestions", newGeneralSuggestions);
+        console.log("results", results);
+      })
+      .catch((err) => {
+        console.error("Something went wrong", err);
+      });
+
+    res.send({
+      newSuggestions: newSuggestions,
+      adoptedSuggestions: adoptedSuggestions,
+      newGeneralSuggestions: newGeneralSuggestions,
+      success: true,
     });
-    console.log(
-      "suggestionKnessetMemberCanSee ----g>>>",
-      suggestionKnessetMemberCanSee
-    );
-    res.send({ suggestions: suggestionKnessetMemberCanSee, success: true });
+
+
   } catch (error) {
     console.log(error);
     res.send({
       success: false,
       message:
-        "getting the appropriate suggestion from the DB Failed! try again" +
+        "getting the appropriate suggestion from the DB Failed! try again , " +
         error,
     });
   }
@@ -98,7 +117,6 @@ exports.createSuggestions = async (req, res) => {
     question,
     governmentOffice,
     files = [],
-    knessetMembersWhoRejected = [{ email: "1" }],
   } = req.body;
 
   try {
@@ -121,7 +139,6 @@ exports.createSuggestions = async (req, res) => {
       governmentOffice: governmentOffice,
       files: files,
       status: { status: "open" },
-      knessetMembersWhoRejected: knessetMembersWhoRejected,
     });
     console.log("-->", suggestionToAdd);
     suggestionToAdd.save().then(() => {
@@ -139,6 +156,39 @@ exports.createSuggestions = async (req, res) => {
       success: false,
       message: "adding the suggestion to the DB Failed! try again" + error,
     });
+  }
+};
+
+exports.updateSuggestion = async (req, res) => {
+  console.log("getAllSuggestions");
+  let { updateRequestType = "" } = req.body;
+  if (updateRequestType == "reject-adopt") {
+    var query = { username: req.user.username };
+    req.newData.username = req.user.username;
+
+    MyModel.findOneAndUpdate(
+      query,
+      req.newData,
+      { upsert: true },
+      function (err, doc) {
+        if (err) return res.send(500, { error: err });
+        return res.send("Succesfully saved.");
+      }
+    );
+  } else if (updateRequestType == "update-status") {
+  } else {
+    res.send({
+      success: false,
+      message:
+        'the update request is invalid it should be one of these : ["reject-adopt" || "update-status"] ',
+    });
+  }
+  switch (updateRequestType) {
+    case "reject-adopt":
+      break;
+
+    default:
+      break;
   }
 };
 
@@ -174,30 +224,4 @@ const tool = {
   subTitle: "tool subTitle",
   term: "this is the tool term",
   language: "Hebrew",
-};
-
-const suggestion = {
-    subject: "suggestion subject",
-    date: Date.now,
-    description: "suggestion description",
-    status: { status: "open", date: Date.now },
-    knessetMembers: [knessetMember, knessetMember],
-    toolType: tool,
-    submittedBy: user,
-    question: "suggestion question",
-    governmentOffice: "suggestion governmentOffice",
-    files: null,
-    additionalQuestionAfterMembersReply: "suggestion additionalQuestionAfterMembersReply",
-};
-
-
-const suggestion = {
-    subject: "suggestion subject",
-    description: "suggestion description",
-    knessetMembers: [knessetMember, {emsil:'knset member email' ,firstName:'firstName',lastName:'lastName'} ],
-    toolType: tool,
-    submittedBy:  {emsil:'knset member email' ,firstName:'firstName',lastName:'lastName'},
-    question: "suggestion question",
-    governmentOffice: "suggestion governmentOffice",
-    files: null,
 };
