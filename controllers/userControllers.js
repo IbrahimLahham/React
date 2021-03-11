@@ -10,7 +10,7 @@ exports.Login = async (req, res) => {
 
   console.log("Login");
   
-  const userToFind = await userTest.findOne({ email });
+  const userToFind = await user.findOne({ email });
 
   if (userToFind === null) {
       res.send({ok: false , message: 'Login Failed'})
@@ -37,13 +37,13 @@ exports.Registration = async (req, res) => {
 
   const { firstName, lastName, email, password, company, phone, type, active, language } = req.body;
 
-  const searchUser = await userTest.findOne({ email });
+  const searchUser = await user.findOne({ email });
   
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password , salt);
   console.log(hashPassword);
   if (searchUser === null) {
-  const userToAdd = new userTest({
+  const userToAdd = new user({
     firstName:firstName,
     lastName:lastName,
     email:email,
@@ -87,7 +87,7 @@ exports.ForgetPassword = async (req, res) => {
       res.send(`email sent to ${to} sucessfuly`);
     }
   });
-  res.send({ user: userTest.email, ok: true });
+  res.send({ user: user.email, ok: true });
 };
 
 
@@ -96,16 +96,16 @@ exports.SavePassword = async (req, res) => {
   const {email, password} = req.body;
   console.log(email, password)
 
-  const userToFind = await userTest.findOne({ email });
+  const userToFind = await user.findOne({ email });
   
   if (userToFind === null) {
     res.send({ok: false , message: 'Process Failed'})
 } else {
 
-  userTest.updateOne({ email: email }, {
+  user.updateOne({ email: email }, {
     password: password
   });
-  // userTest.findByIdAndUpdate({ email },{password: password}, function(err, result){
+  // user.findByIdAndUpdate({ email },{password: password}, function(err, result){
 
   //   if(err){
   //       console.log("nooo");
@@ -117,7 +117,7 @@ exports.SavePassword = async (req, res) => {
   //   }
 
 // })
-            // userTest.updateOne({ email }, { password: password });
+            // user.updateOne({ email }, { password: password });
           res.send({ ok: true })
       // res.send({user: userToFind.type , ok: true , message: 'The Password Saved'})
 }
@@ -131,7 +131,7 @@ exports.GetUsersByType = async (req, res) => {
 
   const {type} = req.body;
 
-  const userToFind = await userTest.find({ type });
+  const userToFind = await user.find({ type });
   res.send({users:userToFind});
 
 };

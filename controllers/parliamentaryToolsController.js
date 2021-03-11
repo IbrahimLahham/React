@@ -1,30 +1,44 @@
-// handlers
+const Tool = require("../schema/Tool");
 
-let tempParliamentaryTools = [
-  {
-    type: "כינוס הכנסת בזמן הפגרה",
-    title: "כינוס הכנסת בזמן הפגרה ",
-    subTitle:
-      " כינוס הכנסת בזמן הפגרה כינוס הכנסת בזמן הפגרהכינוס הכנסת בזמן הפגרה כינוס ",
-    term: "",
-    language: "heb",
-  },
-  {
-    type: "שאילתה רגילה",
-    title: "שאילתה רגילה ",
-    subTitle:
-      "שאילתה רגילהשאילתה רגילהשאילתה רגילהשאילתה רגילהשאילתה רגילהשאילתה רגילה",
-    term: "",
-    language: "heb",
-  },
-  {
-    type: "נאום בן דקה",
-    title: "נאום בן דקה",
-    subTitle: "נאום בן דקה נאום בן דקה נאום בן דקהנאום בן דקהנאום בן דקה",
-    term: "",
-    language: "heb",
-  },
-];
 exports.getAllParliamentaryTools = async (req, res) => {
-  res.send({ parliamentaryTools: tempParliamentaryTools, success: true });
+  try {
+    const parliamentaryTools = await Tool.find({});
+    res.send({ parliamentaryTools: parliamentaryTools, success: true });
+  } catch (error) {
+    console.log(error);
+    res.send({
+      success: false,
+      message:
+        "getting the parliamentary Tools from the DB Failed! try again" + error,
+    });
+  }
+};
+
+exports.createParliamentaryTool = async (req, res) => {
+  let { type, title, subTitle, term, language, redirectTo } = req.body;
+
+  try {
+    const toolToAdd = new Tool({
+      type: type,
+      title: title,
+      subTitle: subTitle,
+      term: term,
+      language: language,
+      redirectTo: redirectTo,
+    });
+    toolToAdd.save().then(() => {
+      res.send({
+        success: true,
+        createdSuggestion: req.body,
+        message: "the  parliamentary Tool has been saved in th DB successfully",
+      });
+    });
+  } catch (error) {
+    console.log(error);
+    res.send({
+      success: false,
+      message:
+        "adding the parliamentary Tool to the DB Failed! try again" + error,
+    });
+  }
 };
