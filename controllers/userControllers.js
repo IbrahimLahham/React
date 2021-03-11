@@ -18,7 +18,7 @@ exports.Login = async (req, res) => {
       const vaildPass = await bcrypt.compare(password, userToFind.password);
       if(vaildPass){
 
-        const token = jwt.sign({ role: userToFind.type }, process.env.TOKEN_SECRET);
+        const token = jwt.sign({ role: userToFind.type ,email: userToFind.email }, process.env.TOKEN_SECRET);
         res.cookie('cookie', token, { maxAge: 900000, httpOnly: true });
         res.send({ role: userToFind.type ,ok: true , message: 'The User Is Logged In'});
 
@@ -83,7 +83,7 @@ exports.ForgetPassword = async (req, res) => {
     from: from,
     to: to,
     subject: subject,
-    text: randomPassword
+    text: ``
   };
  transporter.sendMail(mailOptions, (err, data) => {
     if (err) {

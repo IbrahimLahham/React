@@ -98,3 +98,15 @@ const suggestion = {
     files: null,
     additionalQuestionAfterMembersReply: "suggestion additionalQuestionAfterMembersReply",
 };
+
+
+const suggestion = {
+    subject: "suggestion subject",
+    description: "suggestion description",
+    knessetMembers: [knessetMember, {emsil:'knset member email' ,firstName:'firstName',lastName:'lastName'} ],
+    toolType: tool,
+    submittedBy:  {emsil:'knset member email' ,firstName:'firstName',lastName:'lastName'},
+    question: "suggestion question",
+    governmentOffice: "suggestion governmentOffice",
+    files: null,
+};
