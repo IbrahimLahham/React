@@ -5,9 +5,9 @@ import React, { useEffect, useState } from 'react';
 
 const ResetPassword = () => {
     const [serverToken, setToken] = useState("");
-    useEffect(()=>{
-        if((window.location.search.substring(1).length) !== 0){
-            setToken("?"+window.location.search.substring(1));
+    useEffect(() => {
+        if ((window.location.search.substring(1).length) !== 0) {
+            setToken("?" + window.location.search.substring(1));
         }
     }, []);
 
@@ -27,8 +27,13 @@ const ResetPassword = () => {
                 body: JSON.stringify({ password: newpassword })
             }).then(r => r.json())
                 .then(data => {
-                    console.log(data);
-                    setSuccess(" הסיסמה שונתה בהצלחה");
+                    console.log("data: ", data);
+                    if(data.ok){
+                        setSuccess(" הסיסמה שונתה בהצלחה");
+                    }
+                    else{
+                        setSuccess("אי אפשר לשנות הסיסמה!");
+                    }
                 })
 
         } else {
