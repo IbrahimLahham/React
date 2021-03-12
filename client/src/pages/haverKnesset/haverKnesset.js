@@ -21,37 +21,27 @@ function HaverKnesset() {
     const toggle = () => setIsOpen(!isOpen);
 
     useEffect(() => {
-        fetch('/suggestion/byUserSuggest')
-            .then(r => r.json())
-            .then(data => {
-                // console.log(data);
-                let arr = [];
-                data.map((elem, index) => {
-                    arr = [...arr, { key: index, date: "21.11.21", per: elem.toolType.type, sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status }];
-                })
-                setMyNewSuggestions(arr);
-            })
         fetch('/suggestion/byKnessetMemberValidate')
             .then(r => r.json())
             .then(data => {
-                // console.log(data);
+                console.log("data:", data);
                 let arr = [];
-                data.map((elem, index) => {
-                    arr = [...arr, { key: index, date: "21.11.21", per: elem.toolType.type, sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status, options: ["חבר", "אזרח"] }];
+                data.newSuggestions.map((elem, index) => {
+                    arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status }];
+                })
+                setMyNewSuggestions(arr);
+                arr = [];
+                data.adoptedSuggestions.map((elem, index) => {
+                    arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, options: ["חבר", "אזרח"] }];
                 })
                 setActiveSuggestions(arr);
-            })
-        fetch('/suggestion/byParliamentaryTool')
-            .then(r => r.json())
-            .then(data => {
-                // console.log(data);
-                let arr = [];
-                data.map((elem, index) => {
-                    arr = [...arr, { key: index, date: "21.11.21", per: elem.toolType.type, sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status }];
+                arr = [];
+                data.newGeneralSuggestions.map((elem, index) => {
+                    arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status }];
                 })
                 setAllNewSuggestions(arr);
-            })
 
+            })
     }, [])
 
     function handleVmySug(e) {
@@ -73,97 +63,97 @@ function HaverKnesset() {
         console.log("e: ", e);
         console.log("all Suggestions removed!");
     }
-    const changeLanguage = lng => {          
+    const changeLanguage = lng => {
         i18n.changeLanguage(lng);
-      };
+    };
 
     return (
         <>
-        <div className="suggestions-container">
-            
-            <table>
-                <caption id="title" className="title-bold">{t('ownSuggestions')}</caption>
-                <tr id="header">
-                    <th className="title-bold">{t('date')}</th>
-                    <th className="title-bold">{t('parlamintary')}</th>
-                    <th className="title-bold">{t('subject')}</th>
-                    <th className="title-bold">{t('offer')}</th>
-                    <th className="title-bold">{t('adoptionrejection')}</th>
-                </tr>
+            <div className="suggestions-container">
 
-                {myNewSuggestions.map((elem, index) => {
+                <table>
+                    <caption id="title" className="title-bold">{t('ownSuggestions')}</caption>
+                    <tr id="header">
+                        <th className="title-bold">{t('date')}</th>
+                        <th className="title-bold">{t('parlamintary')}</th>
+                        <th className="title-bold">{t('subject')}</th>
+                        <th className="title-bold">{t('offer')}</th>
+                        <th className="title-bold">{t('adoptionrejection')}</th>
+                    </tr>
 
-                    return (
-                        <Suggestion
-                            key={index}
-                            date={elem.date}
-                            per={elem.per}
-                            sub={elem.sub}
-                            offer={elem.offer}
-                            add={handleVmySug}
-                            remove={handleXmySug}
-                            description={elem.description}
-                            status={elem.status}
-                        />)
-                })}
+                    {myNewSuggestions.map((elem, index) => {
 
-            </table>
+                        return (
+                            <Suggestion
+                                key={index}
+                                date={elem.date}
+                                per={elem.per}
+                                sub={elem.sub}
+                                offer={elem.offer}
+                                add={handleVmySug}
+                                remove={handleXmySug}
+                                description={elem.description}
+                                status={elem.status}
+                            />)
+                    })}
 
-            <table>
-                <caption id="title" className="title-bold">{t('updateSuggestions')}</caption>
-                <tr id="header">
-                <th className="title-bold">{t('date')}</th>
-                    <th className="title-bold">{t('parlamintary')}</th>
-                    <th className="title-bold">{t('subject')}</th>
-                    <th className="title-bold">{t('offer')}</th>
-                    <th className="title-bold">{t('status')}</th>
-                </tr>
-                {activeSuggestions.map((elem, index) => {
-                    return (
-                        <ActiveSuggestions
-                            key={index}
-                            date={elem.date}
-                            per={elem.per}
-                            sub={elem.sub}
-                            offer={elem.offer}
-                            description={elem.description}
-                            options={elem.options}
-                            status={elem.status}
-                        />
-                    );
-                })}
-            </table>
+                </table>
 
-            <table>
-                <caption id="title" className="title-bold">{t('allSuggestions')}</caption>
-                <tr id="header">
-                    <th className="title-bold">{t('date')}</th>
-                    <th className="title-bold">{t('parlamintary')}</th>
-                    <th className="title-bold">{t('subject')}</th>
-                    <th className="title-bold">{t('offer')}</th>
-                    <th className="title-bold">{t('adoptionrejection')}</th>
-                </tr>
-                {allNewSuggestions.map((elem, index) => {
-                    return (
-                        <Suggestion
-                            key={index}
-                            date={elem.date}
-                            per={elem.per}
-                            sub={elem.sub}
-                            offer={elem.offer}
-                            add={handleVallSug}
-                            remove={handleXallSug}
-                            description={elem.description}
-                            status={elem.status}
-                        />
+                <table>
+                    <caption id="title" className="title-bold">{t('updateSuggestions')}</caption>
+                    <tr id="header">
+                        <th className="title-bold">{t('date')}</th>
+                        <th className="title-bold">{t('parlamintary')}</th>
+                        <th className="title-bold">{t('subject')}</th>
+                        <th className="title-bold">{t('offer')}</th>
+                        <th className="title-bold">{t('status')}</th>
+                    </tr>
+                    {activeSuggestions.map((elem, index) => {
+                        return (
+                            <ActiveSuggestions
+                                key={index}
+                                date={elem.date}
+                                per={elem.per}
+                                sub={elem.sub}
+                                offer={elem.offer}
+                                description={elem.description}
+                                options={elem.options}
+                                status={elem.status}
+                            />
+                        );
+                    })}
+                </table>
 
-                    );
-                })}
-            </table>
+                <table>
+                    <caption id="title" className="title-bold">{t('allSuggestions')}</caption>
+                    <tr id="header">
+                        <th className="title-bold">{t('date')}</th>
+                        <th className="title-bold">{t('parlamintary')}</th>
+                        <th className="title-bold">{t('subject')}</th>
+                        <th className="title-bold">{t('offer')}</th>
+                        <th className="title-bold">{t('adoptionrejection')}</th>
+                    </tr>
+                    {allNewSuggestions.map((elem, index) => {
+                        return (
+                            <Suggestion
+                                key={index}
+                                date={elem.date}
+                                per={elem.per}
+                                sub={elem.sub}
+                                offer={elem.offer}
+                                add={handleVallSug}
+                                remove={handleXallSug}
+                                description={elem.description}
+                                status={elem.status}
+                            />
 
-            
-        </div>
-        <button onClick={() => changeLanguage('hb')}>Hb</button>
+                        );
+                    })}
+                </table>
+
+
+            </div>
+            <button onClick={() => changeLanguage('hb')}>Hb</button>
             <button onClick={() => changeLanguage('ar')}>ar</button>
         </>
 
