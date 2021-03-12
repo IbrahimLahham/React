@@ -24,7 +24,7 @@ function Suggestions(props) {
     // }
     return (<>
         <tr>
-            <td className="title-large">{props.date}
+            <td className="title-large">{props.date.split("T")[0]}
                 {isOpen === false ?
                     <ArrowLeftIcon onClick={toggle}></ArrowLeftIcon> : <ArrowDropDownIcon onClick={toggle}></ArrowDropDownIcon>}
             </td>
