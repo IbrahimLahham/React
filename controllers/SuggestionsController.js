@@ -40,6 +40,13 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
         console.log("adoptedSuggestions", adoptedSuggestions);
         console.log("newGeneralSuggestions", newGeneralSuggestions);
         console.log("results", results);
+
+        res.send({
+          newSuggestions: newSuggestions,
+          adoptedSuggestions: adoptedSuggestions,
+          newGeneralSuggestions: newGeneralSuggestions,
+          success: true,
+        });
       })
       .catch((err) => {
         console.error("Something went wrong", err);
@@ -50,13 +57,6 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
             error,
         });
       });
-
-    res.send({
-      newSuggestions: newSuggestions,
-      adoptedSuggestions: adoptedSuggestions,
-      newGeneralSuggestions: newGeneralSuggestions,
-      success: true,
-    });
   } catch (error) {
     console.log(error);
     res.send({
