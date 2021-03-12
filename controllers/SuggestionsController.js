@@ -57,13 +57,6 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
             error,
         });
       });
-
-    res.send({
-      newSuggestions: newSuggestions,
-      adoptedSuggestions: adoptedSuggestions,
-      newGeneralSuggestions: newGeneralSuggestions,
-      success: true,
-    });
   } catch (error) {
     console.log(error);
     res.send({
