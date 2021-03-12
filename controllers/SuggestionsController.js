@@ -3,6 +3,7 @@ const Suggestion = require("../schema/Suggestion");
 exports.getSuggestionsByKnessetMember = async (req, res) => {
   const { email = "" } = req.body;
   console.log("email", email);
+  email = "preferredKnessetMembers1";
   try {
     Promise.all([
       Suggestion.find({ "whoIsWorkingOnIt.email": email }),
