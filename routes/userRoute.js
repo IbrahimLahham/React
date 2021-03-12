@@ -31,4 +31,8 @@ router
   .route("/checkConnection")
   .post(userController.CheckConnection);
 
+  router
+  .route("/getAllKnessetMembers")
+  .get(userController.getAllKnessetMembers);
+
 module.exports = router;
