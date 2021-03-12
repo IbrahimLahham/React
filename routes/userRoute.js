@@ -27,4 +27,8 @@ router
   .route("/getUsersByType")
   .get(userController.GetUsersByType);
 
+  router
+  .route("/checkConnection")
+  .post(userController.CheckConnection);
+
 module.exports = router;
