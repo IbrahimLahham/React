@@ -195,7 +195,7 @@ exports.CheckConnection = async (req, res) => {
   const flag = req.cookies.cookie !== undefined;
   if(flag){
     try {
-      jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
+      jwt.verify(req.cookies.cookie, process.env.TOKEN_SECRET, (err, data) => {
         if (err) {
           console.log(err);
         }
@@ -207,9 +207,12 @@ exports.CheckConnection = async (req, res) => {
     } catch (error) {
       res.send({ok: false, cookie:flag});
     }
-    
+  }
+  else{
+    res.send({ok: false, cookie:flag});
   }
 };
+
 
 exports.getAllKnessetMembers = async (req, res) => {
   console.log("getAllKnessetMembers");
