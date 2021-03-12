@@ -16,7 +16,7 @@ exports.Login = async (req, res) => {
     const vaildPass = await bcrypt.compare(password, userToFind.password);
     if (vaildPass) {
       const token = jwt.sign(
-        { role: userToFind.type, email: userToFind.email, firstName: userToFind.firstName,lastName: userToFind.lastName },
+        { role: userToFind.type, email: userToFind.email, firstName: userToFind.firstName, lastName: userToFind.lastName },
         process.env.TOKEN_SECRET
       );
       res.cookie("cookie", token, { maxAge: 900000, httpOnly: true });
@@ -66,9 +66,9 @@ exports.Registration = async (req, res) => {
     userToAdd.save().then(() => {
       console.log("user saved");
     });
-    
+
     const token = jwt.sign(
-      {email: email },
+      { email: email },
       process.env.TOKEN_SECRET
     );
     const transporter = nodemailer.createTransport({
@@ -110,7 +110,7 @@ exports.ForgetPassword = async (req, res) => {
 
   if (!(userToCheck === null)) {
     const token = jwt.sign(
-      {email: userToCheck.email },
+      { email: userToCheck.email, date: new Date() },
       process.env.TOKEN_SECRET
     );
     const transporter = nodemailer.createTransport({
@@ -144,7 +144,7 @@ exports.SavePassword = async (req, res) => {
   console.log("SavePassword");
   const { password } = req.body;
   const { token } = req.query;
- 
+
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password, salt);
 
@@ -152,25 +152,32 @@ exports.SavePassword = async (req, res) => {
     jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
       if (err) {
         console.log(err);
-        // res.send(err);
+        res.send({ ok: false });
       }
       else {
-        user.updateOne(
-          { email: data.email },
-          { password: hashPassword },
-          function (err, result) {
-            if (err) {
-              res.send(err);
-            } else {
-              res.send(`password changed sucessfuly for ${data.email} `);
+        const timeOver = (new Date() - new Date(data.date)) / 60000.;
+        console.log(`time: ${timeOver} minutes`);
+        if (timeOver < 10) {
+          user.updateOne(
+            { email: data.email },
+            { password: hashPassword },
+            function (err, result) {
+              if (err) {
+                res.send(err);
+              } else {
+                res.send({ ok: true, msg: `password changed sucessfuly for ${data.email} ` });
+              }
             }
-          }
-        );
+          );
+        }
+        else {
+          res.send({ ok: true, msg: `password cannot be changed due to time over!` });
+        }
       }
     })
   }
-  catch(e){
-    res.send(e);
+  catch (e) {
+    res.send({ ok: true, msg: "error!" });
   }
 };
 
@@ -193,31 +200,31 @@ exports.DeleteCookie = async (req, res) => {
 exports.CheckConnection = async (req, res) => {
   console.log("CheckConnection");
   const flag = req.cookies.cookie !== undefined;
-  if(flag){
+  if (flag) {
     try {
       jwt.verify(req.cookies.cookie, process.env.TOKEN_SECRET, (err, data) => {
         if (err) {
           console.log(err);
         }
         else {
-            console.log(data.lastName);
-            res.send({ok: true, cookie:flag,type:data.role,firstName:data.firstName,lastName:data.lastName,email:data.email});
+          console.log(data.lastName);
+          res.send({ ok: true, cookie: flag, type: data.role, firstName: data.firstName, lastName: data.lastName, email: data.email });
         }
       })
     } catch (error) {
-      res.send({ok: false, cookie:flag});
+      res.send({ ok: false, cookie: flag });
     }
   }
-  else{
-    res.send({ok: false, cookie:flag});
+  else {
+    res.send({ ok: false, cookie: flag });
   }
 };
 
 
 exports.getAllKnessetMembers = async (req, res) => {
   console.log("getAllKnessetMembers");
-  
-  const users = user.find({ type : "knessetMember" }, function(err, result) {
+
+  const users = user.find({ type: "knessetMember" }, function (err, result) {
     if (err) {
       console.log(err);
     } else {
@@ -225,5 +232,5 @@ exports.getAllKnessetMembers = async (req, res) => {
     }
   });
   console.log(users);
-  res.send({ok: true, users: users});
+  res.send({ ok: true, users: users });
 };
