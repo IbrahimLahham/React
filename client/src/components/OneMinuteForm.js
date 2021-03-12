@@ -63,20 +63,23 @@ function OneMinuteForm() {
             <Multiselect
               style={{
                 multiselectContainer: {
-                  width: "300px",
+                  width: "70%",
+                  border: "5px solid black",
+                  "border-radius": "15px",
                 },
                 inputField: {
                   margin: "5px",
                 },
                 optionContainer: {
                   // To change css for option container
-                  width: "300px",
+                  width: "100%",
                   "text-align": "right",
                 },
                 searchBox: {
                   // To change search box element look
                   "text-align": "right",
                   color: "#000",
+                  border: "0px",
                 },
                 option: {
                   // To change css for dropdown options

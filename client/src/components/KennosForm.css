@@ -8,7 +8,7 @@
   text-align: right;
   box-shadow: 0 12px 6px -3px #cccccc;
   overflow: scroll;
-  border-radius: 5px;;
+  border-radius: 5px;
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
 .recomnde::-webkit-scrollbar {
@@ -51,7 +51,6 @@
   margin-left: 30px;
   width: 45%;
   padding: 16px;
-  line-height: 0px;
 }
 .reomnde__SecindHalf > input {
   padding: 10px;

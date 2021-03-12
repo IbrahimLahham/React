@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './loginRegisteration.css'
 import { useHistory } from 'react-router-dom';
-
+import { useTranslation } from 'react-i18next';
 import {
     BrowserRouter as Router,
     Switch,
@@ -11,6 +11,7 @@ import {
 
 
 function LoginRegisteration() {
+    const { t, i18n } = useTranslation();
     const history = useHistory();
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
@@ -25,6 +26,7 @@ function LoginRegisteration() {
     useEffect(() => {
 
     }, []);
+    
 
     function handleLogin(e) {
         e.preventDefault();
@@ -89,70 +91,78 @@ function LoginRegisteration() {
 
             })
     }
+    const changeLanguage = lng => {          
+        i18n.changeLanguage(lng);
+      };
+    
 
     return (
+        
         <div>
+          
             <div className="user-container">
 
                 <form onSubmit={handleLogin} className="user-login-div">
-                    <h1 className="title-bold-big">כניסה</h1>
+                    <h1 className="title-bold-big">{t('signin')}</h1>
                     <div className="user-login-flex">
-                        <label className="title-bold">דוא"ל:</label>
+                        <label className="title-bold">{t('email')}</label>
                         <input type="email" className="input-field" onChange={(e) => {
                             setLoginEmail(e.target.value);
                         }}></input>
                     </div>
                     <div className="user-login-flex">
-                        <label className="title-bold">סיסמה:</label>
+                        <label className="title-bold">{t('password')}</label>
                         <input type="password" className="input-field" onChange={(e) => {
                             setLoginPassword(e.target.value);
                         }} required></input>
                     </div>
 
-                    <Link id="forgot-pass" to="/forgetpassword">שכחתי סיסמה</Link>
+                    <Link id="forgot-pass" to="/forgetpassword">{t('forgetPassword')}</Link>
 
-                    <button className="user-button" type="submit">התחברות</button>
+                    <button className="user-button" type="submit">{t('buttonSignin')}</button>
                     <label className="message">{error}</label>
                 </form>
 
                 <form onSubmit={handleRegister} className="user-login-div">
-                    <h1 className="title-bold-big">הרשמה</h1>
+                    <h1 className="title-bold-big">{t('signup')}</h1>
                     <div className="user-login-flex">
-                        <label className="title-bold">*שם פרטי:</label>
+                        <label className="title-bold">*{t('firstName')}</label>
                         <input type="text" className="input-field" onChange={(e) => {
                             setFirstName(e.target.value);
                         }} required></input>
                     </div>
                     <div className="user-login-flex">
-                        <label className="title-bold">*שם משפחה:</label>
+                        <label className="title-bold">*{t('lastName')}</label>
                         <input type="text" className="input-field" onChange={(e) => {
                             setLastName(e.target.value);
                         }} required></input>
                     </div>
                     <div className="user-login-flex">
-                        <label className="title-bold">*דוא"ל:</label>
+                        <label className="title-bold">*{t('email')}</label>
                         <input type="email" className="input-field" onChange={(e) => {
                             setEmail(e.target.value);
                         }} required></input>
                     </div>
                     <div className="user-login-flex">
-                        <label className="title-bold">אירגון/חברה:</label>
+                        <label className="title-bold">{t('company')}</label>
                         <input type="text" className="input-field" onChange={(e) => {
                             setOrganization(e.target.value);
                         }}></input>
                     </div>
                     <div className="user-login-flex">
-                        <label className="title-bold">טלפון:</label>
+                        <label className="title-bold">{t('phone')}</label>
                         <input type="text" className="input-field" onChange={(e) => {
                             setTelephon(e.target.value);
                         }}></input>
                     </div>
-                    <label id="required" className="paragraph-regular">*חובה למלא פרטים המסומנים בכוכבית</label>
-                    <button className="user-button" type="submit">הרשמה</button>
+                    <label id="required" className="paragraph-regular">*{t('star')}</label>
+                    <button className="user-button" type="submit">{t('buttonSignup')}</button>
                     <label className="message">{registermessage}</label>
                 </form>
 
             </div>
+            <button onClick={() => changeLanguage('hb')}>Hb</button>
+            <button onClick={() => changeLanguage('ar')}>ar</button>
         </div>
 
     )
