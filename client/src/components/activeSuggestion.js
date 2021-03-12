@@ -12,6 +12,16 @@ function ActiveSuggestions(props) {
         console.log("status: ", e.target.value);
         console.log("e: ", props);
         console.log("status changed!");
+        // fetch('/suggestion/updateStatus', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ status: e.target.value })
+        // }).then(r => r.json())
+        //     .then(data => {
+        //         console.log(data);
+        //     })
     }
 
     return (<>
