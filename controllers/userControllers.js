@@ -201,14 +201,14 @@ exports.CheckConnection = async (req, res) => {
         }
         else {
             console.log(data.lastName);
+            res.send({ok: true, cookie:flag,type:data.type,firstName:data.firstName,lastName:data.lastName,email:data.email});
         }
       })
     } catch (error) {
-      
+      res.send({ok: false, cookie:flag});
     }
     
   }
-  res.send({ok: true, cookie:flag});
 };
 
 exports.getAllKnessetMembers = async (req, res) => {
