@@ -31,7 +31,7 @@ function Forgetpassword() {
 
         //     })
 
-        fetch('/send-email', {
+        fetch('/user/forgetPassword', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -8,9 +8,10 @@ function Time({ text, data }) {
       <Subject text={text} Icon={Logo} />
       {data.map((elm) => (
         <div className="time__info">
+          <h5 className="h5 h5-new">{elm.date}</h5>
+          <h5>{elm.first}:</h5>
           <h5>{elm.second}</h5>
-          <h5>:{elm.first}</h5>
-          <p>{elm.date}</p>
+          
         </div>
       ))}
     </div>

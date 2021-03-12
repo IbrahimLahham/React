@@ -9,8 +9,9 @@ function ActiveSuggestions(props) {
     const toggle = () => setIsOpen(!isOpen)
 
     function test_select(e) {
-        e.preventDefault();
-        console.log("e: ", document.getElementById("status").value);
+        console.log("status: ", e.target.value);
+        console.log("e: ", props);
+        console.log("status changed!");
     }
 
     return (<>
@@ -36,11 +37,16 @@ function ActiveSuggestions(props) {
                 <td></td>
                 <td colSpan="2" className="paragraph-regular">
                     <a>תוכן השיאלתה:</a>
-                    <p>עם השמועות על הקדמת ...</p>
+                    <p>{props.description}</p>
                 </td>
-                <td>
+                <td id="status-lines">
                     <a>סטטוס מפורט:</a>
-                    <p>עם השמועות על הקדמת ...</p>
+                    <a>תאריך אימוץ:</a>
+                    <label>{props.status.status}</label>
+                    <a>תאריך העברה למשרד:</a>
+                    <label>{props.status.status}</label>
+                    <a>תאריך קבלת למשרד:</a>
+                    <label>{props.status.status}</label>
                 </td>
             </tr> : null}
 
