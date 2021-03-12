@@ -83,11 +83,19 @@ exports.ForgetPassword = async (req, res) => {
 
   const userToCheck = await user.findOne({ email: to });
 
-  const randomPassword = Math.random().toString(36).slice(-8);
-  const salt = await bcrypt.genSalt(10);
-  const hashPassword = await bcrypt.hash(randomPassword, salt);
+      // const email =  bcrypt.compare(user, user.email);
+      // const salt = await bcrypt.genSalt(10);
+      // const hashPassword = await bcrypt.hash(password , salt);
+
+  // const randomPassword = Math.random().toString(36).slice(-8);
+  // const salt = await bcrypt.genSalt(10);
+  // const hashPassword = await bcrypt.hash(randomPassword, salt);
 
   if (!(userToCheck === null)) {
+    const token = jwt.sign(
+      {email: userToCheck.email },
+      process.env.TOKEN_SECRET
+    );
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -99,24 +107,26 @@ exports.ForgetPassword = async (req, res) => {
       from: from,
       to: to,
       subject: subject,
-      text: ``,
+      text: `http://localhost:3000/resetPassword?token=${token}
+      `,
     };
     transporter.sendMail(mailOptions, (err, data) => {
       if (err) {
         console.log(err);
         res.send("Error occurs");
       } else {
-        user.updateOne(
-          { email: userToCheck.email },
-          { password: hashPassword },
-          function (err, result) {
-            if (err) {
-              res.send(err);
-            } else {
-              res.send(`email sent to ${to} sucessfuly`);
-            }
-          }
-        );
+        // user.updateOne(
+        //   { email: userToCheck.email },
+        //   { password: hashPassword },
+        //   function (err, result) {
+        //     if (err) {
+        //       res.send(err);
+        //     } else {
+        //       res.send(`email sent to ${to} sucessfuly`);
+        //     }
+        //   }
+        // );
+        res.send(`email sent to ${to} sucessfuly`);
       }
     });
     // const token = jwt.sign({ user: to }, process.env.TOKEN_SECRET);
@@ -128,14 +138,43 @@ exports.ForgetPassword = async (req, res) => {
 
 exports.SavePassword = async (req, res) => {
   console.log("SavePassword");
-  const { token, password } = req.body;
+  const { password } = req.body;
+  const { token } = req.query;
+ 
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
 
-  const users = await user.find({});
+  try {
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
+      if (err) {
+        console.log(err);
+        // res.send(err);
+      }
+      else {
+        user.updateOne(
+          { email: data.email },
+          { password: hashPassword },
+          function (err, result) {
+            if (err) {
+              res.send(err);
+            } else {
+              res.send(`password changed sucessfuly for ${data.email} `);
+            }
+          }
+        );
+      }
+    })
+  }
+  catch(e){
+    res.send(e);
+  }
+
+  // const users = await user.find({});
   // users.forEach(user => {
   //   const email =  bcrypt.compare(user, user.email);
   // });
-  res.send({ token: token, ok: true });
-
+ 
+  // const email =  bcrypt.compare(user, user.email);
   //   const salt = await bcrypt.genSalt(10);
   //   const hashPassword = await bcrypt.hash(password , salt);
 };
@@ -154,4 +193,24 @@ exports.DeleteCookie = async (req, res) => {
 
   res.clearCookie("cookie");
   res.send({ ok: true });
+};
+
+exports.CheckConnection = async (req, res) => {
+  console.log("CheckConnection");
+  const flag = req.cookies.cookie !== undefined;
+  res.send({ok: true, cookie:flag});
+};
+
+exports.getAllKnessetMembers = async (req, res) => {
+  console.log("getAllKnessetMembers");
+  
+  const users = user.find({ type : "knessetMember" }, function(err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(result);
+    }
+  });
+  console.log(users);
+  res.send({ok: true, users: users});
 };

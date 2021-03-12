@@ -1,8 +1,16 @@
 import "./Header.css";
 import "./Breadcrumb";
 import Breadcrumb from "./Breadcrumb";
+import { useHistory } from "react-router";
+import PersonIcon from '@material-ui/icons/Person';
+
 function Header(props) {
-  
+  const history = useHistory();
+
+  function loginRegisteration() {
+    history.push('loginRegisteration')
+  }
+
   return (
     <div>
       <div className="App-header">
@@ -32,9 +40,17 @@ function Header(props) {
           <li id="nav-committees">
             <a href="#">כלים פרלמנטריים</a>
           </li>
+          {
+            props.show ? (props.connected ? null:
+            <li className="left-nav" id="nav-committees">
+              <PersonIcon style={{ color: 'blue' }} />
+              <label onClick={loginRegisteration}>התחבר למערכת</label>
+            </li>):null
+          }
+          {console.log(props.show)}
         </ul>
       </div>
-      <Breadcrumb breadcrumbList={props.pages} userType={1} />
+      <Breadcrumb breadcrumbList={props.pages} userType={1} connected={props.connected} />
     </div>
   );
 }

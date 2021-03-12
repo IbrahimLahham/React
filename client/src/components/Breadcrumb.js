@@ -1,5 +1,6 @@
 import "./Breadcrumb.css";
 import { Link, useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function Breadcrumb(props) {
   const history = useHistory();
@@ -14,6 +15,7 @@ function Breadcrumb(props) {
       body: JSON.stringify()
     }).then(r => r.json())
       .then(data => {
+        console.log("connected: ", props.connected);
         console.log(data);
         history.push('loginRegisteration')
       })
@@ -32,14 +34,14 @@ function Breadcrumb(props) {
             );
           })}
         </div>
-
-        <div className="user-links">
+        {props.connected ? <div className="user-links">
           <a className="disconnect" href="#" onClick={test}>
             {" "}
             התנתק{" "}
           </a>
           |<a className="link"> {props.userType ? "לוח מעקב" : "מערכת ח״כ"} </a>
-        </div>
+        </div> : <div></div>}
+
       </section>
     </div>
   );

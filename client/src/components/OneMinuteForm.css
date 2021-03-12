@@ -51,7 +51,6 @@
   margin-left: 30px;
   width: 45%;
   padding: 16px;
-  line-height: 0px;
 }
 .reomnde__SecindHalf > input {
   padding: 10px;
@@ -80,13 +79,14 @@ form {
   display: flex;
   flex-direction: row;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .attach-title-div {
   display: flex;
   flex-direction: row;
+  align-items: center;
   height: 41px;
-  line-height: 0px;
   margin-top: auto;
   margin-bottom: auto;
 }
@@ -113,7 +113,6 @@ form {
   padding: 8px;
   height: 30px;
   width: fit-content;
-  line-height: 0px;
   background-color: white;
   font-size: x-small;
 }
