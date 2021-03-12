@@ -43,6 +43,12 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
       })
       .catch((err) => {
         console.error("Something went wrong", err);
+        res.send({
+          success: false,
+          message:
+            "getting the appropriate suggestion from the DB Failed! try again , " +
+            error,
+        });
       });
 
     res.send({
@@ -118,7 +124,7 @@ exports.createSuggestions = async (req, res) => {
     let obj = {};
     let temp = [];
     for (const userDetails of preferredKnessetMembers) {
-      obj["email"] = userDetails;
+      obj["email"] = userDetails.email;
       temp.push(obj);
       obj = {};
     }
