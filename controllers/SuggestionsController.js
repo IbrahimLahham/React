@@ -1,7 +1,4 @@
-// handlers
 const Suggestion = require("../schema/Suggestion");
-const User = require("../schema/user");
-const userTest = require("../schema/userTest");
 
 exports.getSuggestionsByKnessetMember = async (req, res) => {
   const { email = "" } = req.body;
@@ -54,8 +51,6 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
       newGeneralSuggestions: newGeneralSuggestions,
       success: true,
     });
-
-
   } catch (error) {
     console.log(error);
     res.send({
