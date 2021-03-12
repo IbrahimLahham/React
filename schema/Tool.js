@@ -6,7 +6,8 @@ const ToolSchema = new mongoose.Schema({
     title: String,
     subTitle: String,
     term: String,
-    language: String
+    language: String,
+    redirectTo:String
 });
 
 

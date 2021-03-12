@@ -1,7 +1,24 @@
 import "./Breadcrumb.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 function Breadcrumb(props) {
+  const history = useHistory();
+
+  function test() {
+    console.log("disconnect");
+    fetch('/user/deleteCookie', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify()
+    }).then(r => r.json())
+      .then(data => {
+        console.log(data);
+        history.push('loginRegisteration')
+      })
+  }
+
   return (
     <div className="Header">
       <section className="secondary-nav-bar">
@@ -17,7 +34,7 @@ function Breadcrumb(props) {
         </div>
 
         <div className="user-links">
-          <a className="disconnect" href="#">
+          <a className="disconnect" href="#" onClick={test}>
             {" "}
             התנתק{" "}
           </a>
