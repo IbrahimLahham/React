@@ -161,3 +161,17 @@ exports.CheckConnection = async (req, res) => {
   const flag = req.cookies.cookie !== undefined;
   res.send({ok: true, cookie:flag});
 };
+
+exports.getAllKnessetMembers = async (req, res) => {
+  console.log("getAllKnessetMembers");
+  
+  const users = user.find({ type : "knessetMember" }, function(err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(result);
+    }
+  });
+  console.log(users);
+  res.send({ok: true, users: users});
+};
