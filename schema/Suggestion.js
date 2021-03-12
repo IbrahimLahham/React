@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const User = require("./user").schema;
 const Tool = require("./Tool").schema;
 const SuggestionStatus = require("./SuggestionStatus").schema;
-const UserTest = require("./userTest").schema;
 
 const SuggestionSchema = new mongoose.Schema({
   subject: String,

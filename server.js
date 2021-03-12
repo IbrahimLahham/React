@@ -4,12 +4,11 @@ const mongoose = require("mongoose");
 const SuggestionsRouter = require("./routes/SuggestionsRoute");
 const parliamentaryToolsRouter = require("./routes/parliamentaryToolsRoute");
 const userRouter = require("./routes/userRoute");
+var cookieParser = require("cookie-parser");
 require("dotenv").config();
 
-
-var cookieParser = require("cookie-parser");
-
 app.use(express.static("client/build"));
+
 // MiddleWares
 app.use(express.json());
 app.use(cookieParser());
