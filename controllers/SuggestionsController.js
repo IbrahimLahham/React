@@ -4,6 +4,7 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
   // const { email = "" } = req.query;
   const email = "preferredKnessetMembers1";
   console.log("email", email);
+  email = "preferredKnessetMembers1";
   try {
     Promise.all([
       Suggestion.find({ "whoIsWorkingOnIt.email": email }),
@@ -124,7 +125,7 @@ exports.createSuggestions = async (req, res) => {
     let obj = {};
     let temp = [];
     for (const userDetails of preferredKnessetMembers) {
-      obj["email"] = userDetails;
+      obj["email"] = userDetails.email;
       temp.push(obj);
       obj = {};
     }
