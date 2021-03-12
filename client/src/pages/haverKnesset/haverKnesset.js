@@ -3,8 +3,17 @@ import React, { useState, useEffect } from 'react';
 import './haverKnesset.css'
 import Suggestion from './suggestions';
 import ActiveSuggestions from '../../components/activeSuggestion';
+import { useTranslation } from 'react-i18next';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+
 
 function HaverKnesset() {
+    const { t, i18n } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const [myNewSuggestions, setMyNewSuggestions] = useState([]);
     const [activeSuggestions, setActiveSuggestions] = useState([]);
@@ -12,7 +21,7 @@ function HaverKnesset() {
     const toggle = () => setIsOpen(!isOpen);
 
     useEffect(() => {
-            fetch('/suggestion/byUserSuggest')
+        fetch('/suggestion/byUserSuggest')
             .then(r => r.json())
             .then(data => {
                 console.log(data);
@@ -64,17 +73,22 @@ function HaverKnesset() {
         console.log("e: ", e);
         console.log("all Suggestions removed!");
     }
+    const changeLanguage = lng => {          
+        i18n.changeLanguage(lng);
+      };
 
     return (
+        <>
         <div className="suggestions-container">
+            
             <table>
-                <caption id="title" className="title-bold">הצעות חדשות עבורי:</caption>
+                <caption id="title" className="title-bold">{t('ownSuggestions')}</caption>
                 <tr id="header">
-                    <th className="title-bold">תאריך</th>
-                    <th className="title-bold">כלי פרלמנטרי</th>
-                    <th className="title-bold">נושא</th>
-                    <th className="title-bold">מציע</th>
-                    <th className="title-bold">אימוץ/דחיה</th>
+                    <th className="title-bold">{t('date')}</th>
+                    <th className="title-bold">{t('parlamintary')}</th>
+                    <th className="title-bold">{t('subject')}</th>
+                    <th className="title-bold">{t('offer')}</th>
+                    <th className="title-bold">{t('adoptionrejection')}</th>
                 </tr>
 
                 {myNewSuggestions.map((elem, index) => {
@@ -96,14 +110,13 @@ function HaverKnesset() {
             </table>
 
             <table>
-                <caption id="title" className="title-bold">הצעות בטיפול:</caption>
+                <caption id="title" className="title-bold">{t('updateSuggestions')}</caption>
                 <tr id="header">
-                    <th className="title-bold">תאריך</th>
-
-                    <th className="title-bold">כלי פרלמנטרי</th>
-                    <th className="title-bold">נושא</th>
-                    <th className="title-bold">מציע</th>
-                    <th className="title-bold">עדכון סטטוס</th>
+                <th className="title-bold">{t('date')}</th>
+                    <th className="title-bold">{t('parlamintary')}</th>
+                    <th className="title-bold">{t('subject')}</th>
+                    <th className="title-bold">{t('offer')}</th>
+                    <th className="title-bold">{t('status')}</th>
                 </tr>
                 {activeSuggestions.map((elem, index) => {
                     return (
@@ -120,13 +133,13 @@ function HaverKnesset() {
             </table>
 
             <table>
-                <caption id="title" className="title-bold">הצעות חדשות כללי:</caption>
+                <caption id="title" className="title-bold">{t('allSuggestions')}</caption>
                 <tr id="header">
-                    <th className="title-bold">תאריך</th>
-                    <th className="title-bold">כלי פרלמנטרי</th>
-                    <th className="title-bold">נושא</th>
-                    <th className="title-bold">מציע</th>
-                    <th className="title-bold">אימוץ/דחיה</th>
+                    <th className="title-bold">{t('date')}</th>
+                    <th className="title-bold">{t('parlamintary')}</th>
+                    <th className="title-bold">{t('subject')}</th>
+                    <th className="title-bold">{t('offer')}</th>
+                    <th className="title-bold">{t('adoptionrejection')}</th>
                 </tr>
                 {allNewSuggestions.map((elem, index) => {
                     return (
@@ -146,8 +159,11 @@ function HaverKnesset() {
                 })}
             </table>
 
-
+            
         </div>
+        <button onClick={() => changeLanguage('hb')}>Hb</button>
+            <button onClick={() => changeLanguage('ar')}>ar</button>
+        </>
 
     )
 }
