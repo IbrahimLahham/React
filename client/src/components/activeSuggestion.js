@@ -16,7 +16,7 @@ function ActiveSuggestions(props) {
 
     return (<>
         <tr>
-            <td className="title-large">{props.date}
+            <td className="title-large">{props.date.split("T")[0]}
                 {isOpen === false ?
                     <ArrowLeftIcon onClick={toggle}></ArrowLeftIcon> : <ArrowDropDownIcon onClick={toggle}></ArrowDropDownIcon>}
             </td>
@@ -41,12 +41,21 @@ function ActiveSuggestions(props) {
                 </td>
                 <td id="status-lines">
                     <a>סטטוס מפורט:</a>
-                    <a>תאריך אימוץ:</a>
-                    <label>{props.status.status}</label>
+                    {props.status.map((elem, index) => {
+                        return (
+                            <div>
+                                <a>{elem.status}</a>
+                                <br />
+                                <label>{elem.date.split("T")[0]}</label>
+                            </div>
+                        )
+                    })}
+                    {/* <a>תאריך אימוץ:</a>
+                    <label>{props.status[0].date}</label>
                     <a>תאריך העברה למשרד:</a>
                     <label>{props.status.status}</label>
                     <a>תאריך קבלת למשרד:</a>
-                    <label>{props.status.status}</label>
+                    <label>{props.status.status}</label> */}
                 </td>
             </tr> : null}
 

@@ -42,3 +42,18 @@ exports.createParliamentaryTool = async (req, res) => {
     });
   }
 };
+
+exports.getToolByType = async (req, res) => {
+  try {
+    const {toolType} = req.body;
+    const parliamentaryTool = await Tool.findOne({ type: toolType});
+    res.send({ parliamentaryTool: parliamentaryTool, success: true });
+  } catch (error) {
+    console.log(error);
+    res.send({
+      success: false,
+      message:
+        "getting the parliamentary Tools from the DB Failed! try again" + error,
+    });
+  }
+};
