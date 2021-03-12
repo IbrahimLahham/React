@@ -79,8 +79,8 @@ exports.Registration = async (req, res) => {
       },
     });
     const mailOptions = {
-      from: from,
-      to: to,
+      from: process.env.EMAIL,
+      to: email,
       subject: "welcome to knesset website",
       text: `your current password is: ${randomPassword} \n link to change your password: http://localhost:3000/resetPassword?token=${token}
       `,
