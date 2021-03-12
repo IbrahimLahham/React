@@ -9,7 +9,7 @@ function Cards(props) {
             <a href="#">
               <h2 className="title"> {tool.title} </h2>
             </a>
-            <p className="content"> {tool.content} </p>
+            <p className="content"> {tool.subTitle} </p>
           </div>
         );
       })}

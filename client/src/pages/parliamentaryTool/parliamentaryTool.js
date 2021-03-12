@@ -27,8 +27,20 @@ const datas = [
 
 function App() {
   const [data, setData] = useState([]);
+  // useEffect(() => {
+  //   setData(datas);
+  // }, []);
+
   useEffect(() => {
-    setData(datas);
+    fetch("parliamentaryTools/")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        data.parliamentaryTools.map((tool, index) => {
+          console.log("Tool: ", tool);
+        });
+        setData(data.parliamentaryTools);
+      });
   }, []);
 
   return (
