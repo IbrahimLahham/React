@@ -7,9 +7,12 @@ router
     .get(parliamentaryToolsController.getAllParliamentaryTools);
 
 router
-    .route("/creat")
+    .route("/create")
     .post(parliamentaryToolsController.createParliamentaryTool);
 
+    router
+    .route("/getToolByType")
+    .post(parliamentaryToolsController.getToolByType);
 
 
 module.exports = router;
