@@ -32,9 +32,23 @@ function HaverKnesset() {
                 setMyNewSuggestions(arr);
                 arr = [];
                 data.adoptedSuggestions.map((elem, index) => {
-                    arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, 
-                    options: ["חבר", "אזרח"] 
-                }];
+                    let opt = [];
+                    if(elem.toolType.title === "כינוס הכנסת"){
+                        opt = ["תאריך התכנסות צפוי", "איסוף חתימות", "התכנסה"];
+                    }
+                    else if(elem.toolType.title === "נאום בן דקה"){
+                        opt = ["הוקרא", "תאריך הקראה צפוי", "תאריך אימוץ"];
+                    }
+                    else if(elem.toolType.title === "שיאלתא"){
+                        opt = ["תאריך קבלץת תשובה", "תאריך העברה למשרד", "תאריך אימוץ"];
+                    }
+                    else{
+                        opt = ["תאריך התכנסות צפוי", "איסוף חתימות", "התכנסה"];
+                    }
+                    arr = [...arr, {
+                        key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status,
+                        options: opt
+                    }];
                 })
                 setActiveSuggestions(arr);
                 arr = [];
@@ -65,7 +79,7 @@ function HaverKnesset() {
     function handleXmySug(e) {
         console.log("e: ", e);
         console.log("my Suggestions removed!");
-                // fetch('/suggestion/reject-adopt', {
+        // fetch('/suggestion/reject-adopt', {
         //     method: 'POST',
         //     headers: {
         //         'Content-Type': 'application/json'
@@ -80,7 +94,7 @@ function HaverKnesset() {
     function handleVallSug(e) {
         console.log("e: ", e);
         console.log("all Suggestions selected!");
-                // fetch('/suggestion/reject-adopt', {
+        // fetch('/suggestion/reject-adopt', {
         //     method: 'POST',
         //     headers: {
         //         'Content-Type': 'application/json'
@@ -95,7 +109,7 @@ function HaverKnesset() {
     function handleXallSug(e) {
         console.log("e: ", e);
         console.log("all Suggestions removed!");
-                // fetch('/suggestion/reject-adopt', {
+        // fetch('/suggestion/reject-adopt', {
         //     method: 'POST',
         //     headers: {
         //         'Content-Type': 'application/json'
