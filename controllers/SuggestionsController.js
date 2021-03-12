@@ -4,7 +4,8 @@ const User = require("../schema/user");
 const userTest = require("../schema/userTest");
 
 exports.getSuggestionsByKnessetMember = async (req, res) => {
-  const { email = "" } = req.body;
+  // const { email = "" } = req.query;
+  const email = "preferredKnessetMembers1";
   console.log("email", email);
   try {
     Promise.all([
@@ -43,17 +44,22 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
         console.log("adoptedSuggestions", adoptedSuggestions);
         console.log("newGeneralSuggestions", newGeneralSuggestions);
         console.log("results", results);
+        res.send({
+          newSuggestions: newSuggestions,
+          adoptedSuggestions: adoptedSuggestions,
+          newGeneralSuggestions: newGeneralSuggestions,
+          success: true,
+        });
       })
       .catch((err) => {
         console.error("Something went wrong", err);
+        res.send({
+          success: false,
+          message:
+            "getting the appropriate suggestion from the DB Failed! try again , " +
+            error,
+        });
       });
-
-    res.send({
-      newSuggestions: newSuggestions,
-      adoptedSuggestions: adoptedSuggestions,
-      newGeneralSuggestions: newGeneralSuggestions,
-      success: true,
-    });
 
 
   } catch (error) {
