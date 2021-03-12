@@ -143,4 +143,8 @@ exports.DeleteCookie = async (req, res) => {
   res.send({ok: true});
 };
 
-
+exports.CheckConnection = async (req, res) => {
+  console.log("CheckConnection");
+  const flag = req.cookies.cookie !== undefined;
+  res.send({ok: true, cookie:flag});
+};
