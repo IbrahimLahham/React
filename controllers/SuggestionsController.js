@@ -4,7 +4,6 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
   // const { email = "" } = req.query;
   const email = "preferredKnessetMembers1";
   console.log("email", email);
-  email = "preferredKnessetMembers1";
   try {
     Promise.all([
       Suggestion.find({ "whoIsWorkingOnIt.email": email }),
