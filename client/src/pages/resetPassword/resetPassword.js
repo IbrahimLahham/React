@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 //import './normalquery.css'
 
 
 const ResetPassword = () => {
+    const [serverToken, setToken] = useState("");
+    useEffect(()=>{
+        setToken(window.location.search.substring(1));
+    }, []);
+
 
     const [newpassword, setNewPassword] = useState("")
     const [repeatnewpassword, setRepeatNewPassword] = useState("")
@@ -12,7 +17,7 @@ const ResetPassword = () => {
         e.preventDefault();
         console.log(newpassword, repeatnewpassword);
         if (newpassword === repeatnewpassword) {
-            fetch('/user/savePassword', {
+            fetch(`/user/savePassword?${serverToken}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -124,7 +124,7 @@ exports.createSuggestions = async (req, res) => {
     let obj = {};
     let temp = [];
     for (const userDetails of preferredKnessetMembers) {
-      obj["email"] = userDetails;
+      obj["email"] = userDetails.email;
       temp.push(obj);
       obj = {};
     }

@@ -14,15 +14,22 @@ router
   .route("/byParliamentaryTool")
   .get(SuggestionsController.getSuggestionsParliamentaryTool);
 
-router.route("/byDate").get(SuggestionsController.getSuggestionsByDate);
-
-router.route("/byStatus").get(SuggestionsController.getSuggestionsByStatus);
-
-router.route("/all").get(SuggestionsController.getAllSuggestions);
+router
+.route("/byDate")
+.get(SuggestionsController.getSuggestionsByDate);
 
 router
-  .route("/createSuggestion")
-  .post(SuggestionsController.createSuggestions);
+.route("/byStatus")
+.get(SuggestionsController.getSuggestionsByStatus);
+
+router
+.route("/all")
+.get(SuggestionsController.getAllSuggestions);
+
+router
+.route("/createSuggestion")
+.post(SuggestionsController.createSuggestions);
+
 router
   .route("/updateSuggestion")
   .patch(SuggestionsController.createSuggestions);

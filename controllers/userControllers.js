@@ -38,7 +38,6 @@ exports.Registration = async (req, res) => {
     firstName,
     lastName,
     email,
-    password,
     company,
     phone,
     type,
@@ -48,8 +47,9 @@ exports.Registration = async (req, res) => {
 
   const searchUser = await user.findOne({ email });
 
+  const randomPassword = Math.random().toString(36).slice(-8);
   const salt = await bcrypt.genSalt(10);
-  const hashPassword = await bcrypt.hash(password, salt);
+  const hashPassword = await bcrypt.hash(randomPassword, salt);
 
   if (searchUser === null) {
     const userToAdd = new user({
@@ -66,11 +66,36 @@ exports.Registration = async (req, res) => {
     userToAdd.save().then(() => {
       console.log("user saved");
     });
-
-    res.send({
-      user: userToAdd.email,
-      ok: true,
-      message: "The User Is Registered",
+    
+    const token = jwt.sign(
+      {email: email },
+      process.env.TOKEN_SECRET
+    );
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASS,
+      },
+    });
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: email,
+      subject: "welcome to knesset website",
+      text: `your current password is: ${randomPassword} \n link to change your password: http://localhost:3000/resetPassword?token=${token}
+      `,
+    };
+    transporter.sendMail(mailOptions, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.send("Error occurs");
+      } else {
+        res.send({
+          user: userToAdd.email,
+          ok: true,
+          message: `email sent to ${to} sucessfuly`,
+        });
+      }
     });
   } else {
     res.send({ ok: false, message: "The User Is Already Exist" });
@@ -83,11 +108,11 @@ exports.ForgetPassword = async (req, res) => {
 
   const userToCheck = await user.findOne({ email: to });
 
-  const randomPassword = Math.random().toString(36).slice(-8);
-  const salt = await bcrypt.genSalt(10);
-  const hashPassword = await bcrypt.hash(randomPassword, salt);
-
   if (!(userToCheck === null)) {
+    const token = jwt.sign(
+      {email: userToCheck.email },
+      process.env.TOKEN_SECRET
+    );
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -98,29 +123,18 @@ exports.ForgetPassword = async (req, res) => {
     const mailOptions = {
       from: from,
       to: to,
-      subject: subject,
-      text: ``,
+      subject: "reset your password",
+      text: `link to change your password: http://localhost:3000/resetPassword?token=${token}
+      `,
     };
     transporter.sendMail(mailOptions, (err, data) => {
       if (err) {
         console.log(err);
         res.send("Error occurs");
       } else {
-        user.updateOne(
-          { email: userToCheck.email },
-          { password: hashPassword },
-          function (err, result) {
-            if (err) {
-              res.send(err);
-            } else {
-              res.send(`email sent to ${to} sucessfuly`);
-            }
-          }
-        );
+        res.send(`email sent to ${to} sucessfuly`);
       }
     });
-    // const token = jwt.sign({ user: to }, process.env.TOKEN_SECRET);
-    // res.send({ token: token, ok: true });
   } else {
     res.send({ ok: false, message: "Invalid Email " });
   }
@@ -128,14 +142,43 @@ exports.ForgetPassword = async (req, res) => {
 
 exports.SavePassword = async (req, res) => {
   console.log("SavePassword");
-  const { token, password } = req.body;
+  const { password } = req.body;
+  const { token } = req.query;
+ 
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
 
-  const users = await user.find({});
+  try {
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
+      if (err) {
+        console.log(err);
+        // res.send(err);
+      }
+      else {
+        user.updateOne(
+          { email: data.email },
+          { password: hashPassword },
+          function (err, result) {
+            if (err) {
+              res.send(err);
+            } else {
+              res.send(`password changed sucessfuly for ${data.email} `);
+            }
+          }
+        );
+      }
+    })
+  }
+  catch(e){
+    res.send(e);
+  }
+
+  // const users = await user.find({});
   // users.forEach(user => {
   //   const email =  bcrypt.compare(user, user.email);
   // });
-  res.send({ token: token, ok: true });
-
+ 
+  // const email =  bcrypt.compare(user, user.email);
   //   const salt = await bcrypt.genSalt(10);
   //   const hashPassword = await bcrypt.hash(password , salt);
 };
