@@ -6,7 +6,9 @@ import React, { useEffect, useState } from 'react';
 const ResetPassword = () => {
     const [serverToken, setToken] = useState("");
     useEffect(()=>{
-        setToken(window.location.search.substring(1));
+        if((window.location.search.substring(1).length) !== 0){
+            setToken("?"+window.location.search.substring(1));
+        }
     }, []);
 
 
@@ -17,7 +19,7 @@ const ResetPassword = () => {
         e.preventDefault();
         console.log(newpassword, repeatnewpassword);
         if (newpassword === repeatnewpassword) {
-            fetch(`/user/savePassword?${serverToken}`, {
+            fetch(`/user/savePassword${serverToken}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

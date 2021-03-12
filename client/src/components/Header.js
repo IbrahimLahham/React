@@ -41,13 +41,16 @@ function Header(props) {
             <a href="#">כלים פרלמנטריים</a>
           </li>
           {
-            props.show ? (props.connected ? null:
-            <li className="left-nav" id="nav-committees">
-              <PersonIcon style={{ color: 'blue' }} />
-              <label onClick={loginRegisteration}>התחבר למערכת</label>
-            </li>):null
+            props.show ? (props.connected ?
+              <li className="left-nav" id="nav-committees">
+                <PersonIcon style={{ color: 'blue' }} />
+                <label>{props.user.type + " " + props.user.firstName + " " + props.user.lastName}</label>
+              </li> :
+              <li className="left-nav" id="nav-committees">
+                <PersonIcon style={{ color: 'blue' }} />
+                <label onClick={loginRegisteration}>התחבר למערכת</label>
+              </li>) : null
           }
-          {console.log(props.show)}
         </ul>
       </div>
       <Breadcrumb breadcrumbList={props.pages} userType={1} connected={props.connected} />

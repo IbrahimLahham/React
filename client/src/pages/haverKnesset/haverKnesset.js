@@ -32,7 +32,9 @@ function HaverKnesset() {
                 setMyNewSuggestions(arr);
                 arr = [];
                 data.adoptedSuggestions.map((elem, index) => {
-                    arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, options: ["חבר", "אזרח"] }];
+                    arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, 
+                    options: ["חבר", "אזרח"] 
+                }];
                 })
                 setActiveSuggestions(arr);
                 arr = [];
@@ -47,21 +49,62 @@ function HaverKnesset() {
     function handleVmySug(e) {
         console.log("e: ", e);
         console.log("my Suggestions selected!");
+        // fetch('/suggestion/reject-adopt', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ adopt: true })
+        // }).then(r => r.json())
+        //     .then(data => {
+        //         console.log(data);
+        //     })
+
     }
 
     function handleXmySug(e) {
         console.log("e: ", e);
         console.log("my Suggestions removed!");
+                // fetch('/suggestion/reject-adopt', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ adopt: false })
+        // }).then(r => r.json())
+        //     .then(data => {
+        //         console.log(data);
+        //     })
     }
 
     function handleVallSug(e) {
         console.log("e: ", e);
         console.log("all Suggestions selected!");
+                // fetch('/suggestion/reject-adopt', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ adopt: true })
+        // }).then(r => r.json())
+        //     .then(data => {
+        //         console.log(data);
+        //     })
     }
 
     function handleXallSug(e) {
         console.log("e: ", e);
         console.log("all Suggestions removed!");
+                // fetch('/suggestion/reject-adopt', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ adopt: false })
+        // }).then(r => r.json())
+        //     .then(data => {
+        //         console.log(data);
+        //     })
     }
     const changeLanguage = lng => {
         i18n.changeLanguage(lng);
