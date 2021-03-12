@@ -17,7 +17,7 @@ const ResetPassword = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ newpassword })
+                body: JSON.stringify({ password: newpassword })
             }).then(r => r.json())
                 .then(data => {
                     console.log(data);

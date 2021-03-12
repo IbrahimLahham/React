@@ -1,7 +1,8 @@
 const Suggestion = require("../schema/Suggestion");
 
 exports.getSuggestionsByKnessetMember = async (req, res) => {
-  const { email = "" } = req.body;
+  // const { email = "" } = req.query;
+  const email = "preferredKnessetMembers1";
   console.log("email", email);
   email = "preferredKnessetMembers1";
   try {
@@ -41,7 +42,6 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
         console.log("adoptedSuggestions", adoptedSuggestions);
         console.log("newGeneralSuggestions", newGeneralSuggestions);
         console.log("results", results);
-
         res.send({
           newSuggestions: newSuggestions,
           adoptedSuggestions: adoptedSuggestions,
