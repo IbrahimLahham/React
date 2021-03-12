@@ -16,7 +16,7 @@ exports.Login = async (req, res) => {
     const vaildPass = await bcrypt.compare(password, userToFind.password);
     if (vaildPass) {
       const token = jwt.sign(
-        { role: userToFind.type, email: userToFind.email },
+        { role: userToFind.type, email: userToFind.email, firstName: userToFind.firstName,lastName: userToFind.lastName },
         process.env.TOKEN_SECRET
       );
       res.cookie("cookie", token, { maxAge: 900000, httpOnly: true });
@@ -172,15 +172,6 @@ exports.SavePassword = async (req, res) => {
   catch(e){
     res.send(e);
   }
-
-  // const users = await user.find({});
-  // users.forEach(user => {
-  //   const email =  bcrypt.compare(user, user.email);
-  // });
- 
-  // const email =  bcrypt.compare(user, user.email);
-  //   const salt = await bcrypt.genSalt(10);
-  //   const hashPassword = await bcrypt.hash(password , salt);
 };
 
 exports.GetUsersByType = async (req, res) => {
@@ -202,7 +193,22 @@ exports.DeleteCookie = async (req, res) => {
 exports.CheckConnection = async (req, res) => {
   console.log("CheckConnection");
   const flag = req.cookies.cookie !== undefined;
-  res.send({ok: true, cookie:flag});
+  if(flag){
+    try {
+      jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
+        if (err) {
+          console.log(err);
+        }
+        else {
+            console.log(data.lastName);
+            res.send({ok: true, cookie:flag,type:data.type,firstName:data.firstName,lastName:data.lastName,email:data.email});
+        }
+      })
+    } catch (error) {
+      res.send({ok: false, cookie:flag});
+    }
+    
+  }
 };
 
 exports.getAllKnessetMembers = async (req, res) => {
