@@ -25,9 +25,9 @@ import {
 
 export default function App() {
   const [connected, setConnected] = useState(false);
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
-    console.log("checkConnection");
     fetch('/user/checkConnection', {
       method: 'POST',
       headers: {
@@ -36,8 +36,8 @@ export default function App() {
       body: JSON.stringify()
     }).then(r => r.json())
       .then(data => {
-        console.log(data);
         setConnected(data.cookie);
+        setUser({ type: data.type, firstName: data.firstName, lastName: data.lastName, email: data.email });
       })
   }, []);
 
@@ -50,8 +50,8 @@ export default function App() {
       body: JSON.stringify()
     }).then(r => r.json())
       .then(data => {
-        // console.log(data);
         setConnected(data.cookie);
+        setUser({ type: data.type, firstName: data.firstName, lastName: data.lastName, email: data.email });
       })
   }
 
@@ -96,39 +96,39 @@ export default function App() {
             renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/parliamentaryTool">
-            <Header show={true} connected={connected} pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }]} />
+            <Header user={user} show={true} connected={connected} pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }]} />
             <ParliamentaryTool />
           </Route>
           <Route path="/normalquery">
-            <Header show={true} connected={connected} pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }, { text: "שיאלתה רגילה", url: "normalquery" }]} />
+            <Header user={user} show={true} connected={connected} pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }, { text: "שיאלתה רגילה", url: "normalquery" }]} />
             <Normalquery />
           </Route>
           <Route path="/kenosKnesset">
-            <Header show={true} connected={connected} pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }, { text: "כינוס הכנסת בזמן הפגרה", url: "kenosKnesset" }]} />
+            <Header user={user} show={true} connected={connected} pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }, { text: "כינוס הכנסת בזמן הפגרה", url: "kenosKnesset" }]} />
             <KenosKnesset />
           </Route>
           <Route path="/oneMinuteSpeech">
-            <Header show={true} connected={connected} pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }, { text: "נאום בן דקה", url: "oneMinuteSpeech" }]} />
+            <Header user={user} show={true} connected={connected} pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }, { text: "נאום בן דקה", url: "oneMinuteSpeech" }]} />
             <OneMinuteSpeech />
           </Route>
           <Route path="/trackingBoard">
-            <Header show={true} connected={connected} pages={[{ text: "לוח מעקב", url: "trackingBoard" }]} />
+            <Header user={user} show={true} connected={connected} pages={[{ text: "לוח מעקב", url: "trackingBoard" }]} />
             <TrackingBoard />
           </Route>
           <Route path="/loginRegisteration">
-            <Header show={false} connected={false} pages={[{ text: "הרשמה והתחברות", url: "loginRegisteration" }]} />
+            <Header user={user} show={false} connected={false} pages={[{ text: "הרשמה והתחברות", url: "loginRegisteration" }]} />
             <Login />
           </Route>
           <Route path="/forgetpassword">
-            <Header show={false} connected={false} pages={[{ text: "הרשמה והתחברות", url: "loginRegisteration" }, { text: "שכחתי סיסמה", url: "forgetpassword" }]} />
+            <Header user={user} show={false} connected={false} pages={[{ text: "הרשמה והתחברות", url: "loginRegisteration" }, { text: "שכחתי סיסמה", url: "forgetpassword" }]} />
             <Forgetpassword />
           </Route>
           <Route path="/resetPassword">
-            <Header show={false} connected={false} pages={[{ text: "הרשמה והתחברות", url: "loginRegisteration" }, { text: "שינוי סיסמה", url: "resetPassword" }]} />
+            <Header user={user} show={false} connected={false} pages={[{ text: "הרשמה והתחברות", url: "loginRegisteration" }, { text: "שינוי סיסמה", url: "resetPassword" }]} />
             <Resetpassword />
           </Route>
           <Route path="/haverKnesset">
-            <Header show={true} connected={connected} pages={[{ text: "מערכת ח״כ", url: "haverKnesset" }]} />
+            <Header user={user} show={true} connected={connected} pages={[{ text: "מערכת ח״כ", url: "haverKnesset" }]} />
             <HaverKnesset />
           </Route>
 
