@@ -39,7 +39,7 @@ function HaverKnesset() {
                     else if(elem.toolType.title === "נאום בן דקה"){
                         opt = ["הוקרא", "תאריך הקראה צפוי", "תאריך אימוץ"];
                     }
-                    else if(elem.toolType.title === "שיאלתא"){
+                    else if(elem.toolType.title === "שאילתא"){
                         opt = ["תאריך קבלץת תשובה", "תאריך העברה למשרד", "תאריך אימוץ"];
                     }
                     else{
