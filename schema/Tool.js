@@ -4,7 +4,11 @@ const ToolSchema = new mongoose.Schema({
   type: String,
   title: String,
   subTitle: String,
-  term: String,
+  tkanon: {
+    title: String,
+    tkanonNumber: String,
+    tkanonDetails: [{ sectionTitle: String, sectionContent: String }],
+  },
   language: String,
   redirectTo: String,
 });
