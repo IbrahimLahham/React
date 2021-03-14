@@ -25,7 +25,7 @@ import {
 
 export default function App() {
   const [connected, setConnected] = useState(false);
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     fetch('/user/checkConnection', {
@@ -117,7 +117,7 @@ export default function App() {
           </Route>
           <Route path="/loginRegisteration">
             <Header user={user} show={false} connected={false} pages={[{ text: "הרשמה והתחברות", url: "loginRegisteration" }]} />
-            <Login />
+            <Login setUser={setUser} setConnected={setConnected}/>
           </Route>
           <Route path="/forgetpassword">
             <Header user={user} show={false} connected={false} pages={[{ text: "הרשמה והתחברות", url: "loginRegisteration" }, { text: "שכחתי סיסמה", url: "forgetpassword" }]} />

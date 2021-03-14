@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 
 
-function LoginRegisteration() {
+function LoginRegisteration(props) {
     const { t, i18n } = useTranslation();
     const history = useHistory();
     const [loginEmail, setLoginEmail] = useState("");
@@ -22,6 +22,8 @@ function LoginRegisteration() {
     const [organization, setOrganization] = useState("");
     const [error, setError] = useState("");
     const [registermessage, setRegisterMessage] = useState("");
+
+    const {setUser, setConnected} = props;
 
     useEffect(() => {
 
@@ -43,6 +45,7 @@ function LoginRegisteration() {
                 console.log("server data: ", data);
                 // if login true - redirect to forms creation page;
                 if (data.ok === true) {
+                    setUser({ type: data.role, firstName: data.firstName, lastName: data.lastName, email: data.email });
                     if (data.role === "citizen")
                         history.push('/parliamentaryTool')
                     else if (data.role === "knessetMember") {
