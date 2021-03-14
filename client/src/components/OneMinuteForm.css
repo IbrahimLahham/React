@@ -35,6 +35,7 @@
   text-align: right;
   width: 45%;
   /* height: 240px; */
+  padding: 16px;
 }
 .btn {
   position: relative;
