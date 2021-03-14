@@ -23,6 +23,7 @@ exports.Login = async (req, res) => {
       res.cookie("cookie", token, { maxAge: 900000, httpOnly: true });
       res.send({
         role: userToFind.type,
+        email: userToFind.email, firstName: userToFind.firstName, lastName: userToFind.lastName,
         ok: true,
         message: "The User Is Logged In",
       });
