@@ -24,26 +24,56 @@ import {
 } from "react-router-dom";
 
 export default function App() {
+  const [connected, setConnected] = useState(false);
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    fetch('/user/checkConnection', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify()
+    }).then(r => r.json())
+      .then(data => {
+        setConnected(data.cookie);
+        setUser({ type: data.type, firstName: data.firstName, lastName: data.lastName, email: data.email });
+      })
+  }, []);
+
+  function checkConnection() {
+    fetch('/user/checkConnection', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify()
+    }).then(r => r.json())
+      .then(data => {
+        setConnected(data.cookie);
+        setUser({ type: data.type, firstName: data.firstName, lastName: data.lastName, email: data.email });
+      })
+  }
 
   return (
-    <Router>
+    <Router onChange={checkConnection}>
       <div>
         <nav className='all-tabs'>
           <ul>
             <li className='active-nav'>
-              <Link to="/parliamentaryTool">parliamentaryTools</Link>
+              <Link onClick={checkConnection} to="/parliamentaryTool">parliamentaryTools</Link>
             </li>
             <li className='non-active-nav'>
-              <Link to="/normalquery">normalquery</Link>
+              <Link onClick={checkConnection} to="/normalquery">normalquery</Link>
             </li>
             <li className='non-active-nav'>
-              <Link to="/kenosKnesset">kenosKnesset</Link>
+              <Link onClick={checkConnection} to="/kenosKnesset">kenosKnesset</Link>
             </li>
             <li className='non-active-nav'>
-              <Link to="/oneMinuteSpeech">oneMinuteSpeech</Link>
+              <Link onClick={checkConnection} to="/oneMinuteSpeech">oneMinuteSpeech</Link>
             </li>
             <li className='non-active-nav'>
-              <Link to="/trackingBoard">trackingBoard</Link>
+              <Link onClick={checkConnection} to="/trackingBoard">trackingBoard</Link>
             </li>
             <li className='non-active-nav'>
               <Link to="/loginRegisteration">loginRegisteration</Link>
@@ -55,7 +85,7 @@ export default function App() {
               <Link to="/resetPassword">resetPassword</Link>
             </li>
             <li className='non-active-nav'>
-              <Link to="/haverKnesset">haverKnesset</Link>
+              <Link onClick={checkConnection} to="/haverKnesset">haverKnesset</Link>
             </li>
 
 
@@ -66,39 +96,39 @@ export default function App() {
             renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/parliamentaryTool">
-            <Header pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }]} />
+            <Header user={user} show={true} connected={connected} pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }]} />
             <ParliamentaryTool />
           </Route>
           <Route path="/normalquery">
-            <Header pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }, { text: "שיאלתה רגילה", url: "normalquery" }]} />
+            <Header user={user} show={true} connected={connected} pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }, { text: "שיאלתה רגילה", url: "normalquery" }]} />
             <Normalquery />
           </Route>
           <Route path="/kenosKnesset">
-            <Header pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }, { text: "כינוס הכנסת בזמן הפגרה", url: "kenosKnesset" }]} />
+            <Header user={user} show={true} connected={connected} pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }, { text: "כינוס הכנסת בזמן הפגרה", url: "kenosKnesset" }]} />
             <KenosKnesset />
           </Route>
           <Route path="/oneMinuteSpeech">
-            <Header pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }, { text: "נאום בן דקה", url: "oneMinuteSpeech" }]} />
+            <Header user={user} show={true} connected={connected} pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }, { text: "נאום בן דקה", url: "oneMinuteSpeech" }]} />
             <OneMinuteSpeech />
           </Route>
           <Route path="/trackingBoard">
-            <Header pages={[{ text: "לוח מעקב", url: "trackingBoard" }]} />
+            <Header user={user} show={true} connected={connected} pages={[{ text: "לוח מעקב", url: "trackingBoard" }]} />
             <TrackingBoard />
           </Route>
           <Route path="/loginRegisteration">
-            <Header pages={[{ text: "הרשמה והתחברות", url: "loginRegisteration" }]} />
+            <Header user={user} show={false} connected={false} pages={[{ text: "הרשמה והתחברות", url: "loginRegisteration" }]} />
             <Login />
           </Route>
           <Route path="/forgetpassword">
-            <Header pages={[{ text: "הרשמה והתחברות", url: "loginRegisteration" }, { text: "שכחתי סיסמה", url: "forgetpassword" }]} />
+            <Header user={user} show={false} connected={false} pages={[{ text: "הרשמה והתחברות", url: "loginRegisteration" }, { text: "שכחתי סיסמה", url: "forgetpassword" }]} />
             <Forgetpassword />
           </Route>
           <Route path="/resetPassword">
-            <Header pages={[{ text: "הרשמה והתחברות", url: "loginRegisteration" }, { text: "שינוי סיסמה", url: "resetPassword" }]} />
+            <Header user={user} show={false} connected={false} pages={[{ text: "הרשמה והתחברות", url: "loginRegisteration" }, { text: "שינוי סיסמה", url: "resetPassword" }]} />
             <Resetpassword />
           </Route>
           <Route path="/haverKnesset">
-            <Header pages={[{ text: "מערכת ח״כ", url: "haverKnesset" }]} />
+            <Header user={user} show={true} connected={connected} pages={[{ text: "מערכת ח״כ", url: "haverKnesset" }]} />
             <HaverKnesset />
           </Route>
 

@@ -3,8 +3,17 @@ import React, { useState, useEffect } from 'react';
 import './haverKnesset.css'
 import Suggestion from './suggestions';
 import ActiveSuggestions from '../../components/activeSuggestion';
+import { useTranslation } from 'react-i18next';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+
 
 function HaverKnesset() {
+    const { t, i18n } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const [myNewSuggestions, setMyNewSuggestions] = useState([]);
     const [activeSuggestions, setActiveSuggestions] = useState([]);
@@ -12,144 +21,198 @@ function HaverKnesset() {
     const toggle = () => setIsOpen(!isOpen);
 
     useEffect(() => {
-        fetch('/suggestion/byUserSuggest')
-            .then(r => r.json())
-            .then(data => {
-                // console.log(data);
-                let arr = [];
-                data.map((elem, index) => {
-                    arr = [...arr, { key: index, date: "21.11.21", per: elem.toolType.type, sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status }];
-                })
-                setMyNewSuggestions(arr);
-            })
         fetch('/suggestion/byKnessetMemberValidate')
             .then(r => r.json())
             .then(data => {
-                // console.log(data);
+                console.log("data:", data);
                 let arr = [];
-                data.map((elem, index) => {
-                    arr = [...arr, { key: index, date: "21.11.21", per: elem.toolType.type, sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status, options: ["חבר", "אזרח"] }];
+                data.newSuggestions.map((elem, index) => {
+                    arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status }];
+                })
+                setMyNewSuggestions(arr);
+                arr = [];
+                data.adoptedSuggestions.map((elem, index) => {
+                    let opt = [];
+                    if(elem.toolType.title === "כינוס הכנסת"){
+                        opt = ["תאריך התכנסות צפוי", "איסוף חתימות", "התכנסה"];
+                    }
+                    else if(elem.toolType.title === "נאום בן דקה"){
+                        opt = ["הוקרא", "תאריך הקראה צפוי", "תאריך אימוץ"];
+                    }
+                    else if(elem.toolType.title === "שיאלתא"){
+                        opt = ["תאריך קבלץת תשובה", "תאריך העברה למשרד", "תאריך אימוץ"];
+                    }
+                    else{
+                        opt = ["תאריך התכנסות צפוי", "איסוף חתימות", "התכנסה"];
+                    }
+                    arr = [...arr, {
+                        key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status,
+                        options: opt
+                    }];
                 })
                 setActiveSuggestions(arr);
-            })
-        fetch('/suggestion/byParliamentaryTool')
-            .then(r => r.json())
-            .then(data => {
-                // console.log(data);
-                let arr = [];
-                data.map((elem, index) => {
-                    arr = [...arr, { key: index, date: "21.11.21", per: elem.toolType.type, sub: elem.subject, offer: elem.submittedBy.firstName, rejection: "true", description: elem.description, status: elem.status }];
+                arr = [];
+                data.newGeneralSuggestions.map((elem, index) => {
+                    arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status }];
                 })
                 setAllNewSuggestions(arr);
-            })
 
+            })
     }, [])
 
     function handleVmySug(e) {
         console.log("e: ", e);
         console.log("my Suggestions selected!");
+        // fetch('/suggestion/reject-adopt', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ adopt: true })
+        // }).then(r => r.json())
+        //     .then(data => {
+        //         console.log(data);
+        //     })
+
     }
 
     function handleXmySug(e) {
         console.log("e: ", e);
         console.log("my Suggestions removed!");
+        // fetch('/suggestion/reject-adopt', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ adopt: false })
+        // }).then(r => r.json())
+        //     .then(data => {
+        //         console.log(data);
+        //     })
     }
 
     function handleVallSug(e) {
         console.log("e: ", e);
         console.log("all Suggestions selected!");
+        // fetch('/suggestion/reject-adopt', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ adopt: true })
+        // }).then(r => r.json())
+        //     .then(data => {
+        //         console.log(data);
+        //     })
     }
 
     function handleXallSug(e) {
         console.log("e: ", e);
         console.log("all Suggestions removed!");
+        // fetch('/suggestion/reject-adopt', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ adopt: false })
+        // }).then(r => r.json())
+        //     .then(data => {
+        //         console.log(data);
+        //     })
     }
+    const changeLanguage = lng => {
+        i18n.changeLanguage(lng);
+    };
 
     return (
-        <div className="suggestions-container">
-            <table>
-                <caption id="title" className="title-bold">הצעות חדשות עבורי:</caption>
-                <tr id="header">
-                    <th className="title-bold">תאריך</th>
-                    <th className="title-bold">כלי פרלמנטרי</th>
-                    <th className="title-bold">נושא</th>
-                    <th className="title-bold">מציע</th>
-                    <th className="title-bold">אימוץ/דחיה</th>
-                </tr>
+        <>
+            <div className="suggestions-container">
 
-                {myNewSuggestions.map((elem, index) => {
+                <table>
+                    <caption id="title" className="title-bold">{t('ownSuggestions')}</caption>
+                    <tr id="header">
+                        <th className="title-bold">{t('date')}</th>
+                        <th className="title-bold">{t('parlamintary')}</th>
+                        <th className="title-bold">{t('subject')}</th>
+                        <th className="title-bold">{t('offer')}</th>
+                        <th className="title-bold">{t('adoptionrejection')}</th>
+                    </tr>
 
-                    return (
-                        <Suggestion
-                            key={index}
-                            date={elem.date}
-                            per={elem.per}
-                            sub={elem.sub}
-                            offer={elem.offer}
-                            add={handleVmySug}
-                            remove={handleXmySug}
-                            description={elem.description}
-                            status={elem.status}
-                        />)
-                })}
+                    {myNewSuggestions.map((elem, index) => {
 
-            </table>
+                        return (
+                            <Suggestion
+                                key={index}
+                                date={elem.date}
+                                per={elem.per}
+                                sub={elem.sub}
+                                offer={elem.offer}
+                                add={handleVmySug}
+                                remove={handleXmySug}
+                                description={elem.description}
+                                status={elem.status}
+                            />)
+                    })}
 
-            <table>
-                <caption id="title" className="title-bold">הצעות בטיפול:</caption>
-                <tr id="header">
-                    <th className="title-bold">תאריך</th>
+                </table>
 
-                    <th className="title-bold">כלי פרלמנטרי</th>
-                    <th className="title-bold">נושא</th>
-                    <th className="title-bold">מציע</th>
-                    <th className="title-bold">עדכון סטטוס</th>
-                </tr>
-                {activeSuggestions.map((elem, index) => {
-                    return (
-                        <ActiveSuggestions
-                            key={index}
-                            date={elem.date}
-                            per={elem.per}
-                            sub={elem.sub}
-                            offer={elem.offer}
-                            description={elem.description}
-                            options={elem.options}
-                            status={elem.status}
-                        />
-                    );
-                })}
-            </table>
+                <table>
+                    <caption id="title" className="title-bold">{t('updateSuggestions')}</caption>
+                    <tr id="header">
+                        <th className="title-bold">{t('date')}</th>
+                        <th className="title-bold">{t('parlamintary')}</th>
+                        <th className="title-bold">{t('subject')}</th>
+                        <th className="title-bold">{t('offer')}</th>
+                        <th className="title-bold">{t('status')}</th>
+                    </tr>
+                    {activeSuggestions.map((elem, index) => {
+                        return (
+                            <ActiveSuggestions
+                                key={index}
+                                date={elem.date}
+                                per={elem.per}
+                                sub={elem.sub}
+                                offer={elem.offer}
+                                description={elem.description}
+                                options={elem.options}
+                                status={elem.status}
+                            />
+                        );
+                    })}
+                </table>
 
-            <table>
-                <caption id="title" className="title-bold">הצעות חדשות כללי:</caption>
-                <tr id="header">
-                    <th className="title-bold">תאריך</th>
-                    <th className="title-bold">כלי פרלמנטרי</th>
-                    <th className="title-bold">נושא</th>
-                    <th className="title-bold">מציע</th>
-                    <th className="title-bold">אימוץ/דחיה</th>
-                </tr>
-                {allNewSuggestions.map((elem, index) => {
-                    return (
-                        <Suggestion
-                            key={index}
-                            date={elem.date}
-                            per={elem.per}
-                            sub={elem.sub}
-                            offer={elem.offer}
-                            add={handleVallSug}
-                            remove={handleXallSug}
-                            description={elem.description}
-                            status={elem.status}
-                        />
+                <table>
+                    <caption id="title" className="title-bold">{t('allSuggestions')}</caption>
+                    <tr id="header">
+                        <th className="title-bold">{t('date')}</th>
+                        <th className="title-bold">{t('parlamintary')}</th>
+                        <th className="title-bold">{t('subject')}</th>
+                        <th className="title-bold">{t('offer')}</th>
+                        <th className="title-bold">{t('adoptionrejection')}</th>
+                    </tr>
+                    {allNewSuggestions.map((elem, index) => {
+                        return (
+                            <Suggestion
+                                key={index}
+                                date={elem.date}
+                                per={elem.per}
+                                sub={elem.sub}
+                                offer={elem.offer}
+                                add={handleVallSug}
+                                remove={handleXallSug}
+                                description={elem.description}
+                                status={elem.status}
+                            />
 
-                    );
-                })}
-            </table>
+                        );
+                    })}
+                </table>
 
 
-        </div>
+            </div>
+            <button onClick={() => changeLanguage('hb')}>Hb</button>
+            <button onClick={() => changeLanguage('ar')}>ar</button>
+        </>
 
     )
 }

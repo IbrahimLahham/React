@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 //import './normalquery.css'
 
 
 const ResetPassword = () => {
+    const [serverToken, setToken] = useState("");
+    useEffect(() => {
+        if ((window.location.search.substring(1).length) !== 0) {
+            setToken("?" + window.location.search.substring(1));
+        }
+    }, []);
+
 
     const [newpassword, setNewPassword] = useState("")
     const [repeatnewpassword, setRepeatNewPassword] = useState("")
@@ -12,16 +19,21 @@ const ResetPassword = () => {
         e.preventDefault();
         console.log(newpassword, repeatnewpassword);
         if (newpassword === repeatnewpassword) {
-            fetch('/user/savePassword', {
+            fetch(`/user/savePassword${serverToken}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ newpassword })
+                body: JSON.stringify({ password: newpassword })
             }).then(r => r.json())
                 .then(data => {
-                    console.log(data);
-                    setSuccess(" הסיסמה שונתה בהצלחה");
+                    console.log("data: ", data);
+                    if(data.ok){
+                        setSuccess(" הסיסמה שונתה בהצלחה");
+                    }
+                    else{
+                        setSuccess("אי אפשר לשנות הסיסמה!");
+                    }
                 })
 
         } else {

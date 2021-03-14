@@ -1,16 +1,17 @@
 const mongoose = require("mongoose");
 
-
 const ToolSchema = new mongoose.Schema({
-    type: String,
+  type: String,
+  title: String,
+  subTitle: String,
+  tkanon: {
     title: String,
-    subTitle: String,
-    term: String,
-    language: String,
-    redirectTo:String
+    tkanonNumber: String,
+    tkanonDetails: [{ sectionTitle: String, sectionContent: String }],
+  },
+  language: String,
+  redirectTo: String,
 });
-
-
 
 const Tool = mongoose.model("Tool", ToolSchema);
 module.exports = Tool;
