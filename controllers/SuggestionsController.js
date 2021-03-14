@@ -117,6 +117,7 @@ exports.createSuggestions = async (req, res) => {
       governmentOffice: governmentOffice,
       files: files,
       status: { status: "open" },
+      isSpam: false,
     });
     console.log("-->", suggestionToAdd);
     suggestionToAdd.save().then(() => {

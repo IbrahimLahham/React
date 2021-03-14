@@ -13,6 +13,12 @@ import Forgetpassword from './pages/loginRegisteration/forgetpassword';
 import Resetpassword from './pages/resetPassword/resetPassword';
 import HaverKnesset from './pages/haverKnesset/haverKnesset';
 
+import AdminPage from './pages/admin/adminPage';
+import AddKnesset from './pages/admin/addKnesset';
+import Members from './pages/admin/members';
+import SpamSuggestions from './pages/admin/spamSuggestions';
+
+
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -87,7 +93,18 @@ export default function App() {
             <li className='non-active-nav'>
               <Link onClick={checkConnection} to="/haverKnesset">haverKnesset</Link>
             </li>
-
+            <li className='non-active-nav'>
+              <Link onClick={checkConnection} to="/adminPage">adminPage</Link>
+            </li>
+            <li className='non-active-nav'>
+              <Link onClick={checkConnection} to="/addKnesset">addKnesset</Link>
+            </li>
+            <li className='non-active-nav'>
+              <Link onClick={checkConnection} to="/members">members</Link>
+            </li>
+            <li className='non-active-nav'>
+              <Link onClick={checkConnection} to="/spamSuggestions">spamSuggestions</Link>
+            </li>
 
           </ul>
         </nav>
@@ -131,7 +148,22 @@ export default function App() {
             <Header user={user} show={true} connected={connected} pages={[{ text: "מערכת ח״כ", url: "haverKnesset" }]} />
             <HaverKnesset />
           </Route>
-
+          <Route path="/adminPage">
+            <Header user={user} show={true} connected={connected} pages={[{ text: "admin", url: "adminPage" }]} />
+            <AdminPage />
+          </Route>
+          <Route path="/addKnesset">
+            <Header user={user} show={true} connected={connected} pages={[{ text: "admin", url: "adminPage" }, { text: "מערכת ח״כ", url: "addKnesset" }]} />
+            <AddKnesset />
+          </Route>
+          <Route path="/members">
+            <Header user={user} show={true} connected={connected} pages={[{ text: "admin", url: "adminPage" }, { text: "מערכת ח״כ", url: "members" }]} />
+            <Members />
+          </Route>
+          <Route path="/spamSuggestions">
+            <Header user={user} show={true} connected={connected} pages={[{ text: "admin", url: "adminPage" }, { text: "מערכת ח״כ", url: "spamSuggestions" }]} />
+            <SpamSuggestions />
+          </Route>
         </Switch>
 
         <Footer />

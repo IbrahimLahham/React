@@ -8,6 +8,7 @@ const SuggestionSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
   description: String,
   status: [SuggestionStatus],
+  isSpam: {type: Boolean, default: false},
   preferredKnessetMembers: [User],
   knessetMembersWhoRejected: [User],
   whoIsWorkingOnIt: User,
