@@ -5,8 +5,10 @@ import React, { useEffect, useState } from 'react';
 
 const ResetPassword = () => {
     const [serverToken, setToken] = useState("");
-    useEffect(()=>{
-        setToken(window.location.search.substring(1));
+    useEffect(() => {
+        if ((window.location.search.substring(1).length) !== 0) {
+            setToken("?" + window.location.search.substring(1));
+        }
     }, []);
 
 
@@ -17,7 +19,7 @@ const ResetPassword = () => {
         e.preventDefault();
         console.log(newpassword, repeatnewpassword);
         if (newpassword === repeatnewpassword) {
-            fetch(`/user/savePassword?${serverToken}`, {
+            fetch(`/user/savePassword${serverToken}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -25,8 +27,13 @@ const ResetPassword = () => {
                 body: JSON.stringify({ password: newpassword })
             }).then(r => r.json())
                 .then(data => {
-                    console.log(data);
-                    setSuccess(" הסיסמה שונתה בהצלחה");
+                    console.log("data: ", data);
+                    if(data.ok){
+                        setSuccess(" הסיסמה שונתה בהצלחה");
+                    }
+                    else{
+                        setSuccess("אי אפשר לשנות הסיסמה!");
+                    }
                 })
 
         } else {

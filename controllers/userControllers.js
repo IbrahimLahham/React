@@ -1,4 +1,5 @@
 const user = require("../schema/user");
+const _token = require('../schema/token');
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
@@ -16,7 +17,7 @@ exports.Login = async (req, res) => {
     const vaildPass = await bcrypt.compare(password, userToFind.password);
     if (vaildPass) {
       const token = jwt.sign(
-        { role: userToFind.type, email: userToFind.email },
+        { role: userToFind.type, email: userToFind.email, firstName: userToFind.firstName, lastName: userToFind.lastName },
         process.env.TOKEN_SECRET
       );
       res.cookie("cookie", token, { maxAge: 900000, httpOnly: true });
@@ -59,18 +60,29 @@ exports.Registration = async (req, res) => {
       password: hashPassword,
       company: company,
       phone: phone,
-      type: type,
+      type: "citizen",
       active: active,
       language: language,
     });
     userToAdd.save().then(() => {
       console.log("user saved");
     });
-    
+
+    const _date = new Date();
     const token = jwt.sign(
-      {email: email },
+      { email: email, date: _date },
       process.env.TOKEN_SECRET
     );
+
+    const tokenToAdd = new _token({
+      email: email,
+      token: token,
+      status: true,
+    });
+    tokenToAdd.save().then(() => {
+      console.log("token saved");
+    });
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -88,31 +100,35 @@ exports.Registration = async (req, res) => {
     transporter.sendMail(mailOptions, (err, data) => {
       if (err) {
         console.log(err);
-        res.send("Error occurs");
+        res.send({ ok: false, msg: "Error occurs" });
       } else {
-        res.send({
-          user: userToAdd.email,
-          ok: true,
-          message: `email sent to ${to} sucessfuly`,
-        });
+        res.send({ok: true, message: `email sent sucessfuly`});
       }
     });
   } else {
     res.send({ ok: false, message: "The User Is Already Exist" });
   }
 };
-
 exports.ForgetPassword = async (req, res) => {
   console.log("ForgetPassword");
-  const { from, to, subject, text } = req.body;
+  const { to } = req.body;
 
   const userToCheck = await user.findOne({ email: to });
 
   if (!(userToCheck === null)) {
     const token = jwt.sign(
-      {email: userToCheck.email },
+      { email: userToCheck.email, date: new Date() },
       process.env.TOKEN_SECRET
     );
+
+    const tokenToAdd = new _token({
+      email: userToCheck.email,
+      token: token,
+      status: true,
+    });
+    tokenToAdd.save().then(() => {
+      console.log("token saved");
+    });
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -121,7 +137,7 @@ exports.ForgetPassword = async (req, res) => {
       },
     });
     const mailOptions = {
-      from: from,
+      from: process.env.EMAIL,
       to: to,
       subject: "reset your password",
       text: `link to change your password: http://localhost:3000/resetPassword?token=${token}
@@ -144,43 +160,51 @@ exports.SavePassword = async (req, res) => {
   console.log("SavePassword");
   const { password } = req.body;
   const { token } = req.query;
- 
+
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password, salt);
 
-  try {
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
-      if (err) {
-        console.log(err);
-        // res.send(err);
-      }
-      else {
-        user.updateOne(
-          { email: data.email },
-          { password: hashPassword },
-          function (err, result) {
-            if (err) {
-              res.send(err);
-            } else {
-              res.send(`password changed sucessfuly for ${data.email} `);
-            }
+  const searchToken = await _token.findOne({ token });
+  if (searchToken === null) {
+    res.send({ ok: false, message: "change password Failed" });
+  }
+  else if (searchToken.status) {
+    try {
+      jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
+        if (err) {
+          console.log(err);
+          res.send({ ok: false });
+        }
+        else {
+          const timeOver = (new Date() - new Date(data.date)) / 60000.;
+          console.log(`time: ${timeOver} minutes`);
+          if (timeOver < 10) {
+            user.updateOne(
+              { email: data.email },
+              { password: hashPassword },
+              function (err, result) {
+                if (err) {
+                  res.send(err);
+                } else {
+                  _token.updateOne({ token: token }, { status: false }, function (err, result) { if (err) { console.log("error token!"); } else { console.log("token status changed!") } });
+                  res.send({ ok: true, msg: `password changed sucessfuly for ${data.email} ` });
+                }
+              }
+            );
           }
-        );
-      }
-    })
+          else {
+            res.send({ ok: false, msg: `password cannot be changed due to time over!` });
+          }
+        }
+      })
+    }
+    catch (e) {
+      res.send({ ok: false, msg: "error!" });
+    }
   }
-  catch(e){
-    res.send(e);
+  else {
+    res.send({ ok: false, msg: "password already changed!" });
   }
-
-  // const users = await user.find({});
-  // users.forEach(user => {
-  //   const email =  bcrypt.compare(user, user.email);
-  // });
- 
-  // const email =  bcrypt.compare(user, user.email);
-  //   const salt = await bcrypt.genSalt(10);
-  //   const hashPassword = await bcrypt.hash(password , salt);
 };
 
 exports.GetUsersByType = async (req, res) => {
@@ -202,13 +226,31 @@ exports.DeleteCookie = async (req, res) => {
 exports.CheckConnection = async (req, res) => {
   console.log("CheckConnection");
   const flag = req.cookies.cookie !== undefined;
-  res.send({ok: true, cookie:flag});
+  if (flag) {
+    try {
+      jwt.verify(req.cookies.cookie, process.env.TOKEN_SECRET, (err, data) => {
+        if (err) {
+          console.log(err);
+        }
+        else {
+          console.log(data.lastName);
+          res.send({ ok: true, cookie: flag, type: data.role, firstName: data.firstName, lastName: data.lastName, email: data.email });
+        }
+      })
+    } catch (error) {
+      res.send({ ok: false, cookie: flag });
+    }
+  }
+  else {
+    res.send({ ok: false, cookie: flag });
+  }
 };
+
 
 exports.getAllKnessetMembers = async (req, res) => {
   console.log("getAllKnessetMembers");
-  
-  const users = user.find({ type : "knessetMember" }, function(err, result) {
+
+  const users = user.find({ type: "knessetMember" }, function (err, result) {
     if (err) {
       console.log(err);
     } else {
@@ -216,5 +258,5 @@ exports.getAllKnessetMembers = async (req, res) => {
     }
   });
   console.log(users);
-  res.send({ok: true, users: users});
+  res.send({ ok: true, users: users });
 };
