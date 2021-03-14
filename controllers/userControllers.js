@@ -11,7 +11,7 @@ exports.Login = async (req, res) => {
 
   const userToFind = await user.findOne({ email });
 
-  if (userToFind === null) {
+  if ((userToFind === null)||(!userToFind.active)){
     res.send({ ok: false, message: "Login Failed" });
   } else {
     const vaildPass = await bcrypt.compare(password, userToFind.password);
@@ -116,7 +116,7 @@ exports.ForgetPassword = async (req, res) => {
 
   const userToCheck = await user.findOne({ email: to });
 
-  if (!(userToCheck === null)) {
+  if (!(userToCheck === null)&&(userToCheck.active)) {
     const token = jwt.sign(
       { email: userToCheck.email, date: new Date() },
       process.env.TOKEN_SECRET
