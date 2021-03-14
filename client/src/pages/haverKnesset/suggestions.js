@@ -34,6 +34,7 @@ function Suggestions(props) {
             <td className="title-large" id="accept-decline">
                 <CheckBoxIcon id="v-box" style={{ color: 'green' }} onClick={(e) => { add(props) }}>v</CheckBoxIcon>
                 <CloseIcon style={{ color: 'red' }} onClick={(e) => { remove(props) }}>x</CloseIcon>
+                <button>spam</button>
             </td>
         </tr>
         {isOpen === true ?

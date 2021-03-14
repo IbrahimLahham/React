@@ -42,7 +42,7 @@ exports.Registration = async (req, res) => {
     email,
     company,
     phone,
-    type,
+    type="citizen",
     active,
     language,
   } = req.body;
@@ -61,7 +61,7 @@ exports.Registration = async (req, res) => {
       password: hashPassword,
       company: company,
       phone: phone,
-      type: "citizen",
+      type: type,
       active: active,
       language: language,
     });
