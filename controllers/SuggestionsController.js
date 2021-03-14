@@ -43,13 +43,13 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
           newSuggestions: newSuggestions,
           adoptedSuggestions: adoptedSuggestions,
           newGeneralSuggestions: newGeneralSuggestions,
-          success: true,
+          ok: true,
         });
       })
       .catch((err) => {
         console.error("Something went wrong", err);
         res.send({
-          success: false,
+          ok: false,
           message:
             "getting the appropriate suggestion from the DB Failed! try again , " +
             error,
@@ -58,7 +58,7 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send({
-      success: false,
+      ok: false,
       message:
         "getting the appropriate suggestion from the DB Failed! try again , " +
         error,
@@ -77,7 +77,7 @@ exports.getSuggestionsByUserSuggest = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send({
-      success: false,
+      ok: false,
       message:
         "getting the appropriate suggestion from the DB Failed! try again" +
         error,
@@ -123,7 +123,7 @@ exports.createSuggestions = async (req, res) => {
       console.log("the suggestion has been saved in th DB successfully");
       console.log("created Suggestion", suggestionToAdd);
       res.send({
-        success: true,
+        ok: true,
         createdSuggestion: req.body,
         message: "the suggestion has been saved in th DB successfully",
       });
@@ -131,7 +131,7 @@ exports.createSuggestions = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send({
-      success: false,
+      ok: false,
       message: "adding the suggestion to the DB Failed! try again" + error,
     });
   }
@@ -156,7 +156,7 @@ exports.updateSuggestion = async (req, res) => {
   } else if (updateRequestType == "update-status") {
   } else {
     res.send({
-      success: false,
+      ok: false,
       message:
         'the update request is invalid it should be one of these : ["reject-adopt" || "update-status"] ',
     });

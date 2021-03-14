@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const user = require("../schema/user");
 
 module.exports = function ( req, res, next) {
  
@@ -11,9 +12,19 @@ module.exports = function ( req, res, next) {
             res.send(err);
           }
           else {
-            console.log(data.email);
-            req.body.email = data.email;
-            next();
+            user.findOne({email:data.email}).then(function(userToFind) {
+              if((userToFind)&&(userToFind.active)){
+                console.log(data.email);
+                req.body.email = data.email;
+                next();
+                }else{
+                  res.send({
+                    ok: false,
+                    message: "Invalid User"
+                  });
+                }
+            });
+      
           }
         })
       }
