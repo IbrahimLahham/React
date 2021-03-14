@@ -26,7 +26,7 @@ function LoginRegisteration() {
     useEffect(() => {
 
     }, []);
-    
+
 
     function handleLogin(e) {
         e.preventDefault();
@@ -45,7 +45,7 @@ function LoginRegisteration() {
                 if (data.ok === true) {
                     if (data.role === "citizen")
                         history.push('/parliamentaryTool')
-                    else if(data.role === "knessetMember") {
+                    else if (data.role === "knessetMember") {
                         history.push('/haverKnesset')
                     }
                 }
@@ -55,51 +55,49 @@ function LoginRegisteration() {
             })
     }
 
+
     function handleRegister(e) {
         e.preventDefault();
         console.log({ firstName: firstName, lastName: lastName, email: email, organization: organization, telephon: telephon })
 
         // firstName doesn't contrains numbers 
 
+        const validPhone = new RegExp("(00972|0|\\+972)[5][0-9]{8}");
+        if (validPhone.test(telephon)) {
 
-        fetch('/user/Registration', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ firstName: firstName, lastName: lastName, email: email, company: organization, phone: telephon })
-        }).then(r => r.json())
-            .then(data => {
-                console.log(data);
-                //if login true - redirect to forms creation page;
-                if (data.ok === true) {
-                    setRegisterMessage("צעד אחד נותר, תבדוק הדוא״ל.");
-                    fetch('/send-email', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ from: "openknessetdev@gmail.com", to: email, subject: "OpenKnesset Registeration", text: "your temporary password: 1234\nreset password via the link: localhost:3000/resetPassword" })
-                    }).then(r => r.json())
-                        .then(data => {
-                            console.log(data);
-                        })
-                }
-                else {
-                    setRegisterMessage("הדוא״ל כבר קיים !")
-                }
+            fetch('/user/Registration', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ firstName: firstName, lastName: lastName, email: email, company: organization, phone: telephon })
+            }).then(r => r.json())
+                .then(data => {
+                    console.log(data);
+                    //if login true - redirect to forms creation page;
+                    if (data.ok === true) {
+                        setRegisterMessage("צעד אחד נותר, תבדוק הדוא״ל.");
+                    }
+                    else {
+                        setRegisterMessage("הדוא״ל כבר קיים !")
+                    }
 
-            })
+                })
+        }
+        else {
+            setRegisterMessage("מספר טלפון לא חוקי!")
+        }
     }
-    const changeLanguage = lng => {          
-        i18n.changeLanguage(lng);
-      };
     
+    const changeLanguage = lng => {
+        i18n.changeLanguage(lng);
+    };
+
 
     return (
-        
+
         <div>
-          
+
             <div className="user-container">
 
                 <form onSubmit={handleLogin} className="user-login-div">
