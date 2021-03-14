@@ -1,7 +1,7 @@
 const Suggestion = require("../schema/Suggestion");
 
 exports.getSuggestionsByKnessetMember = async (req, res) => {
-  const {email} = req.body;
+  const { email } = req.body;
   try {
     Promise.all([
       Suggestion.find({ "whoIsWorkingOnIt.email": email }),
@@ -30,13 +30,13 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
       .then((results) => {
         //results return an array
         const [
-          newSuggestions,
           adoptedSuggestions,
+          newSuggestions,
           newGeneralSuggestions,
         ] = results;
 
-        console.log("newSuggestions", newSuggestions);
         console.log("adoptedSuggestions", adoptedSuggestions);
+        console.log("newSuggestions", newSuggestions);
         console.log("newGeneralSuggestions", newGeneralSuggestions);
         console.log("results", results);
         res.send({
@@ -97,7 +97,6 @@ exports.createSuggestions = async (req, res) => {
     governmentOffice,
     files = [],
   } = req.body;
-  console.log("emaillllllllllllllllllllllllll"+email);
   try {
     let obj = {};
     let temp = [];
@@ -113,7 +112,7 @@ exports.createSuggestions = async (req, res) => {
       description: description,
       preferredKnessetMembers: preferredKnessetMembers,
       toolType: { title: toolType },
-      submittedBy: { "email": email },
+      submittedBy: { email: email },
       question: question,
       governmentOffice: governmentOffice,
       files: files,
@@ -170,5 +169,3 @@ exports.updateSuggestion = async (req, res) => {
       break;
   }
 };
-
-
