@@ -1,4 +1,5 @@
 const user = require("../schema/user");
+const _token = require('../schema/token');
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
@@ -59,7 +60,7 @@ exports.Registration = async (req, res) => {
       password: hashPassword,
       company: company,
       phone: phone,
-      type: type,
+      type: "citizen",
       active: active,
       language: language,
     });
@@ -67,10 +68,21 @@ exports.Registration = async (req, res) => {
       console.log("user saved");
     });
 
+    const _date = new Date();
     const token = jwt.sign(
-      { email: email },
+      { email: email, date: _date },
       process.env.TOKEN_SECRET
     );
+
+    const tokenToAdd = new _token({
+      email: email,
+      token: token,
+      status: true,
+    });
+    tokenToAdd.save().then(() => {
+      console.log("token saved");
+    });
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -88,23 +100,18 @@ exports.Registration = async (req, res) => {
     transporter.sendMail(mailOptions, (err, data) => {
       if (err) {
         console.log(err);
-        res.send("Error occurs");
+        res.send({ ok: false, msg: "Error occurs" });
       } else {
-        res.send({
-          user: userToAdd.email,
-          ok: true,
-          message: `email sent to ${to} sucessfuly`,
-        });
+        res.send({ok: true, message: `email sent sucessfuly`});
       }
     });
   } else {
     res.send({ ok: false, message: "The User Is Already Exist" });
   }
 };
-
 exports.ForgetPassword = async (req, res) => {
   console.log("ForgetPassword");
-  const { from, to, subject, text } = req.body;
+  const { to } = req.body;
 
   const userToCheck = await user.findOne({ email: to });
 
@@ -113,6 +120,15 @@ exports.ForgetPassword = async (req, res) => {
       { email: userToCheck.email, date: new Date() },
       process.env.TOKEN_SECRET
     );
+
+    const tokenToAdd = new _token({
+      email: userToCheck.email,
+      token: token,
+      status: true,
+    });
+    tokenToAdd.save().then(() => {
+      console.log("token saved");
+    });
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -121,7 +137,7 @@ exports.ForgetPassword = async (req, res) => {
       },
     });
     const mailOptions = {
-      from: from,
+      from: process.env.EMAIL,
       to: to,
       subject: "reset your password",
       text: `link to change your password: http://localhost:3000/resetPassword?token=${token}
@@ -148,36 +164,46 @@ exports.SavePassword = async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password, salt);
 
-  try {
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
-      if (err) {
-        console.log(err);
-        res.send({ ok: false });
-      }
-      else {
-        const timeOver = (new Date() - new Date(data.date)) / 60000.;
-        console.log(`time: ${timeOver} minutes`);
-        if (timeOver < 10) {
-          user.updateOne(
-            { email: data.email },
-            { password: hashPassword },
-            function (err, result) {
-              if (err) {
-                res.send(err);
-              } else {
-                res.send({ ok: true, msg: `password changed sucessfuly for ${data.email} ` });
-              }
-            }
-          );
+  const searchToken = await _token.findOne({ token });
+  if (searchToken === null) {
+    res.send({ ok: false, message: "change password Failed" });
+  }
+  else if (searchToken.status) {
+    try {
+      jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
+        if (err) {
+          console.log(err);
+          res.send({ ok: false });
         }
         else {
-          res.send({ ok: true, msg: `password cannot be changed due to time over!` });
+          const timeOver = (new Date() - new Date(data.date)) / 60000.;
+          console.log(`time: ${timeOver} minutes`);
+          if (timeOver < 10) {
+            user.updateOne(
+              { email: data.email },
+              { password: hashPassword },
+              function (err, result) {
+                if (err) {
+                  res.send(err);
+                } else {
+                  _token.updateOne({ token: token }, { status: false }, function (err, result) { if (err) { console.log("error token!"); } else { console.log("token status changed!") } });
+                  res.send({ ok: true, msg: `password changed sucessfuly for ${data.email} ` });
+                }
+              }
+            );
+          }
+          else {
+            res.send({ ok: false, msg: `password cannot be changed due to time over!` });
+          }
         }
-      }
-    })
+      })
+    }
+    catch (e) {
+      res.send({ ok: false, msg: "error!" });
+    }
   }
-  catch (e) {
-    res.send({ ok: true, msg: "error!" });
+  else {
+    res.send({ ok: false, msg: "password already changed!" });
   }
 };
 
