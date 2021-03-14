@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 
 //import './normalquery.css'
 
 
 const ResetPassword = () => {
     const [serverToken, setToken] = useState("");
+    const history = useHistory();
+
     useEffect(() => {
         if ((window.location.search.substring(1).length) !== 0) {
             setToken("?" + window.location.search.substring(1));
@@ -30,6 +33,7 @@ const ResetPassword = () => {
                     console.log("data: ", data);
                     if(data.ok){
                         setSuccess(" הסיסמה שונתה בהצלחה");
+                        // history.push("loginRegisteration");
                     }
                     else{
                         setSuccess("אי אפשר לשנות הסיסמה!");
@@ -44,7 +48,7 @@ const ResetPassword = () => {
     return (
         <div className="user-container">
             <form onSubmit={handlereset} className="user-login-div">
-                <h1 className="title-bold-big">שחזור סיסמה</h1>
+                <h1 className="title-bold-big">שינוי סיסמה</h1>
                 <div className="user-login-flex">
                     <label className="title-bold">סיסמה חדשה</label>
                     <input type="password" className="input-field" onChange={(e) => {
@@ -52,7 +56,7 @@ const ResetPassword = () => {
                     }} required></input>
                 </div>
                 <div className="user-login-flex">
-                    <label className="title-bold">לחֲזוֹר סיסמה</label>
+                    <label className="title-bold">סיסמה חדשה</label>
                     <input type="password" className="input-field" onChange={(e) => {
                         setRepeatNewPassword(e.target.value);
                     }} required></input>
