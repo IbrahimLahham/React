@@ -19,4 +19,8 @@ router
   .route("/updateSuggestion")
   .patch(verifyCookie,SuggestionsController.createSuggestions);
 
+router
+  .route("/spamSuggestion")
+  .post(verifyCookie,SuggestionsController.spamSuggestion);
+
 module.exports = router;

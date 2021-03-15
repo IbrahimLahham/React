@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './members.css'
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import MemberCard from '../../components/MembersCard';
 import {
     BrowserRouter as Router,
     Switch,
@@ -30,8 +31,10 @@ function Members(props) {
             body: JSON.stringify({})
         }).then(r => r.json())
             .then(data => {
-                console.log("data: ", data.users);
-                setUsers(data.users);
+                console.log("data: ", data);
+                if (data.ok) {
+                    setUsers(data.users);
+                }
             });
     }
 
@@ -45,8 +48,10 @@ function Members(props) {
             body: JSON.stringify({})
         }).then(r => r.json())
             .then(data => {
-                console.log("data: ", data.users);
-                setUsers(data.users);
+                console.log("data: ", data);
+                if (data.ok) {
+                    setUsers(data.users);
+                }
             });
     }
 
@@ -60,15 +65,16 @@ function Members(props) {
             body: JSON.stringify({})
         }).then(r => r.json())
             .then(data => {
-                console.log("data: ", data.users);
-                setUsers(data.users);
+                console.log("data: ", data);
+                if (data.ok) {
+                    setUsers(data.users);
+                }
             });
     }
 
     function changeStatus(e) {
-        e.preventDefault();
-        const email = e.target.children[0].innerText;
-        const active = (e.target.children[1].innerText === "true");
+        const email = e.members.email;
+        const active = (e.members.active);
         fetch('/admin/changeStatus', {
             method: 'POST',
             headers: {
@@ -91,21 +97,20 @@ function Members(props) {
 
             <div className="user-container">
 
-                <button onClick={allMembers}>all</button>
-                <button onClick={blockedMembers}>blocked</button>
-                <button onClick={activeMembers}>active</button>
+                <button onClick={allMembers}>כל האזרחים</button>
+                <button onClick={blockedMembers}>אזרחים חסומים</button>
+                <button onClick={activeMembers}>אזרחים פעילים</button>
 
             </div>
-            <div>
+            <div className="member-container">
                 {/* {console.log("users: ", users[0])} */}
                 {users.map((elem, index) => {
                     return (
-                        <form onSubmit={changeStatus}>
-                            <a>{elem.email}</a>
-                            <a>{""+elem.active}</a>
-                            <button type="submit">change status</button>
-                            <br />
-                        </form>
+                        <MemberCard
+                            key={index}
+                            members={elem}
+                            changeStatus={changeStatus}
+                        />
                     );
                 })}
             </div>
