@@ -7,7 +7,7 @@ function kenosKnesset() {
   return (
     <div>
       <div className="container">
-        <TopCards toolType={"4"} />
+        <TopCards toolType={"כינוס הכנסת"} />
         <KennosForm />
       </div>
     </div>
