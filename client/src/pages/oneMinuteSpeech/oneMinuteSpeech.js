@@ -11,7 +11,7 @@ const oneMinuteSpeech = () => {
   return (
     <div>
       <div className="container">
-        <TopCards toolType={"4"} />
+        <TopCards toolType={"נאום בן דקה"} />
         <OneMinuteForm />
       </div>
     </div>

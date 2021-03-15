@@ -11,7 +11,7 @@ const normalquery = () => {
   return (
     <div>
       <div className="container">
-        <TopCards toolType={"4"} />
+        <TopCards toolType={"שאילתא"} />
         <RegularQueryForm />
       </div>
     </div>
