@@ -170,3 +170,28 @@ exports.updateSuggestion = async (req, res) => {
       break;
   }
 };
+
+
+exports.spamSuggestion = async (req, res) => {
+  const { _id, isSpam } = req.body;
+  console.log("_id: ", _id, " isSpam: ", isSpam);
+    try {
+        Suggestion.updateOne({ _id: _id }, { isSpam: isSpam }, function (err, result) {
+            if (err) {
+                console.log("error status!");
+                res.send({ ok: false });
+            }
+            else {
+                console.log("status changed and sent to admin!");
+                res.send({ ok: true });
+            }
+        });
+    } catch (error) {
+        console.log(error);
+        res.send({
+            ok: false,
+            message:
+                "getting the parliamentary Tools from the DB Failed! try again" + error,
+        });
+    }
+};

@@ -149,19 +149,19 @@ export default function App() {
             <HaverKnesset />
           </Route>
           <Route path="/adminPage">
-            <Header user={user} show={true} connected={connected} pages={[{ text: "admin", url: "adminPage" }]} />
+            <Header user={user} show={true} connected={connected} pages={[{ text: "מנהל", url: "adminPage" }]} />
             <AdminPage />
           </Route>
           <Route path="/addKnesset">
-            <Header user={user} show={true} connected={connected} pages={[{ text: "admin", url: "adminPage" }, { text: "מערכת ח״כ", url: "addKnesset" }]} />
+            <Header user={user} show={true} connected={connected} pages={[{ text: "מנהל", url: "adminPage" }, { text: "הוספה", url: "addKnesset" }]} />
             <AddKnesset />
           </Route>
           <Route path="/members">
-            <Header user={user} show={true} connected={connected} pages={[{ text: "admin", url: "adminPage" }, { text: "מערכת ח״כ", url: "members" }]} />
+            <Header user={user} show={true} connected={connected} pages={[{ text: "מנהל", url: "adminPage" }, { text: "אזרחים", url: "members" }]} />
             <Members />
           </Route>
           <Route path="/spamSuggestions">
-            <Header user={user} show={true} connected={connected} pages={[{ text: "admin", url: "adminPage" }, { text: "מערכת ח״כ", url: "spamSuggestions" }]} />
+            <Header user={user} show={true} connected={connected} pages={[{ text: "מנהל", url: "adminPage" }, { text: "ספאם", url: "spamSuggestions" }]} />
             <SpamSuggestions />
           </Route>
         </Switch>

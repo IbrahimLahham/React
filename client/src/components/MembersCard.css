@@ -1,0 +1,16 @@
+.member{
+    display: grid;
+    border: 1px solid black;
+    background-color: white;
+    margin: 10px;
+    width: fit-content;
+    height: fit-content;
+    padding: 10px;
+}
+
+.member-container{
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+}
