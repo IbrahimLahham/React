@@ -9,10 +9,9 @@ function Time({ text, data }) {
       <Subject text={text} Icon={Logo} />
       {data.map((elm) => (
         <div className="time__info">
-          <h5 className="h5 h5-new"></h5>
-          <h5>{elm}</h5>
+          <h5 className="h5 h5-new">{elm.date}</h5>
+          <h5>{elm.description}</h5>
           <h5></h5>
-          <p></p>
         </div>
       ))}
     </div>

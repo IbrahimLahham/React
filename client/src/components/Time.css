@@ -9,7 +9,7 @@
 .time__info {
   display: flex;
   margin-left: 140px;
-  width: 500px;
+  width: 90%;
   /* line-height: 0px; */
 }
 .time__info > h5 {

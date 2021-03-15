@@ -22,7 +22,7 @@ function TopCards(props) {
         // console.log("toolData: ", toolData);
         console.log("Parlmintary tool: ", data);
         setHistory([...data.history]);
-        setFuture([...data.futur]);
+        setFuture([...data.future]);
       });
   }, []);
 
