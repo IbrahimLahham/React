@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './spamSuggestions.css'
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import SuggestionCard from '../../components/SuggestionCard';
 import {
     BrowserRouter as Router,
     Switch,
@@ -32,7 +33,9 @@ function SpamSuggestions(props) {
         }).then(r => r.json())
             .then(data => {
                 console.log("data: ", data);
-                setSpam(data.isSpam);
+                if (data.ok) {
+                    setSpam(data.isSpam);
+                }
             });
     }
 
@@ -45,7 +48,10 @@ function SpamSuggestions(props) {
             body: JSON.stringify({})
         }).then(r => r.json())
             .then(data => {
-                setSpam(data.isSpam);
+                console.log("data: ", data);
+                if (data.ok) {
+                    setSpam(data.isSpam);
+                }
             });
     }
 
@@ -58,14 +64,16 @@ function SpamSuggestions(props) {
             body: JSON.stringify({})
         }).then(r => r.json())
             .then(data => {
-                setSpam(data.isSpam);
+                console.log("data: ", data);
+                if (data.ok) {
+                    setSpam(data.isSpam);
+                }
             });
     }
 
     function changeSpam(e) {
-        e.preventDefault();
-        const _id = e.target.children[2].innerText;
-        const isSpam = (e.target.children[1].innerText === "true");
+        const _id = e.suggestions._id;
+        const isSpam = (e.suggestions.isSpam);
         fetch('/admin/changeSpam', {
             method: 'POST',
             headers: {
@@ -78,6 +86,20 @@ function SpamSuggestions(props) {
             });
     }
 
+    function changeStatus(e) {
+        const email = e.suggestions.submittedBy.email;
+        const active = (e.suggestions.submittedBy.active);
+        fetch('/admin/changeStatus', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email, active: !active })
+        }).then(r => r.json())
+            .then(data => {
+                console.log("data: ", data);
+            });
+    }
 
     const changeLanguage = lng => {
         i18n.changeLanguage(lng);
@@ -89,21 +111,20 @@ function SpamSuggestions(props) {
 
             <div className="user-container">
 
-                <button onClick={allSuggestions}>all</button>
-                <button onClick={showSpam}>spam</button>
-                <button onClick={notSpam}>active</button>
+                <button onClick={allSuggestions}>כל ההצעות</button>
+                <button onClick={showSpam}>הצעות ספאם</button>
+                <button onClick={notSpam}>הצעות פעילות</button>
 
             </div>
-            <div>
+            <div className="suggestion-container">
                 {spam.map((elem, index) => {
                     return (
-                        <form key={index} onSubmit={changeSpam}>
-                            <a>{elem.description}</a>
-                            <label>{""+elem.isSpam}</label>
-                            <a>{elem._id}</a>
-                            <button type="submit">change spam</button>
-                            <br />
-                        </form>
+                        <SuggestionCard
+                            key={index}
+                            suggestions={elem}
+                            changeSpam={changeSpam}
+                            changeStatus={changeStatus}
+                        />
                     );
                 })}
             </div>
