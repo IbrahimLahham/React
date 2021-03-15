@@ -24,39 +24,40 @@ function HaverKnesset() {
         fetch('/suggestion/byKnessetMemberValidate')
             .then(r => r.json())
             .then(data => {
-                console.log("data:", data);
-                let arr = [];
-                data.newSuggestions.map((elem, index) => {
-                    arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status }];
-                })
-                setMyNewSuggestions(arr);
-                arr = [];
-                data.adoptedSuggestions.map((elem, index) => {
-                    let opt = [];
-                    if(elem.toolType.title === "כינוס הכנסת"){
-                        opt = ["תאריך התכנסות צפוי", "איסוף חתימות", "התכנסה"];
-                    }
-                    else if(elem.toolType.title === "נאום בן דקה"){
-                        opt = ["הוקרא", "תאריך הקראה צפוי", "תאריך אימוץ"];
-                    }
-                    else if(elem.toolType.title === "שיאלתא"){
-                        opt = ["תאריך קבלץת תשובה", "תאריך העברה למשרד", "תאריך אימוץ"];
-                    }
-                    else{
-                        opt = ["תאריך התכנסות צפוי", "איסוף חתימות", "התכנסה"];
-                    }
-                    arr = [...arr, {
-                        key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status,
-                        options: opt
-                    }];
-                })
-                setActiveSuggestions(arr);
-                arr = [];
-                data.newGeneralSuggestions.map((elem, index) => {
-                    arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status }];
-                })
-                setAllNewSuggestions(arr);
-
+                if (data.ok) {
+                    console.log("data:", data);
+                    let arr = [];
+                    data.newSuggestions.map((elem, index) => {
+                        arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, _id: elem._id }];
+                    })
+                    setMyNewSuggestions(arr);
+                    arr = [];
+                    data.adoptedSuggestions.map((elem, index) => {
+                        let opt = [];
+                        if (elem.toolType.title === "כינוס הכנסת") {
+                            opt = ["תאריך התכנסות צפוי", "איסוף חתימות", "התכנסה"];
+                        }
+                        else if (elem.toolType.title === "נאום בן דקה") {
+                            opt = ["הוקרא", "תאריך הקראה צפוי", "תאריך אימוץ"];
+                        }
+                        else if (elem.toolType.title === "שאילתא") {
+                            opt = ["תאריך קבלץת תשובה", "תאריך העברה למשרד", "תאריך אימוץ"];
+                        }
+                        else {
+                            opt = ["תאריך התכנסות צפוי", "איסוף חתימות", "התכנסה"];
+                        }
+                        arr = [...arr, {
+                            key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, _id: elem._id,
+                            options: opt
+                        }];
+                    })
+                    setActiveSuggestions(arr);
+                    arr = [];
+                    data.newGeneralSuggestions.map((elem, index) => {
+                        arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, _id: elem._id }];
+                    })
+                    setAllNewSuggestions(arr);
+                }
             })
     }, [])
 
@@ -68,12 +69,11 @@ function HaverKnesset() {
         //     headers: {
         //         'Content-Type': 'application/json'
         //     },
-        //     body: JSON.stringify({ adopt: true })
+        //     body: JSON.stringify({ adopt: true, suggestion: e._id })
         // }).then(r => r.json())
         //     .then(data => {
         //         console.log(data);
         //     })
-
     }
 
     function handleXmySug(e) {
@@ -151,6 +151,7 @@ function HaverKnesset() {
                                 remove={handleXmySug}
                                 description={elem.description}
                                 status={elem.status}
+                                _id={elem._id}
                             />)
                     })}
 
@@ -176,6 +177,7 @@ function HaverKnesset() {
                                 description={elem.description}
                                 options={elem.options}
                                 status={elem.status}
+                                _id={elem._id}
                             />
                         );
                     })}

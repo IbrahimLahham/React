@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("./../controllers/userControllers");
-const  verify = require("./verifyCookie");
+const  verify = require("../middleware/verifyCookie");
 
 router
   .route("/login")

@@ -36,7 +36,7 @@ function ActiveSuggestions(props) {
             <td id="test" className="title-large">
                 <form onChange={test_select}>
                     <select id="status" className="drop-down-menu">
-                        {props.options.map((op, index) => { return <option value={op}>{op}</option> })}
+                        {props.options.map((op, index) => { return <option key={index} value={op}>{op}</option> })}
                     </select>
                 </form>
             </td>

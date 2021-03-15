@@ -1,37 +1,22 @@
 const express = require("express");
 const router = express.Router();
 const SuggestionsController = require("./../controllers/SuggestionsController");
+const verifyCookie = require("../middleware/verifyCookie");
 
 router
   .route("/byKnessetMemberValidate")
-  .get(SuggestionsController.getSuggestionsByKnessetMember);
+  .get(verifyCookie,SuggestionsController.getSuggestionsByKnessetMember);
 
 router
   .route("/byUserSuggest")
-  .get(SuggestionsController.getSuggestionsByUserSuggest);
-
-router
-  .route("/byParliamentaryTool")
-  .get(SuggestionsController.getSuggestionsParliamentaryTool);
-
-router
-.route("/byDate")
-.get(SuggestionsController.getSuggestionsByDate);
-
-router
-.route("/byStatus")
-.get(SuggestionsController.getSuggestionsByStatus);
-
-router
-.route("/all")
-.get(SuggestionsController.getAllSuggestions);
+  .get(verifyCookie,SuggestionsController.getSuggestionsByUserSuggest);
 
 router
 .route("/createSuggestion")
-.post(SuggestionsController.createSuggestions);
+.post(verifyCookie,SuggestionsController.createSuggestions);
 
 router
   .route("/updateSuggestion")
-  .patch(SuggestionsController.createSuggestions);
+  .patch(verifyCookie,SuggestionsController.createSuggestions);
 
 module.exports = router;
