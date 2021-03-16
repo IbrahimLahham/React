@@ -6,10 +6,10 @@ import { Multiselect } from "multiselect-react-dropdown";
 import { useState, useEffect } from "react";
 
 function KennosForm() {
+  const [allKnessetMembersList, setAllKnessetMembersList] = useState([]);
   const [selectedKnessetMembersList, setSelectedKnessetMembersList] = useState(
     []
   );
-  const [allKnessetMembersList, setAllKnessetMembersList] = useState([]);
 
   useEffect(() => {
     fetch("/user/getAllKnessetMembers")
@@ -17,7 +17,7 @@ function KennosForm() {
       .then((data) => {
         const membersTempList = [];
         data.map((member, index) => {
-          membersTempList.push({
+          return membersTempList.push({
             name: member.firstName + " " + member.lastName,
             email: member.email,
           });
@@ -30,26 +30,6 @@ function KennosForm() {
       });
   }, []);
 
-  // const options = [
-  //   { name: "גפני משה", id: 1 },
-  //   { name: "גרמל יעל", id: 2 },
-  //   { name: "דיין עוזי", id: 1 },
-  //   { name: "דיכנטר אבי", id: 2 },
-  //   { name: "Srigar", id: 1 },
-  //   { name: "Sam", id: 2 },
-  //   { name: "Srigar", id: 1 },
-  //   { name: "Sam", id: 2 },
-  //   { name: "Srigar", id: 1 },
-  //   { name: "Sam", id: 2 },
-  //   { name: "Srigar", id: 1 },
-  //   { name: "Sam", id: 2 },
-  //   { name: "Srigar", id: 1 },
-  //   { name: "Sam", id: 2 },
-  //   { name: "Srigar", id: 1 },
-  //   { name: "Sam", id: 2 },
-  //   { name: "Srigar", id: 1 },
-  //   { name: "Sam", id: 2 },
-  // ];
   function dummy() {
     console.log("hehe");
   }
