@@ -139,6 +139,7 @@ input[type="file" ] {
   margin-bottom: auto;
   margin-top: auto;
   margin-right: 30px;
+  padding: 8px;
 }
 
 .additional-query-div {
