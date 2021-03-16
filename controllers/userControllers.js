@@ -11,7 +11,7 @@ exports.Login = async (req, res) => {
 
   const userToFind = await user.findOne({ email });
 
-  if (userToFind === null) {
+  if ((userToFind === null)||(!userToFind.active)){
     res.send({ ok: false, message: "Login Failed" });
   } else {
     const vaildPass = await bcrypt.compare(password, userToFind.password);
@@ -23,6 +23,7 @@ exports.Login = async (req, res) => {
       res.cookie("cookie", token, { maxAge: 900000, httpOnly: true });
       res.send({
         role: userToFind.type,
+        email: userToFind.email, firstName: userToFind.firstName, lastName: userToFind.lastName,
         ok: true,
         message: "The User Is Logged In",
       });
@@ -41,7 +42,7 @@ exports.Registration = async (req, res) => {
     email,
     company,
     phone,
-    type,
+    type="citizen",
     active,
     language,
   } = req.body;
@@ -60,7 +61,7 @@ exports.Registration = async (req, res) => {
       password: hashPassword,
       company: company,
       phone: phone,
-      type: "citizen",
+      type: type,
       active: active,
       language: language,
     });
@@ -115,7 +116,7 @@ exports.ForgetPassword = async (req, res) => {
 
   const userToCheck = await user.findOne({ email: to });
 
-  if (!(userToCheck === null)) {
+  if (!(userToCheck === null)&&(userToCheck.active)) {
     const token = jwt.sign(
       { email: userToCheck.email, date: new Date() },
       process.env.TOKEN_SECRET
