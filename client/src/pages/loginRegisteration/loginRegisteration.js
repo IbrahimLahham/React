@@ -8,6 +8,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import { Label } from 'reactstrap';
 
 
 function LoginRegisteration() {
@@ -159,8 +160,9 @@ function LoginRegisteration() {
                 </form>
 
             </div>
-            <button onClick={() => changeLanguage('hb')}>Hb</button>
-            <button onClick={() => changeLanguage('ar')}>ar</button>
+            <a id="forgot-pass" onClick={() => changeLanguage('hb')}>Hb</a>
+            <lable>|</lable>
+            <a id="forgot-pass" onClick={() => changeLanguage('ar')}>ar</a>
         </div>
 
     )
