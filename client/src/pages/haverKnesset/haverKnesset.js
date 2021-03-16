@@ -153,7 +153,6 @@ function HaverKnesset() {
                         <th className="title-bold">{t('offer')}</th>
                         <th className="title-bold">{t('adoptionrejection')}</th>
                     </tr>
-
                     {myNewSuggestions.map((elem, index) => {
 
                         return (
