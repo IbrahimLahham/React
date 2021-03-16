@@ -6,6 +6,8 @@ const parliamentaryToolsRouter = require("./routes/parliamentaryToolsRoute");
 const userRouter = require("./routes/userRoute");
 const adminRouter = require('./routes/adminRoute');
 var cookieParser = require("cookie-parser");
+var admin = require('firebase-admin');
+const serviceAccount = require('./open-knesset-firebase-adminsdk-2sux2-cec40c904b.json');
 require("dotenv").config();
 
 app.use(express.static("client/build"));
@@ -24,6 +26,21 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
   console.log("we are connected to DB");
 });
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+const firebase_db = admin.firestore();
+
+const doc = firebase_db.collection('users').doc('alovelace');
+
+  doc.set({
+  first: 'Ada',
+  last: 'Lovelace',
+  born: 1815
+});
+
 
 //routes
 app.use("/suggestion", SuggestionsRouter);
