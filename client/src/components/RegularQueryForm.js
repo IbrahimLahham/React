@@ -4,6 +4,7 @@ import Subject from "./Subject";
 import at from "./Images/at.PNG";
 import { Multiselect } from "multiselect-react-dropdown";
 import { useState, useEffect } from "react";
+import Attachmentfile from "./attachmentfile";
 
 import AttachIcon from "./Images/attach-icon.png";
 import AttachmentsIcon from "./Images/attacments-icon.png";
@@ -14,6 +15,18 @@ function RegularQueryForm() {
     []
   );
   const [allKnessetMembersList, setAllKnessetMembersList] = useState([]);
+
+  const [files , setFiles] = useState([]);
+
+  function handlefile(e){
+    e.preventDefault();
+    var files = e.target.files;
+    console.log(files);
+    var filesArr = Array.prototype.slice.call(files);
+    console.log(filesArr);
+    setFiles(filesArr);
+    console.log("state" , files);
+  }
 
   useEffect(() => {
     fetch("/user/getAllKnessetMembers")
@@ -159,26 +172,17 @@ function RegularQueryForm() {
             </div>
             <div className="attachments-div">
               <div className="attachments-list">
-                <div class="attachment">
-                  <img src={AttachmentsIcon}></img>
-                  <p>פרוטוקול אסיפה כללית 9.9.13</p>
-                  <img src={PeopleIcon}></img>
-                </div>
-                <div class="attachment">
-                  <img src={AttachmentsIcon}></img>
-                  <p>פרוטוקול אסיפה כללית 9.9.13</p>
-                  <img src={PeopleIcon}></img>
-                </div>
-                <div class="attachment">
-                  <img src={AttachmentsIcon}></img>
-                  <p>פרוטוקול אסיפה כללית 9.9.13</p>
-                  <img src={PeopleIcon}></img>
-                </div>
+              {files.map((file , index)=>{
+                return(
+                  <Attachmentfile key={index} fileTitle={file.name}/>
+                )
+              })}
               </div>
               <div className="attach-button-div">
-                <button className="btn" type="submit">
-                  הוסף קובץ
-                </button>
+              <label className="btn">
+                <input type="file" multiple onChange={handlefile}/>
+                 הוסףקובץ
+              </label>
               </div>
             </div>
 

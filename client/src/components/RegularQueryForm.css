@@ -76,6 +76,11 @@ form {
   width: 100%;
 }
 
+input[type="file" ] {
+  display: none;
+}
+
+
 .attachments-div {
   display: flex;
   flex-direction: row;
