@@ -16,6 +16,8 @@ module.exports = function ( req, res, next) {
               if((userToFind)&&(userToFind.active)){
                 console.log(data.email);
                 req.body.email = data.email;
+                req.body.firstName = data.firstName;
+                req.body.lastName = data.lastName;
                 next();
                 }else{
                   res.send({
