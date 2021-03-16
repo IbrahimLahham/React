@@ -35,10 +35,6 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
           newGeneralSuggestions,
         ] = results;
 
-        console.log("adoptedSuggestions", adoptedSuggestions);
-        console.log("newSuggestions", newSuggestions);
-        console.log("newGeneralSuggestions", newGeneralSuggestions);
-        console.log("results", results);
         res.send({
           newSuggestions: newSuggestions,
           adoptedSuggestions: adoptedSuggestions,
@@ -69,17 +65,74 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
 exports.getSuggestionsByUserSuggest = async (req, res) => {
   const { email } = req.body;
   try {
-    const suggestionKnessetMemberCanSee = await Suggestion.find({
-      "submittedBy.email": email,
-    });
-    console.log("getSuggestionsByUserSuggest", suggestionKnessetMemberCanSee);
-    res.send({ suggestion: suggestionKnessetMemberCanSee });
+    Promise.all([
+      Suggestion.find({
+        $and: [
+          { "whoIsWorkingOnIt.email": null },
+          {
+            "status.status": { $ne: "done" },
+          },
+          {
+            "submittedBy.email": email,
+          },
+        ],
+      }),
+      Suggestion.find({
+        $and: [
+          { "whoIsWorkingOnIt.email": { $ne: null } },
+          {
+            "status.status": { $ne: "done" },
+          },
+          {
+            "submittedBy.email": email,
+          },
+        ],
+      }),
+      Suggestion.find({
+        $and: [
+          {
+            "status.status": "done",
+          },
+          {
+            "submittedBy.email": email,
+          },
+        ],
+      }),
+    ])
+      .then((results) => {
+        //results return an array
+        const [
+          waitingSuggestions,
+          adoptedSuggestions,
+          closedSuggestions,
+        ] = results;
+        let allSuggestions = waitingSuggestions
+          .concat(adoptedSuggestions)
+          .concat(closedSuggestions);
+
+        res.send({
+          waitingSuggestions: waitingSuggestions,
+          adoptedSuggestions: adoptedSuggestions,
+          closedSuggestions: closedSuggestions,
+          suggestions: allSuggestions,
+          ok: true,
+        });
+      })
+      .catch((err) => {
+        console.error("Something went wrong", err);
+        res.send({
+          ok: false,
+          message:
+            "getting the appropriate user suggestion from the DB Failed! try again , " +
+            error,
+        });
+      });
   } catch (error) {
     console.log(error);
     res.send({
       ok: false,
       message:
-        "getting the appropriate suggestion from the DB Failed! try again" +
+        "getting the appropriate user suggestion from the DB Failed! try again , " +
         error,
     });
   }
@@ -96,6 +149,8 @@ exports.createSuggestions = async (req, res) => {
     question,
     governmentOffice,
     files = [],
+    firstName = "",
+    lastName = "",
   } = req.body;
   try {
     let obj = {};
@@ -106,20 +161,18 @@ exports.createSuggestions = async (req, res) => {
       obj = {};
     }
     preferredKnessetMembers = temp;
-    console.log("preferredKnessetMembers", preferredKnessetMembers);
     const suggestionToAdd = new Suggestion({
       subject: subject,
       description: description,
       preferredKnessetMembers: preferredKnessetMembers,
       toolType: { title: toolType },
-      submittedBy: { email: email },
+      submittedBy: { email: email, firstName: firstName, lastName: lastName },
       question: question,
       governmentOffice: governmentOffice,
       files: files,
       status: { status: "open" },
       isSpam: false,
     });
-    console.log("-->", suggestionToAdd);
     suggestionToAdd.save().then(() => {
       console.log("the suggestion has been saved in th DB successfully");
       console.log("created Suggestion", suggestionToAdd);
@@ -139,34 +192,125 @@ exports.createSuggestions = async (req, res) => {
 };
 
 exports.updateSuggestion = async (req, res) => {
-  console.log("getAllSuggestions");
-  let { updateRequestType = "" } = req.body;
-  if (updateRequestType == "reject-adopt") {
-    var query = { username: req.user.username };
-    req.newData.username = req.user.username;
+  let { newStatus, suggestion, date = new Date() } = req.body;
+  let suggestionToUpdate = {
+    _id: suggestion,
+  };
+  let update = {
+    $push: { status: { status: newStatus, date: date } },
+  };
 
-    MyModel.findOneAndUpdate(
-      query,
-      req.newData,
-      { upsert: true },
-      function (err, doc) {
-        if (err) return res.send(500, { error: err });
-        return res.send("Succesfully saved.");
-      }
+  if (newStatus == "done") {
+    update["whoIsWorkingOnIt"] = null;
+  }
+  try {
+    const suggestionKnessetMemberCanSee = await Suggestion.findOneAndUpdate(
+      suggestionToUpdate,
+      update
     );
-  } else if (updateRequestType == "update-status") {
-  } else {
+
+    res.send({
+      ok: true,
+      message: "the suggestion status has ben updated successfully..",
+    });
+  } catch (error) {
+    console.log(error);
     res.send({
       ok: false,
-      message:
-        'the update request is invalid it should be one of these : ["reject-adopt" || "update-status"] ',
+      message: "updating the suggestion status Failed! try again" + error,
     });
   }
-  switch (updateRequestType) {
-    case "reject-adopt":
-      break;
+};
 
-    default:
-      break;
+exports.rejectOrAdoptSuggestion = async (req, res) => {
+  console.log("getAllSuggestions");
+  let { adopt = false, suggestion, email } = req.body;
+
+  if (adopt) {
+    try {
+      const updatedSuggestion = await Suggestion.findOneAndUpdate(
+        { _id: suggestion },
+        {
+          whoIsWorkingOnIt: { email: email },
+          $pull: { preferredKnessetMembers: { email: email } },
+          $push: { status: { status: " תאריך אימוץ : " } },
+        }
+      );
+
+      res.send({
+        ok: true,
+        message: "the suggestion status has ben updated successfully..",
+      });
+    } catch (error) {
+      console.log(error);
+      res.send({
+        ok: false,
+        message: "updating the suggestion status Failed! try again" + error,
+      });
+    }
+  } else {
+    try {
+      let suggestionToUpdate = await Suggestion.findOne({
+        _id: suggestion,
+      });
+      if (suggestionToUpdate.preferredKnessetMembers.length == 1) {
+        suggestionToUpdate.preferredKnessetMembers[0].email == email;
+        let updatedSuggestion = await Suggestion.findOneAndUpdate(
+          { _id: suggestion },
+          {
+            $pull: { preferredKnessetMembers: { email: email } },
+            $push: {
+              knessetMembersWhoRejected: { email: email },
+              status: { status: " נדחתה עי חבר כנסת " },
+            },
+          }
+        );
+      } else {
+        let updatedSuggestion = await Suggestion.findOneAndUpdate(
+          { _id: suggestion },
+          {
+            $pull: { preferredKnessetMembers: { email: email } },
+            $push: { knessetMembersWhoRejected: { email: email } },
+          }
+        );
+      }
+
+      res.send({
+        ok: true,
+        message: "the suggestion status has ben updated successfully..",
+        suggestionToUpdate: suggestionToUpdate,
+      });
+    } catch (error) {
+      console.log(error);
+      res.send({
+        ok: false,
+        message: "updating the suggestion status Failed! try again" + error,
+      });
+    }
   }
+};
+
+
+exports.spamSuggestion = async (req, res) => {
+  const { _id, isSpam } = req.body;
+  console.log("_id: ", _id, " isSpam: ", isSpam);
+    try {
+        Suggestion.updateOne({ _id: _id }, { isSpam: isSpam }, function (err, result) {
+            if (err) {
+                console.log("error status!");
+                res.send({ ok: false });
+            }
+            else {
+                console.log("status changed and sent to admin!");
+                res.send({ ok: true });
+            }
+        });
+    } catch (error) {
+        console.log(error);
+        res.send({
+            ok: false,
+            message:
+                "getting the parliamentary Tools from the DB Failed! try again" + error,
+        });
+    }
 };

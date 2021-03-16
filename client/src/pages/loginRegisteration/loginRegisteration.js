@@ -52,6 +52,9 @@ function LoginRegisteration(props) {
                     else if (data.role === "knessetMember") {
                         history.push('/haverKnesset')
                     }
+                    else if(data.role === "admin"){
+                        history.push('/adminPage')
+                    }
                 }
                 else {
                     setError("דוא״ל או סיסמה שגויים!");

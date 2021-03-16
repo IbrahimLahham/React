@@ -5,14 +5,17 @@ import { Collapse } from 'reactstrap';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CloseIcon from '@material-ui/icons/Close';
+import WarningIcon from '@material-ui/icons/Warning';
 
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 import './suggestions.css';
 
 function Suggestions(props) {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen)
-    const {add , remove } = props;
+    const { add, remove, spam } = props;
     // function handleVallSug(e) {
     //     console.log("e: ", e);
     //     console.log("Suggestions selected!");
@@ -33,8 +36,18 @@ function Suggestions(props) {
             <td className="title-large">{props.offer}</td>
             <td className="title-large" id="accept-decline">
                 <CheckBoxIcon id="v-box" style={{ color: 'green' }} onClick={(e) => { add(props) }}>v</CheckBoxIcon>
-                <CloseIcon style={{ color: 'red' }} onClick={(e) => { remove(props) }}>x</CloseIcon>
-                <button>spam</button>
+                <Popup trigger={<CloseIcon style={{ color: 'red' }}>x</CloseIcon>} position="buttom center">
+                    <div>
+                        <a>are you sure to reject it?</a>
+                        <button onClick={(e) => { remove(props) }}>yes</button>
+                    </div>
+                </Popup>
+                <Popup trigger={<WarningIcon style={{ color: 'orange' }}>x</WarningIcon>} position="buttom center">
+                    <div>
+                        <a>are you sure to send it to spam?</a>
+                        <button onClick={(e) => { spam(props) }}>yes</button>
+                    </div>
+                </Popup>
             </td>
         </tr>
         {isOpen === true ?

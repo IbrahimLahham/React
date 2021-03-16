@@ -84,7 +84,7 @@ function HaverKnesset() {
         //     headers: {
         //         'Content-Type': 'application/json'
         //     },
-        //     body: JSON.stringify({ adopt: false })
+        //     body: JSON.stringify({ adopt: true, suggestion: e._id })
         // }).then(r => r.json())
         //     .then(data => {
         //         console.log(data);
@@ -99,7 +99,7 @@ function HaverKnesset() {
         //     headers: {
         //         'Content-Type': 'application/json'
         //     },
-        //     body: JSON.stringify({ adopt: true })
+        //     body: JSON.stringify({ adopt: true, suggestion: e._id })
         // }).then(r => r.json())
         //     .then(data => {
         //         console.log(data);
@@ -114,12 +114,28 @@ function HaverKnesset() {
         //     headers: {
         //         'Content-Type': 'application/json'
         //     },
-        //     body: JSON.stringify({ adopt: false })
+        //     body: JSON.stringify({ adopt: true, suggestion: e._id })
         // }).then(r => r.json())
         //     .then(data => {
         //         console.log(data);
         //     })
     }
+
+    function handleSpam(e) {
+        console.log("e: ", e._id);
+        const _id = e._id;
+        fetch('/suggestion/spamSuggestion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ _id: _id, isSpam: true })
+        }).then(r => r.json())
+            .then(data => {
+                console.log(data);
+            })
+    }
+
     const changeLanguage = lng => {
         i18n.changeLanguage(lng);
     };
@@ -149,6 +165,7 @@ function HaverKnesset() {
                                 offer={elem.offer}
                                 add={handleVmySug}
                                 remove={handleXmySug}
+                                spam={handleSpam}
                                 description={elem.description}
                                 status={elem.status}
                                 _id={elem._id}
@@ -202,8 +219,10 @@ function HaverKnesset() {
                                 offer={elem.offer}
                                 add={handleVallSug}
                                 remove={handleXallSug}
+                                spam={handleSpam}
                                 description={elem.description}
                                 status={elem.status}
+                                _id={elem._id}
                             />
 
                         );
