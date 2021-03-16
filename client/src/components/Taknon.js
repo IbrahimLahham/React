@@ -12,8 +12,8 @@ function Taknon(props) {
       <div className="taknon__data">
         <h5>{props.tool.tkanon.title}</h5>
         <h5>{props.tool.tkanon.tkanonNumber}. </h5>
-        <h5>א.</h5>
-        {/* <h5 className="articl">
+        {/* <h5>א.</h5>
+        <h5 className="articl">
           5 חברי הכנסת הדורשים לכנס את הכנסת בתקופת הפגרה, בהתאם לסעיף 9(ב( לחוק
           הכנסת, רשאים לפרט בדרישתם נושא אחד או שני נושאים; יושב ראש הכנסת יעמיד
           את הנושאים על סדר יומה של הישיבה, כהצעות לסדר היום; אין באמור כדי
