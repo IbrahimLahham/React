@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const SuggestionsRouter = require("./routes/SuggestionsRoute");
 const parliamentaryToolsRouter = require("./routes/parliamentaryToolsRoute");
 const userRouter = require("./routes/userRoute");
+const adminRouter = require('./routes/adminRoute');
 var cookieParser = require("cookie-parser");
 require("dotenv").config();
 
@@ -28,6 +29,7 @@ db.once("open", () => {
 app.use("/suggestion", SuggestionsRouter);
 app.use("/parliamentaryTools", parliamentaryToolsRouter);
 app.use("/user", userRouter);
+app.use("/admin", adminRouter);
 
 // Server run
 const port = process.env.PORT || 3001;

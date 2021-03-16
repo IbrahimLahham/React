@@ -1,9 +1,7 @@
 const Suggestion = require("../schema/Suggestion");
 
 exports.getSuggestionsByKnessetMember = async (req, res) => {
-  // const { email = "" } = req.query;
-  const email = "preferredKnessetMembers1";
-  console.log("email", email);
+  const { email } = req.body;
   try {
     Promise.all([
       Suggestion.find({ "whoIsWorkingOnIt.email": email }),
@@ -32,26 +30,26 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
       .then((results) => {
         //results return an array
         const [
-          newSuggestions,
           adoptedSuggestions,
+          newSuggestions,
           newGeneralSuggestions,
         ] = results;
 
-        console.log("newSuggestions", newSuggestions);
         console.log("adoptedSuggestions", adoptedSuggestions);
+        console.log("newSuggestions", newSuggestions);
         console.log("newGeneralSuggestions", newGeneralSuggestions);
         console.log("results", results);
         res.send({
           newSuggestions: newSuggestions,
           adoptedSuggestions: adoptedSuggestions,
           newGeneralSuggestions: newGeneralSuggestions,
-          success: true,
+          ok: true,
         });
       })
       .catch((err) => {
         console.error("Something went wrong", err);
         res.send({
-          success: false,
+          ok: false,
           message:
             "getting the appropriate suggestion from the DB Failed! try again , " +
             error,
@@ -60,7 +58,7 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send({
-      success: false,
+      ok: false,
       message:
         "getting the appropriate suggestion from the DB Failed! try again , " +
         error,
@@ -79,32 +77,12 @@ exports.getSuggestionsByUserSuggest = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send({
-      success: false,
+      ok: false,
       message:
         "getting the appropriate suggestion from the DB Failed! try again" +
         error,
     });
   }
-};
-
-exports.getSuggestionsParliamentaryTool = async (req, res) => {
-  console.log("getSuggestionsParliamentaryTool");
-  res.send([suggestion, suggestion, suggestion]);
-};
-
-exports.getSuggestionsByDate = async (req, res) => {
-  console.log("getSuggestionsByDate");
-  res.send([suggestion, suggestion, suggestion]);
-};
-
-exports.getSuggestionsByStatus = async (req, res) => {
-  console.log("getSuggestionsByStatus");
-  res.send([suggestion, suggestion, suggestion]);
-};
-
-exports.getAllSuggestions = async (req, res) => {
-  console.log("getAllSuggestions");
-  res.send([suggestion, suggestion, suggestion]);
 };
 
 // add new suggestion
@@ -114,12 +92,11 @@ exports.createSuggestions = async (req, res) => {
     description,
     preferredKnessetMembers = [],
     toolType,
-    submittedBy,
+    email,
     question,
     governmentOffice,
     files = [],
   } = req.body;
-
   try {
     let obj = {};
     let temp = [];
@@ -135,18 +112,19 @@ exports.createSuggestions = async (req, res) => {
       description: description,
       preferredKnessetMembers: preferredKnessetMembers,
       toolType: { title: toolType },
-      submittedBy: { email: submittedBy },
+      submittedBy: { email: email },
       question: question,
       governmentOffice: governmentOffice,
       files: files,
       status: { status: "open" },
+      isSpam: false,
     });
     console.log("-->", suggestionToAdd);
     suggestionToAdd.save().then(() => {
       console.log("the suggestion has been saved in th DB successfully");
       console.log("created Suggestion", suggestionToAdd);
       res.send({
-        success: true,
+        ok: true,
         createdSuggestion: req.body,
         message: "the suggestion has been saved in th DB successfully",
       });
@@ -154,7 +132,7 @@ exports.createSuggestions = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send({
-      success: false,
+      ok: false,
       message: "adding the suggestion to the DB Failed! try again" + error,
     });
   }
@@ -179,7 +157,7 @@ exports.updateSuggestion = async (req, res) => {
   } else if (updateRequestType == "update-status") {
   } else {
     res.send({
-      success: false,
+      ok: false,
       message:
         'the update request is invalid it should be one of these : ["reject-adopt" || "update-status"] ',
     });
@@ -193,36 +171,27 @@ exports.updateSuggestion = async (req, res) => {
   }
 };
 
-const user1 = {
-  email: "email@gmail.com",
-  password: "password123",
-  firstName: "moshe",
-  lastName: "dayan",
-  phone: "050111111111",
-  company: "company name",
-  type: "ezrah",
-  active: true,
-  suggestions: null,
-  language: "Hebrew",
-};
 
-const knessetMember = {
-  email: "knesset@gmail.com",
-  password: "password123",
-  firstName: "yossi",
-  lastName: "grenbirg",
-  phone: "050222222222",
-  company: "company name",
-  type: "knessetMember",
-  active: true,
-  suggestions: null,
-  language: "Hebrew",
-};
-
-const tool = {
-  type: "tool type",
-  title: "tool title",
-  subTitle: "tool subTitle",
-  term: "this is the tool term",
-  language: "Hebrew",
+exports.spamSuggestion = async (req, res) => {
+  const { _id, isSpam } = req.body;
+  console.log("_id: ", _id, " isSpam: ", isSpam);
+    try {
+        Suggestion.updateOne({ _id: _id }, { isSpam: isSpam }, function (err, result) {
+            if (err) {
+                console.log("error status!");
+                res.send({ ok: false });
+            }
+            else {
+                console.log("status changed and sent to admin!");
+                res.send({ ok: true });
+            }
+        });
+    } catch (error) {
+        console.log(error);
+        res.send({
+            ok: false,
+            message:
+                "getting the parliamentary Tools from the DB Failed! try again" + error,
+        });
+    }
 };
