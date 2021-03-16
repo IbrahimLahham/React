@@ -20,16 +20,16 @@ function ActiveSuggestions(props) {
         e.preventDefault();
         console.log("status: ", status);
         console.log("date: ", e.target.suggestion_date.value);
-        // fetch('/suggestion/updateStatus', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ status: e.target.value })
-        // }).then(r => r.json())
-        //     .then(data => {
-        //         console.log(data);
-        //     })
+        fetch('/suggestion/updateSuggestion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ status: status, suggestion: props, date: e.target.suggestion_date.value })
+        }).then(r => r.json())
+            .then(data => {
+                console.log("data: ", data);
+            })
     }
 
     return (<>
@@ -51,7 +51,7 @@ function ActiveSuggestions(props) {
                 </form>
                 <Popup trigger={<button>בחר תאריך</button>} position="buttom center">
                     <form onSubmit={select_date}>
-                        <input name="suggestion_date" type="date" />
+                        <input name="suggestion_date" type="date" defaultValue={(new Date()).toISOString().substr(0, 10)} />
                         <button type="submit">בחר תאריך</button>
                     </form>
                 </Popup>
