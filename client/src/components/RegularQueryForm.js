@@ -177,6 +177,7 @@ function RegularQueryForm() {
             </div>
             <div className="attachments-div">
               <div className="attachments-list">
+
               {files.map((file , index)=>{
                 return(
                   <Attachmentfile key={index} fileTitle={file.name}/>
@@ -185,8 +186,8 @@ function RegularQueryForm() {
               </div>
               <div className="attach-button-div">
               <label className="btn">
-                <input type="file" multiple onChange={handlefile}/>
-                 הוסףקובץ
+                <input type="file" multiple onChange={handlefile} />
+                 הוסף קובץ
               </label>
               </div>
             </div>
