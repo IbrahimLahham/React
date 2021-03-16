@@ -44,7 +44,7 @@ function Header(props) {
             props.show ? (props.connected ?
               <li className="left-nav" id="nav-committees">
                 <PersonIcon style={{ color: 'blue' }} />
-                <label>{(props.user.type==="knessetMember"?"ח״כ":"אזרח") + " " + props.user.firstName + " " + props.user.lastName}</label>
+                <label>{(props.user.type==="knessetMember"?"ח״כ":(props.user.type==="admin"?"מנהל":"אזרח")) + " " + props.user.firstName + " " + props.user.lastName}</label>
               </li> :
               <li className="left-nav" id="nav-committees">
                 <PersonIcon style={{ color: 'blue' }} />

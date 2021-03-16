@@ -23,4 +23,8 @@ router
   .route("/reject-adopt")
   .post(verifyCookie,SuggestionsController.rejectOrAdoptSuggestion);
 
+router
+  .route("/spamSuggestion")
+  .post(verifyCookie,SuggestionsController.spamSuggestion);
+
 module.exports = router;

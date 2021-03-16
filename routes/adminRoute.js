@@ -1,38 +1,42 @@
 const express = require("express");
 const router = express.Router();
 const AdminController = require("./../controllers/adminController");
-const verifyCookie = require("../middleware/verifyCookie");
+const verifyAdmin = require("../middleware/verifyAdmin");
 
 router
 .route("/getAllMembers")
-.post(AdminController.getAllMembers);
+.post(verifyAdmin, AdminController.getAllMembers);
 
 router
 .route("/getBlockedMembers")
-.post(AdminController.getBlockedMembers);
+.post(verifyAdmin, AdminController.getBlockedMembers);
 
 router
 .route("/getActiveMembers")
-.post(AdminController.getActiveMembers);
+.post(verifyAdmin, AdminController.getActiveMembers);
 
 router
 .route("/changeStatus")
-.post(AdminController.changeStatus);
+.post(verifyAdmin, AdminController.changeStatus);
 
 router
 .route("/checkSpam")
-.post(AdminController.checkSpam);
+.post(verifyAdmin, AdminController.checkSpam);
 
 router
 .route("/allSuggestions")
-.post(AdminController.allSuggestions);
+.post(verifyAdmin, AdminController.allSuggestions);
 
 router
 .route("/notSpam")
-.post(AdminController.notSpam);
+.post(verifyAdmin, AdminController.notSpam);
 
 router
 .route("/changeSpam")
-.post(AdminController.changeSpam);
+.post(verifyAdmin, AdminController.changeSpam);
+
+router
+.route("/addMember")
+.post(verifyAdmin, AdminController.addMember);
 
 module.exports = router;
