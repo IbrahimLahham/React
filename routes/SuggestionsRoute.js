@@ -17,7 +17,11 @@ router
 
 router
   .route("/updateSuggestion")
-  .patch(verifyCookie,SuggestionsController.createSuggestions);
+  .patch(verifyCookie,SuggestionsController.updateSuggestion);
+
+  router
+  .route("/reject-adopt")
+  .post(verifyCookie,SuggestionsController.rejectOrAdoptSuggestion);
 
 router
   .route("/spamSuggestion")

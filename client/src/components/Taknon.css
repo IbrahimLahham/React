@@ -10,7 +10,7 @@
 .taknon__data {
   display: flex;
   position: relative;
-  width: 400px;
+  width: 70%;
 }
 .taknon__data > h5 {
   margin-right: 10px;

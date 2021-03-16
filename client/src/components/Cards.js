@@ -1,4 +1,5 @@
 import "./Cards.css";
+import { Link } from "react-router-dom";
 
 function Cards(props) {
   return (
@@ -6,10 +7,10 @@ function Cards(props) {
       {props.tools.map((tool, index) => {
         return (
           <div className="card" key={index}>
-            <a href="#">
-              <h2 className="title"> {tool.title} </h2>
-            </a>
-            <p className="content"> {tool.content} </p>
+            <Link to={tool.redirectTo}>
+              <h2 className="title">{tool.title}</h2>
+            </Link>
+            <p className="content"> {tool.subTitle} </p>
           </div>
         );
       })}
