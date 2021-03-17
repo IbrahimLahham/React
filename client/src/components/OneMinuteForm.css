@@ -134,6 +134,8 @@ form {
   margin-bottom: auto;
   margin-top: auto;
   margin-right: 30px;
+  padding: 8px;
+
 }
 
 input[type="file" ] {
