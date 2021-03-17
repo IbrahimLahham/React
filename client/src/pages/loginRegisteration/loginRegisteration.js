@@ -33,8 +33,7 @@ function LoginRegisteration(props) {
 
     function handleLogin(e) {
         e.preventDefault();
-
-        fetch('/user/Login', {
+        fetch('/user/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
