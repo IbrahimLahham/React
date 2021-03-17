@@ -8,6 +8,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import { Label } from 'reactstrap';
 
 
 function LoginRegisteration(props) {
@@ -32,8 +33,7 @@ function LoginRegisteration(props) {
 
     function handleLogin(e) {
         e.preventDefault();
-
-        fetch('/user/Login', {
+        fetch('/user/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -166,8 +166,9 @@ function LoginRegisteration(props) {
                 </form>
 
             </div>
-            <button onClick={() => changeLanguage('hb')}>Hb</button>
-            <button onClick={() => changeLanguage('ar')}>ar</button>
+            <a id="forgot-pass" onClick={() => changeLanguage('hb')}>Hb</a>
+            <lable>|</lable>
+            <a id="forgot-pass" onClick={() => changeLanguage('ar')}>ar</a>
         </div>
 
     )

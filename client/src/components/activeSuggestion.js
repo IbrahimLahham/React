@@ -1,27 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+
 
 function ActiveSuggestions(props) {
     const [isOpen, setIsOpen] = useState(false);
-    const toggle = () => setIsOpen(!isOpen)
+    const toggle = () => setIsOpen(!isOpen);
+    const [status, setStatus] = useState(props.options[0]);
 
     function test_select(e) {
-        console.log("status: ", e.target.value);
-        console.log("e: ", props);
-        console.log("status changed!");
-        // fetch('/suggestion/updateStatus', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ status: e.target.value })
-        // }).then(r => r.json())
-        //     .then(data => {
-        //         console.log(data);
-        //     })
+        setStatus(e.target.value);
+    }
+
+    function select_date(e) {
+        e.preventDefault();
+        console.log("status: ", status);
+        console.log("date: ", e.target.suggestion_date.value);
+        fetch('/suggestion/updateSuggestion', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ status: status, suggestion: props, date: e.target.suggestion_date.value })
+        }).then(r => r.json())
+            .then(data => {
+                console.log("data: ", data);
+            })
     }
 
     return (<>
@@ -36,9 +44,17 @@ function ActiveSuggestions(props) {
             <td id="test" className="title-large">
                 <form onChange={test_select}>
                     <select id="status" className="drop-down-menu">
-                        {props.options.map((op, index) => { return <option key={index} value={op}>{op}</option> })}
+                        {props.options.map((op, index) => {
+                            return (<option key={index} value={op}>{op}</option>);
+                        })}
                     </select>
                 </form>
+                <Popup trigger={<button>בחר תאריך</button>} position="buttom center">
+                    <form onSubmit={select_date}>
+                        <input name="suggestion_date" type="date" defaultValue={(new Date()).toISOString().substr(0, 10)} />
+                        <button type="submit">בחר תאריך</button>
+                    </form>
+                </Popup>
             </td>
         </tr>
         {isOpen === true ?

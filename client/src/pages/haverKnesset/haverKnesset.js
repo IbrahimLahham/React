@@ -41,7 +41,7 @@ function HaverKnesset() {
                             opt = ["הוקרא", "תאריך הקראה צפוי", "תאריך אימוץ"];
                         }
                         else if (elem.toolType.title === "שאילתא") {
-                            opt = ["תאריך קבלץת תשובה", "תאריך העברה למשרד", "תאריך אימוץ"];
+                            opt = ["תאריך קבלת תשובה", "תאריך העברה למשרד", "תאריך אימוץ"];
                         }
                         else {
                             opt = ["תאריך התכנסות צפוי", "איסוף חתימות", "התכנסה"];
@@ -64,61 +64,61 @@ function HaverKnesset() {
     function handleVmySug(e) {
         console.log("e: ", e);
         console.log("my Suggestions selected!");
-        // fetch('/suggestion/reject-adopt', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ adopt: true, suggestion: e._id })
-        // }).then(r => r.json())
-        //     .then(data => {
-        //         console.log(data);
-        //     })
+        fetch('/suggestion/reject-adopt', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ adopt: true, suggestion: e._id })
+        }).then(r => r.json())
+            .then(data => {
+                console.log(data);
+            })
     }
 
     function handleXmySug(e) {
         console.log("e: ", e);
         console.log("my Suggestions removed!");
-        // fetch('/suggestion/reject-adopt', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ adopt: true, suggestion: e._id })
-        // }).then(r => r.json())
-        //     .then(data => {
-        //         console.log(data);
-        //     })
+        fetch('/suggestion/reject-adopt', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ adopt: false, suggestion: e._id })
+        }).then(r => r.json())
+            .then(data => {
+                console.log(data);
+            })
     }
 
     function handleVallSug(e) {
         console.log("e: ", e);
         console.log("all Suggestions selected!");
-        // fetch('/suggestion/reject-adopt', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ adopt: true, suggestion: e._id })
-        // }).then(r => r.json())
-        //     .then(data => {
-        //         console.log(data);
-        //     })
+        fetch('/suggestion/reject-adopt', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ adopt: true, suggestion: e._id })
+        }).then(r => r.json())
+            .then(data => {
+                console.log(data);
+            })
     }
 
     function handleXallSug(e) {
         console.log("e: ", e);
         console.log("all Suggestions removed!");
-        // fetch('/suggestion/reject-adopt', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ adopt: true, suggestion: e._id })
-        // }).then(r => r.json())
-        //     .then(data => {
-        //         console.log(data);
-        //     })
+        fetch('/suggestion/reject-adopt', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ adopt: false, suggestion: e._id })
+        }).then(r => r.json())
+            .then(data => {
+                console.log(data);
+            })
     }
 
     function handleSpam(e) {
@@ -153,7 +153,6 @@ function HaverKnesset() {
                         <th className="title-bold">{t('offer')}</th>
                         <th className="title-bold">{t('adoptionrejection')}</th>
                     </tr>
-
                     {myNewSuggestions.map((elem, index) => {
 
                         return (
@@ -231,8 +230,9 @@ function HaverKnesset() {
 
 
             </div>
-            <button onClick={() => changeLanguage('hb')}>Hb</button>
-            <button onClick={() => changeLanguage('ar')}>ar</button>
+            <a id="forgot-pass" onClick={() => changeLanguage('hb')}>Hb</a>
+            <lable>|</lable>
+            <a id="forgot-pass" onClick={() => changeLanguage('ar')}>ar</a>
         </>
 
     )
