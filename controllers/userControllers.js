@@ -95,7 +95,7 @@ exports.Registration = async (req, res) => {
       from: process.env.EMAIL,
       to: email,
       subject: "welcome to knesset website",
-      text: `your current password is: ${randomPassword} \n link to change your password: http://localhost:3000/resetPassword?token=${token}
+      text: `your current password is: ${randomPassword} \n link to change your password: https://open-knesset.herokuapp.com/resetPassword?token=${token}
       `,
     };
     transporter.sendMail(mailOptions, (err, data) => {
@@ -141,7 +141,7 @@ exports.ForgetPassword = async (req, res) => {
       from: process.env.EMAIL,
       to: to,
       subject: "reset your password",
-      text: `link to change your password: http://localhost:3000/resetPassword?token=${token}
+      text: `link to change your password: https://open-knesset.herokuapp.com/resetPassword?token=${token}
       `,
     };
     transporter.sendMail(mailOptions, (err, data) => {
