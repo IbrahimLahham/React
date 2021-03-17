@@ -1,5 +1,6 @@
 const user = require("../schema/user");
 const Suggestion = require("../schema/Suggestion");
+const jwt = require("jsonwebtoken");
 
 exports.getAllMembers = async (req, res) => {
     try {
