@@ -21,7 +21,7 @@ function ActiveSuggestions(props) {
         console.log("status: ", status);
         console.log("date: ", e.target.suggestion_date.value);
         fetch('/suggestion/updateSuggestion', {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
             },

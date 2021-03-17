@@ -33,14 +33,13 @@ function Members(props) {
 
     function handleSpam(e) {
         console.log("e: ",e.email,e.active );
-        const _id = e._id;
-        const active=!e.active;
+        const active=(e.active === "true");
         fetch('/admin/changeStatus', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ _id: _id, isSpam: active })
+            body: JSON.stringify({ _email: e.email, active: !active })
         }).then(r => r.json())
             .then(data => {
                 console.log(data);
