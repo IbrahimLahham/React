@@ -41,7 +41,7 @@ function HaverKnesset() {
                             opt = ["הוקרא", "תאריך הקראה צפוי", "תאריך אימוץ"];
                         }
                         else if (elem.toolType.title === "שאילתא") {
-                            opt = ["תאריך קבלץת תשובה", "תאריך העברה למשרד", "תאריך אימוץ"];
+                            opt = ["תאריך קבלת תשובה", "תאריך העברה למשרד", "תאריך אימוץ"];
                         }
                         else {
                             opt = ["תאריך התכנסות צפוי", "איסוף חתימות", "התכנסה"];
@@ -153,7 +153,6 @@ function HaverKnesset() {
                         <th className="title-bold">{t('offer')}</th>
                         <th className="title-bold">{t('adoptionrejection')}</th>
                     </tr>
-
                     {myNewSuggestions.map((elem, index) => {
 
                         return (
