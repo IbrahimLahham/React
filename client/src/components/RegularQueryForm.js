@@ -16,16 +16,16 @@ function RegularQueryForm() {
   );
   const [allKnessetMembersList, setAllKnessetMembersList] = useState([]);
 
-  const [files , setFiles] = useState([]);
+  const [files, setFiles] = useState([]);
 
-  function handlefile(e){
+  function handlefile(e) {
     e.preventDefault();
     var files = e.target.files;
     console.log(files);
     var filesArr = Array.prototype.slice.call(files);
     console.log(filesArr);
     setFiles(filesArr);
-    console.log("state" , files);
+    console.log("state", files);
   }
 
   useEffect(() => {
@@ -92,6 +92,7 @@ function RegularQueryForm() {
       additionalQuestion: additionalQuestion,
       preferredKnessetMembers: preferredMembers, // [{name: "full name", email: "email@email.com"}]
       toolType: "שאילתא",
+      files: files,
     };
     console.log("Input being sent: ", input);
 
@@ -177,18 +178,15 @@ function RegularQueryForm() {
             </div>
             <div className="attachments-div">
               <div className="attachments-list">
-
-              {files.map((file , index)=>{
-                return(
-                  <Attachmentfile key={index} fileTitle={file.name}/>
-                )
-              })}
+                {files.map((file, index) => {
+                  return <Attachmentfile key={index} fileTitle={file.name} />;
+                })}
               </div>
               <div className="attach-button-div">
-              <label className="btn">
-                <input type="file" multiple onChange={handlefile} />
-                 הוסף קובץ
-              </label>
+                <label className="btn">
+                  <input type="file" multiple onChange={handlefile} />
+                  הוסף קובץ
+                </label>
               </div>
             </div>
 

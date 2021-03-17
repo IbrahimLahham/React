@@ -16,18 +16,18 @@ function OneMinuteForm() {
   );
   const [allKnessetMembersList, setAllKnessetMembersList] = useState([]);
 
-  const [files , setFiles] = useState([]);
+  const [files, setFiles] = useState([]);
 
-  function handlefile(e){
+  function handlefile(e) {
     e.preventDefault();
     var files = e.target.files;
     console.log(files);
     var filesArr = Array.prototype.slice.call(files);
     console.log(filesArr);
     setFiles(filesArr);
-    console.log("state" , files);
+    console.log("state", files);
   }
-  
+
   useEffect(() => {
     fetch("/user/getAllKnessetMembers")
       .then((r) => r.json())
@@ -89,6 +89,7 @@ function OneMinuteForm() {
       description: description,
       preferredKnessetMembers: preferredMembers, // [{name: "full name", email: "email@email.com"}]
       toolType: "נאום בן דקה",
+      files: files,
     };
     console.log("Input being sent: ", input);
 
@@ -166,17 +167,15 @@ function OneMinuteForm() {
             </div>
             <div className="attachments-div">
               <div className="attachments-list">
-              {files.map((file , index)=>{
-                return(
-                  <Attachmentfile key={index} fileTitle={file.name}/>
-                )
-              })}
+                {files.map((file, index) => {
+                  return <Attachmentfile key={index} fileTitle={file.name} />;
+                })}
               </div>
               <div className="attach-button-div">
-              <label className="btn">
-                <input type="file" multiple onChange={handlefile}/>
-                 הוסףקובץ
-              </label>
+                <label className="btn">
+                  <input type="file" multiple onChange={handlefile} />
+                  הוסףקובץ
+                </label>
               </div>
             </div>
 
