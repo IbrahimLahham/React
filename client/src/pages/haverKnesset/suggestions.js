@@ -16,15 +16,7 @@ function Suggestions(props) {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen)
     const { add, remove, spam } = props;
-    // function handleVallSug(e) {
-    //     console.log("e: ", e);
-    //     console.log("Suggestions selected!");
-    // }
 
-    // function handleXallSug(e) {
-    //     console.log("e: ", e);
-    //     console.log("Suggestions removed!");
-    // }
     return (<>
         <tr>
             <td className="title-large">{props.date.split("T")[0]}
