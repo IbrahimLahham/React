@@ -5,11 +5,11 @@ const verifyAdmin = require("../middleware/verifyAdmin");
 
 router
 .route("/getAllMembers")
-.post(verifyAdmin, AdminController.getAllMembers);
+.get(verifyAdmin, AdminController.getAllMembers);
 
 router
 .route("/getBlockedMembers")
-.post(verifyAdmin, AdminController.getBlockedMembers);
+.get(verifyAdmin, AdminController.getBlockedMembers);
 
 router
 .route("/getActiveMembers")
