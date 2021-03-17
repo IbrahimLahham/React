@@ -102,7 +102,12 @@ function RegularQueryForm() {
     };
     fetch("suggestion/createSuggestion", requestOptions)
       .then((response) => response.json())
-      .then((data) => console.log("Form sent to server, result: ", data));
+      .then((data) => {
+        console.log("Form sent to server, result: ", data);
+        if (data.ok === true) {
+          alert("הבקשה נשלחה בהצלחה. תודה על פנייתך");
+        }
+      });
     setSelectedKnessetMembersList([]);
   }
 
