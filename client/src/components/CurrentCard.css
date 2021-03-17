@@ -1,4 +1,4 @@
-.naom {
+.current-card {
   width: 45%;
   background-color: white;
   padding: 5px;
@@ -8,15 +8,15 @@
   overflow: hidden;
 }
 
-.naom > h2 {
-  line-height: 0px;
+.current-card > h2 {
+  line-height: 0.2em;
 }
 
-.naom > p {
+.current-card > p {
   font-size: 14px;
 }
 
-.naom > p > span {
+.current-card > p > span {
   color: rgb(5, 124, 235);
   font-size: 14px;
 }

@@ -38,7 +38,7 @@ function Header(props) {
             <a href="#">ועדות</a>
           </li>
           <li id="nav-committees">
-            <a href="#">כלים פרלמנטריים</a>
+            <a href="./parliamentaryTool">כלים פרלמנטריים</a>
           </li>
           {
             props.show ? (props.connected ?

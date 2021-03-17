@@ -3,12 +3,50 @@ import "./OneMinuteForm.css";
 import Subject from "./Subject";
 import at from "./Images/at.PNG";
 import { Multiselect } from "multiselect-react-dropdown";
+import { useState, useEffect } from "react";
+import Attachmentfile from "./attachmentfile";
 
 import AttachIcon from "./Images/attach-icon.png";
 import AttachmentsIcon from "./Images/attacments-icon.png";
 import PeopleIcon from "./Images/people.png";
 
 function OneMinuteForm() {
+  const [selectedKnessetMembersList, setSelectedKnessetMembersList] = useState(
+    []
+  );
+  const [allKnessetMembersList, setAllKnessetMembersList] = useState([]);
+
+  const [files , setFiles] = useState([]);
+
+  function handlefile(e){
+    e.preventDefault();
+    var files = e.target.files;
+    console.log(files);
+    var filesArr = Array.prototype.slice.call(files);
+    console.log(filesArr);
+    setFiles(filesArr);
+    console.log("state" , files);
+  }
+  
+  useEffect(() => {
+    fetch("/user/getAllKnessetMembers")
+      .then((r) => r.json())
+      .then((data) => {
+        const membersTempList = [];
+        data.map((member, index) => {
+          membersTempList.push({
+            name: member.firstName + " " + member.lastName,
+            email: member.email,
+          });
+        });
+        setAllKnessetMembersList([
+          ...allKnessetMembersList,
+          ...membersTempList,
+        ]);
+        console.log("allKnessetMembersList: ", allKnessetMembersList);
+      });
+  }, []);
+
   const options = [
     { name: "גפני משה", id: 1 },
     { name: "גרמל יעל", id: 2 },
@@ -33,13 +71,41 @@ function OneMinuteForm() {
     console.log("hehe");
   }
 
-  function onSelect(selectedList, selectedItem) {
-    console.log("select invoked: ", selectedList);
+  async function onSelect(selectedList, selectedItem) {
+    await setSelectedKnessetMembersList([
+      ...selectedKnessetMembersList,
+      selectedItem,
+    ]);
+    console.log("select invoked, state updated: ", selectedKnessetMembersList);
   }
 
   function handleForm(e) {
     e.preventDefault();
-    console.log(e.target.subject.value);
+    const subjectText = e.target.subject.value;
+    const description = e.target.description.value;
+    const preferredMembers = selectedKnessetMembersList;
+    const input = {
+      subject: subjectText,
+      description: description,
+      preferredKnessetMembers: preferredMembers, // [{name: "full name", email: "email@email.com"}]
+      toolType: "נאום בן דקה",
+    };
+    console.log("Input being sent: ", input);
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(input),
+    };
+    fetch("suggestion/createSuggestion", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Form sent to server, result: ", data);
+        if (data.ok === true) {
+          alert("הבקשה נשלחה בהצלחה. תודה על פנייתך");
+        }
+      });
+    setSelectedKnessetMembersList([]);
   }
   return (
     <div className="recomnde">
@@ -50,16 +116,10 @@ function OneMinuteForm() {
             <h4>נושא הצעה לסדר:</h4>
             <input type="text" name="subject" />
             <h4>דברי הסבר:</h4>
-            <textarea name="" id="" cols="47" rows="12"></textarea>
+            <textarea name="description" id="" cols="47" rows="12"></textarea>
           </div>
           <div className="reomnde__FirstHalf">
             <h4>חכ"ים רלוונטיים: </h4>
-            {/* <select className="select">
-            <option>גפני משה</option>
-            <option>גרמל יעל</option>
-            <option>דיין עוזי</option>
-            <option>דיכנטר אבי</option>
-          </select> */}
             <Multiselect
               style={{
                 multiselectContainer: {
@@ -92,7 +152,7 @@ function OneMinuteForm() {
                   "font-size": "12px",
                 },
               }}
-              options={options} // Options to display in the dropdown
+              options={allKnessetMembersList} // Options to display in the dropdown
               selectedValues={dummy} // Preselected value to persist in dropdown
               onSelect={onSelect} // Function will trigger on select event
               onRemove={dummy} // Function will trigger on remove event
@@ -106,26 +166,17 @@ function OneMinuteForm() {
             </div>
             <div className="attachments-div">
               <div className="attachments-list">
-                <div class="attachment">
-                  <img src={AttachmentsIcon}></img>
-                  <p>פרוטוקול אסיפה כללית 9.9.13</p>
-                  <img src={PeopleIcon}></img>
-                </div>
-                <div class="attachment">
-                  <img src={AttachmentsIcon}></img>
-                  <p>פרוטוקול אסיפה כללית 9.9.13</p>
-                  <img src={PeopleIcon}></img>
-                </div>
-                <div class="attachment">
-                  <img src={AttachmentsIcon}></img>
-                  <p>פרוטוקול אסיפה כללית 9.9.13</p>
-                  <img src={PeopleIcon}></img>
-                </div>
+              {files.map((file , index)=>{
+                return(
+                  <Attachmentfile key={index} fileTitle={file.name}/>
+                )
+              })}
               </div>
               <div className="attach-button-div">
-                <button className="btn" type="submit">
-                  הוסף קובץ
-                </button>
+              <label className="btn">
+                <input type="file" multiple onChange={handlefile}/>
+                 הוסףקובץ
+              </label>
               </div>
             </div>
 
