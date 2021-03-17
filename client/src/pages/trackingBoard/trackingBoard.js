@@ -1,10 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./trackingBoard.css";
 
 //import './normalquery.css'
 
-const trackingBoard = () => {
+const TrackingBoard = () => {
   // const [book, setbook] = useState([]);
+ // const [data, setData] = useState([]);
+
+  useEffect(() => {
+      fetch("/suggestion/byUserSuggest")
+      .then((r) => r.json())
+      .then((data) => {
+        console.log(data);
+        alert("am in");
+      });
+
+  }, []);
 
   return (
     <div>
@@ -36,4 +47,4 @@ const trackingBoard = () => {
   );
 };
 
-export default trackingBoard;
+export default TrackingBoard;
