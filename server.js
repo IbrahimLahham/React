@@ -25,6 +25,7 @@ db.once("open", () => {
   console.log("we are connected to DB");
 });
 
+
 //routes
 app.use("/suggestion", SuggestionsRouter);
 app.use("/parliamentaryTools", parliamentaryToolsRouter);
