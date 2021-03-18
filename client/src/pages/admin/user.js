@@ -7,16 +7,8 @@ import './user.css';
 
 function User(props) {
     const { spam } = props;
-    const active=props.active
-    // function handleVallSug(e) {
-    //     console.log("e: ", e);
-    //     console.log("Suggestions selected!");
-    // }
+    const active = props.active
 
-    // function handleXallSug(e) {
-    //     console.log("e: ", e);
-    //     console.log("Suggestions removed!");
-    // }
     return (<>
         <tr>
             <td className="title-large">{props.fname} {props.lname}
@@ -25,27 +17,27 @@ function User(props) {
             <td className="title-large">{props.phone}</td>
             <td className="title-large">{props.company}</td>
             <td className="title-large" >
-              {props.type}  
+                {props.type}
             </td>
-            
-                {active===true ?
+
+            {active ?
                 <td className="title-large" id="accept-decline">
                     <Popup trigger={<PersonAddIcon style={{ color: 'green' }}>x</PersonAddIcon>} position="buttom center">
-                    <div>
-                        <a>are you sure to send it to spam?</a>
-                        <button onClick={(e) => { spam(props) }}>yes</button>
-                    </div>
-                </Popup>
-            </td>:<td className="title-large" id="accept-decline">
-            <Popup trigger={<PersonAddDisabledIcon style={{ color: 'red' }}>x</PersonAddDisabledIcon>} position="buttom center">
-                    <div>
-                        <a>are you sure to send it to spam?</a>
-                        <button onClick={(e) => { spam(props) }}>yes</button>
-                    </div>
-                </Popup></td>}
-                
+                        <div>
+                            <a>are you sure to send it to spam?</a>
+                            <button onClick={(e) => { spam(props) }}>yes</button>
+                        </div>
+                    </Popup>
+                </td> : <td className="title-large" id="accept-decline">
+                    <Popup trigger={<PersonAddDisabledIcon style={{ color: 'red' }}>x</PersonAddDisabledIcon>} position="buttom center">
+                        <div>
+                            <a>are you sure to send it to spam?</a>
+                            <button onClick={(e) => { spam(props) }}>yes</button>
+                        </div>
+                    </Popup></td>}
+
         </tr>
-        
+
 
     </>
     );
