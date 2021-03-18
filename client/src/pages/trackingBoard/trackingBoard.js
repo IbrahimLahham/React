@@ -27,10 +27,10 @@ const TrackingBoard = () => {
               <div className="board-item-container">
                 <div className="board-item">
                   <p>
-                    {suggestion.date} {suggestion.toolType.title}
+                    {suggestion.date.split("T")[0]} {suggestion.toolType.title}
                   </p>
                   <h1>{suggestion.subject}</h1>
-                  <p>תאריך הגשה: {suggestion.date}</p>
+                  <p>תאריך הגשה: {suggestion.date.split("T")[0]}</p>
                   <p>אומץ על ידי:</p>
                   <p>הוקרא במליאה: {console.log("Suggestion: ", suggestion)}</p>
                   <h1>תוכן:</h1>
