@@ -100,7 +100,7 @@ form {
 .attachments-list {
   display: grid;
   grid-template-rows: auto auto;
-  background-color: gray;
+  /* background-color: gray; */
   width: fit-content;
   height: fit-content;
   gap: 1px;
