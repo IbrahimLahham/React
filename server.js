@@ -5,6 +5,7 @@ const SuggestionsRouter = require("./routes/SuggestionsRoute");
 const parliamentaryToolsRouter = require("./routes/parliamentaryToolsRoute");
 const userRouter = require("./routes/userRoute");
 const adminRouter = require('./routes/adminRoute');
+// const future_history = require('./future_history_api');
 var cookieParser = require("cookie-parser");
 require("dotenv").config();
 
@@ -24,7 +25,6 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
   console.log("we are connected to DB");
 });
-
 
 //routes
 app.use("/suggestion", SuggestionsRouter);
