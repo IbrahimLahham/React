@@ -28,7 +28,7 @@ function HaverKnesset() {
                     console.log("data:", data);
                     let arr = [];
                     data.newSuggestions.map((elem, index) => {
-                        arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, _id: elem._id }];
+                        arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, _id: elem._id, files: elem.files }];
                     })
                     setMyNewSuggestions(arr);
                     arr = [];
@@ -47,14 +47,14 @@ function HaverKnesset() {
                             opt = ["תאריך התכנסות צפוי", "איסוף חתימות", "התכנסה"];
                         }
                         arr = [...arr, {
-                            key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, _id: elem._id,
+                            key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, _id: elem._id, files: elem.files,
                             options: opt
                         }];
                     })
                     setActiveSuggestions(arr);
                     arr = [];
                     data.newGeneralSuggestions.map((elem, index) => {
-                        arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, _id: elem._id }];
+                        arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, _id: elem._id, files: elem.files }];
                     })
                     setAllNewSuggestions(arr);
                 }
@@ -172,6 +172,7 @@ function HaverKnesset() {
                                     description={elem.description}
                                     status={elem.status}
                                     _id={elem._id}
+                                    files={elem.files}
                                 />)
                         })}
                     </tbody>
@@ -201,6 +202,7 @@ function HaverKnesset() {
                                     options={elem.options}
                                     status={elem.status}
                                     _id={elem._id}
+                                    files={elem.files}
                                 />
                             );
                         })}
@@ -233,6 +235,7 @@ function HaverKnesset() {
                                     description={elem.description}
                                     status={elem.status}
                                     _id={elem._id}
+                                    files={elem.files}
                                 />
 
                             );

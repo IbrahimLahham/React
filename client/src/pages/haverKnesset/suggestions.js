@@ -45,7 +45,13 @@ function Suggestions(props) {
         {isOpen === true ?
             <tr className="test">
                 <td><KeyboardReturnIcon /></td>
-                <td></td>
+                <td>
+                    {props.files.map((elem, index) => {
+                        return (
+                            <label key={index}>{elem.url}</label>
+                        );
+                    })}
+                </td>
                 <td colSpan="2" className="paragraph-regular">
                     <a>תוכן השיאלתה:</a>
                     <p>{props.description}</p>
@@ -55,7 +61,7 @@ function Suggestions(props) {
                     <p>{props.status.status}</p>
                 </td>
             </tr> : null}
-            
+
     </>
     );
 }
