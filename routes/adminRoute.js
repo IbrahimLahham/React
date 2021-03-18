@@ -13,7 +13,7 @@ router
 
 router
 .route("/getActiveMembers")
-.post(verifyAdmin, AdminController.getActiveMembers);
+.get(verifyAdmin, AdminController.getActiveMembers);
 
 router
 .route("/changeStatus")
