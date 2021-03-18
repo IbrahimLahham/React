@@ -25,7 +25,7 @@ function ActiveSuggestions(props) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ status: status, suggestion: props, date: e.target.suggestion_date.value })
+            body: JSON.stringify({ newStatus: status, suggestion: props, date: e.target.suggestion_date.value })
         }).then(r => r.json())
             .then(data => {
                 console.log("data: ", data);
