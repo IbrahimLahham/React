@@ -19,6 +19,7 @@ function HaverKnesset() {
     const [activeSuggestions, setActiveSuggestions] = useState([]);
     const [allNewSuggestions, setAllNewSuggestions] = useState([]);
     const toggle = () => setIsOpen(!isOpen);
+    const [refresh, setRefresh] = useState(0);
 
     useEffect(() => {
         fetch('/suggestion/byKnessetMemberValidate')
@@ -59,7 +60,7 @@ function HaverKnesset() {
                     setAllNewSuggestions(arr);
                 }
             })
-    }, [])
+    }, [refresh])
 
     function handleVmySug(e) {
         console.log("e: ", e);
@@ -73,6 +74,7 @@ function HaverKnesset() {
         }).then(r => r.json())
             .then(data => {
                 console.log(data);
+                setRefresh(refresh+1);
             })
     }
 
@@ -88,6 +90,7 @@ function HaverKnesset() {
         }).then(r => r.json())
             .then(data => {
                 console.log(data);
+                setRefresh(refresh+1);
             })
     }
 
@@ -103,6 +106,7 @@ function HaverKnesset() {
         }).then(r => r.json())
             .then(data => {
                 console.log(data);
+                setRefresh(refresh+1);
             })
     }
 
@@ -118,6 +122,7 @@ function HaverKnesset() {
         }).then(r => r.json())
             .then(data => {
                 console.log(data);
+                setRefresh(refresh+1);
             })
     }
 
@@ -133,6 +138,7 @@ function HaverKnesset() {
         }).then(r => r.json())
             .then(data => {
                 console.log(data);
+                setRefresh(refresh+1);
             })
     }
 
@@ -203,6 +209,8 @@ function HaverKnesset() {
                                     status={elem.status}
                                     _id={elem._id}
                                     files={elem.files}
+                                    refresh={refresh}
+                                    setRefresh={setRefresh}
                                 />
                             );
                         })}

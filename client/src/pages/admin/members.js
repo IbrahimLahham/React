@@ -1,3 +1,4 @@
+import { set } from 'mongoose';
 import React, { useState, useEffect } from 'react';
 import './members.css'
 import User from './user'
@@ -6,6 +7,8 @@ function Members(props) {
     const [users, setUsers] = useState([]);
     const [blcokUsers, setBlockUsers] = useState([]);
     const [activeUsers, setActiveUsers] = useState([]);
+    const [refresh, setRefresh] = useState(0);
+
     useEffect(() => {
         fetch('/admin/getAllMembers')
             .then(r => r.json())
@@ -29,7 +32,7 @@ function Members(props) {
                 }
             })
 
-    }, [])
+    }, [refresh])
 
     function handleActive(e) {
         const active = (e.active);
@@ -42,6 +45,7 @@ function Members(props) {
         }).then(r => r.json())
             .then(data => {
                 console.log(data);
+                setRefresh(refresh+1);
             })
     }
 
