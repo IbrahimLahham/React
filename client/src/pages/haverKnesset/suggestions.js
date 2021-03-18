@@ -6,6 +6,8 @@ import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CloseIcon from '@material-ui/icons/Close';
 import WarningIcon from '@material-ui/icons/Warning';
+import AttachmentIcon from '@material-ui/icons/Attachment';
+import Attachmentfile from '../../components/attachmentfile';
 
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
@@ -45,7 +47,18 @@ function Suggestions(props) {
         {isOpen === true ?
             <tr className="test">
                 <td><KeyboardReturnIcon /></td>
-                <td></td>
+                <td>
+                    {props.files.map((elem, index) => {
+                        return (
+                            < >
+                                <AttachmentIcon style={{width: 20, height:20}}/>
+                                <a key={index} href={elem.url} target="_blank" style={{fontSize: 15}}>{elem.name} </a>
+                                <br/>
+                            </>
+
+                        );
+                    })}
+                </td>
                 <td colSpan="2" className="paragraph-regular">
                     <a>תוכן השיאלתה:</a>
                     <p>{props.description}</p>
@@ -60,3 +73,5 @@ function Suggestions(props) {
     );
 }
 export default Suggestions
+
+

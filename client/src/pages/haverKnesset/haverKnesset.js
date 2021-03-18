@@ -19,6 +19,7 @@ function HaverKnesset() {
     const [activeSuggestions, setActiveSuggestions] = useState([]);
     const [allNewSuggestions, setAllNewSuggestions] = useState([]);
     const toggle = () => setIsOpen(!isOpen);
+    const [refresh, setRefresh] = useState(0);
 
     useEffect(() => {
         fetch('/suggestion/byKnessetMemberValidate')
@@ -28,7 +29,7 @@ function HaverKnesset() {
                     console.log("data:", data);
                     let arr = [];
                     data.newSuggestions.map((elem, index) => {
-                        arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, _id: elem._id }];
+                        arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, _id: elem._id, files: elem.files }];
                     })
                     setMyNewSuggestions(arr);
                     arr = [];
@@ -47,19 +48,19 @@ function HaverKnesset() {
                             opt = ["תאריך התכנסות צפוי", "איסוף חתימות", "התכנסה"];
                         }
                         arr = [...arr, {
-                            key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, _id: elem._id,
+                            key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, _id: elem._id, files: elem.files,
                             options: opt
                         }];
                     })
                     setActiveSuggestions(arr);
                     arr = [];
                     data.newGeneralSuggestions.map((elem, index) => {
-                        arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, _id: elem._id }];
+                        arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, _id: elem._id, files: elem.files }];
                     })
                     setAllNewSuggestions(arr);
                 }
             })
-    }, [])
+    }, [refresh])
 
     function handleVmySug(e) {
         console.log("e: ", e);
@@ -73,6 +74,7 @@ function HaverKnesset() {
         }).then(r => r.json())
             .then(data => {
                 console.log(data);
+                setRefresh(refresh+1);
             })
     }
 
@@ -88,6 +90,7 @@ function HaverKnesset() {
         }).then(r => r.json())
             .then(data => {
                 console.log(data);
+                setRefresh(refresh+1);
             })
     }
 
@@ -103,6 +106,7 @@ function HaverKnesset() {
         }).then(r => r.json())
             .then(data => {
                 console.log(data);
+                setRefresh(refresh+1);
             })
     }
 
@@ -118,6 +122,7 @@ function HaverKnesset() {
         }).then(r => r.json())
             .then(data => {
                 console.log(data);
+                setRefresh(refresh+1);
             })
     }
 
@@ -133,6 +138,7 @@ function HaverKnesset() {
         }).then(r => r.json())
             .then(data => {
                 console.log(data);
+                setRefresh(refresh+1);
             })
     }
 
@@ -144,88 +150,105 @@ function HaverKnesset() {
         <>
             <div className="suggestions-container">
 
-                <table>
+                <table class="fixed_header">
                     <caption id="title" className="title-bold">{t('ownSuggestions')}</caption>
-                    <tr id="header">
-                        <th className="title-bold">{t('date')}</th>
-                        <th className="title-bold">{t('parlamintary')}</th>
-                        <th className="title-bold">{t('subject')}</th>
-                        <th className="title-bold">{t('offer')}</th>
-                        <th className="title-bold">{t('adoptionrejection')}</th>
-                    </tr>
-                    {myNewSuggestions.map((elem, index) => {
+                    <thead>
+                        <tr id="header">
+                            <th className="title-bold">{t('date')}</th>
+                            <th className="title-bold">{t('parlamintary')}</th>
+                            <th className="title-bold">{t('subject')}</th>
+                            <th className="title-bold">{t('offer')}</th>
+                            <th className="title-bold">{t('adoptionrejection')}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                        return (
-                            <Suggestion
-                                key={index}
-                                date={elem.date}
-                                per={elem.per}
-                                sub={elem.sub}
-                                offer={elem.offer}
-                                add={handleVmySug}
-                                remove={handleXmySug}
-                                spam={handleSpam}
-                                description={elem.description}
-                                status={elem.status}
-                                _id={elem._id}
-                            />)
-                    })}
+                        {myNewSuggestions.map((elem, index) => {
 
+                            return (
+                                <Suggestion
+                                    key={index}
+                                    date={elem.date}
+                                    per={elem.per}
+                                    sub={elem.sub}
+                                    offer={elem.offer}
+                                    add={handleVmySug}
+                                    remove={handleXmySug}
+                                    spam={handleSpam}
+                                    description={elem.description}
+                                    status={elem.status}
+                                    _id={elem._id}
+                                    files={elem.files}
+                                />)
+                        })}
+                    </tbody>
                 </table>
 
-                <table>
+                <table class="fixed_header">
                     <caption id="title" className="title-bold">{t('updateSuggestions')}</caption>
-                    <tr id="header">
-                        <th className="title-bold">{t('date')}</th>
-                        <th className="title-bold">{t('parlamintary')}</th>
-                        <th className="title-bold">{t('subject')}</th>
-                        <th className="title-bold">{t('offer')}</th>
-                        <th className="title-bold">{t('status')}</th>
-                    </tr>
-                    {activeSuggestions.map((elem, index) => {
-                        return (
-                            <ActiveSuggestions
-                                key={index}
-                                date={elem.date}
-                                per={elem.per}
-                                sub={elem.sub}
-                                offer={elem.offer}
-                                description={elem.description}
-                                options={elem.options}
-                                status={elem.status}
-                                _id={elem._id}
-                            />
-                        );
-                    })}
+                    <thead>
+                        <tr id="header">
+                            <th className="title-bold">{t('date')}</th>
+                            <th className="title-bold">{t('parlamintary')}</th>
+                            <th className="title-bold">{t('subject')}</th>
+                            <th className="title-bold">{t('offer')}</th>
+                            <th className="title-bold">{t('status')}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {activeSuggestions.map((elem, index) => {
+                            return (
+                                <ActiveSuggestions
+                                    key={index}
+                                    date={elem.date}
+                                    per={elem.per}
+                                    sub={elem.sub}
+                                    offer={elem.offer}
+                                    description={elem.description}
+                                    options={elem.options}
+                                    status={elem.status}
+                                    _id={elem._id}
+                                    files={elem.files}
+                                    refresh={refresh}
+                                    setRefresh={setRefresh}
+                                />
+                            );
+                        })}
+                    </tbody>
                 </table>
 
-                <table>
+                <table class="fixed_header">
                     <caption id="title" className="title-bold">{t('allSuggestions')}</caption>
-                    <tr id="header">
-                        <th className="title-bold">{t('date')}</th>
-                        <th className="title-bold">{t('parlamintary')}</th>
-                        <th className="title-bold">{t('subject')}</th>
-                        <th className="title-bold">{t('offer')}</th>
-                        <th className="title-bold">{t('adoptionrejection')}</th>
-                    </tr>
-                    {allNewSuggestions.map((elem, index) => {
-                        return (
-                            <Suggestion
-                                key={index}
-                                date={elem.date}
-                                per={elem.per}
-                                sub={elem.sub}
-                                offer={elem.offer}
-                                add={handleVallSug}
-                                remove={handleXallSug}
-                                spam={handleSpam}
-                                description={elem.description}
-                                status={elem.status}
-                                _id={elem._id}
-                            />
+                    <thead>
+                        <tr id="header">
+                            <th className="title-bold">{t('date')}</th>
+                            <th className="title-bold">{t('parlamintary')}</th>
+                            <th className="title-bold">{t('subject')}</th>
+                            <th className="title-bold">{t('offer')}</th>
+                            <th className="title-bold">{t('adoptionrejection')}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {allNewSuggestions.map((elem, index) => {
+                            return (
+                                <Suggestion
+                                    key={index}
+                                    date={elem.date}
+                                    per={elem.per}
+                                    sub={elem.sub}
+                                    offer={elem.offer}
+                                    add={handleVallSug}
+                                    remove={handleXallSug}
+                                    spam={handleSpam}
+                                    description={elem.description}
+                                    status={elem.status}
+                                    _id={elem._id}
+                                    files={elem.files}
+                                />
 
-                        );
-                    })}
+                            );
+                        })}
+                    </tbody>
                 </table>
 
 
