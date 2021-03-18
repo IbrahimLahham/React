@@ -42,8 +42,12 @@ function AddKnesset(props) {
             setRegisterMessage("מספר טלפון לא חוקי!")
         }
     }
+    const changeLanguage = lng => {
+        i18n.changeLanguage(lng);
+    };
     
     return (
+        <div>
         <form onSubmit={handleRegister} className="user-login-div">
                     <h1 className="title-bold-big">{t('signup')}</h1>
                     <div className="user-login-flex">
@@ -80,6 +84,10 @@ function AddKnesset(props) {
                     <button className="user-button" type="submit">{t('buttonSignup')}</button>
                     <label className="message">{registermessage}</label>
                 </form>
+                <a id="forgot-pass" onClick={() => changeLanguage('hb')}>Hb</a>
+            <lable>|</lable>
+            <a id="forgot-pass" onClick={() => changeLanguage('ar')}>ar</a>
+                </div>
 
 
     )

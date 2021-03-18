@@ -9,6 +9,7 @@ import Attachmentfile from "./attachmentfile";
 import AttachIcon from "./Images/attach-icon.png";
 import AttachmentsIcon from "./Images/attacments-icon.png";
 import PeopleIcon from "./Images/people.png";
+import FirebaseFileUpload from "./firebase/FirebaseFileUpload/FirebaseFileUpload";
 
 function OneMinuteForm() {
   const [selectedKnessetMembersList, setSelectedKnessetMembersList] = useState(
@@ -165,19 +166,10 @@ function OneMinuteForm() {
               <img src={AttachIcon}></img>
               <h4>קבצים ומסמכים תומכים </h4>
             </div>
-            <div className="attachments-div">
-              <div className="attachments-list">
-                {files.map((file, index) => {
-                  return <Attachmentfile key={index} fileTitle={file.name} />;
-                })}
-              </div>
-              <div className="attach-button-div">
-                <label className="btn">
-                  <input type="file" multiple onChange={handlefile} />
-                  הוסףקובץ
-                </label>
-              </div>
-            </div>
+            <FirebaseFileUpload
+              filsesToSend={files}
+              filesSetter={setFiles}
+            ></FirebaseFileUpload>
 
             <button className="btn" type="submit">
               שלח
