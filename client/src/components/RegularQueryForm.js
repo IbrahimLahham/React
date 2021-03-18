@@ -9,6 +9,7 @@ import Attachmentfile from "./attachmentfile";
 import AttachIcon from "./Images/attach-icon.png";
 import AttachmentsIcon from "./Images/attacments-icon.png";
 import PeopleIcon from "./Images/people.png";
+import FirebaseFileUpload from "./firebase/FirebaseFileUpload/FirebaseFileUpload";
 
 function RegularQueryForm() {
   const [selectedKnessetMembersList, setSelectedKnessetMembersList] = useState(
@@ -16,16 +17,16 @@ function RegularQueryForm() {
   );
   const [allKnessetMembersList, setAllKnessetMembersList] = useState([]);
 
-  const [files , setFiles] = useState([]);
+  const [files, setFiles] = useState([]);
 
-  function handlefile(e){
+  function handlefile(e) {
     e.preventDefault();
     var files = e.target.files;
     console.log(files);
     var filesArr = Array.prototype.slice.call(files);
     console.log(filesArr);
     setFiles(filesArr);
-    console.log("state" , files);
+    console.log("state", files);
   }
 
   useEffect(() => {
@@ -92,6 +93,7 @@ function RegularQueryForm() {
       additionalQuestion: additionalQuestion,
       preferredKnessetMembers: preferredMembers, // [{name: "full name", email: "email@email.com"}]
       toolType: "שאילתא",
+      files: files,
     };
     console.log("Input being sent: ", input);
 
@@ -175,22 +177,10 @@ function RegularQueryForm() {
               <img src={AttachIcon}></img>
               <h4>קבצים ומסמכים תומכים </h4>
             </div>
-            <div className="attachments-div">
-              <div className="attachments-list">
-
-              {files.map((file , index)=>{
-                return(
-                  <Attachmentfile key={index} fileTitle={file.name}/>
-                )
-              })}
-              </div>
-              <div className="attach-button-div">
-              <label className="btn">
-                <input type="file" multiple onChange={handlefile} />
-                 הוסף קובץ
-              </label>
-              </div>
-            </div>
+            <FirebaseFileUpload
+              filsesToSend={files}
+              filesSetter={setFiles}
+            ></FirebaseFileUpload>
 
             <button className="btn" type="submit">
               שלח

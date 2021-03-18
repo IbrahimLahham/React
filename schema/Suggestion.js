@@ -16,7 +16,7 @@ const SuggestionSchema = new mongoose.Schema({
   submittedBy: User,
   question: String,
   governmentOffice: String,
-  files: [Buffer],
+  files: [{name:String,url:String}],
   additionalQuestionAfterMembersReply: String,
   // history
 });
