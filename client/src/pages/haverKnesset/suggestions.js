@@ -55,8 +55,10 @@ function Suggestions(props) {
                     <p>{props.status.status}</p>
                 </td>
             </tr> : null}
-
+            
     </>
     );
 }
 export default Suggestions
+
+

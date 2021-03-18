@@ -46,7 +46,7 @@ exports.getActiveMembers = async (req, res) => {
 
 exports.changeStatus = async (req, res) => {
     const { _email, active = false } = req.body;
-    console.log({ _email, active });
+    console.log("email: ", _email, "active: ", active === true );
     try {
         user.updateOne({ email: _email }, { active: active }, function (err, result) {
             if (err) {
@@ -55,7 +55,7 @@ exports.changeStatus = async (req, res) => {
             }
             else {
                 console.log("status changed!");
-                res.send({ ok: true });
+                res.send({ ok: true, msg: "status changed!" });
             }
         });
     } catch (error) {
