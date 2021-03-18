@@ -64,61 +64,61 @@ function HaverKnesset() {
     function handleVmySug(e) {
         console.log("e: ", e);
         console.log("my Suggestions selected!");
-        // fetch('/suggestion/reject-adopt', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ adopt: true, suggestion: e._id })
-        // }).then(r => r.json())
-        //     .then(data => {
-        //         console.log(data);
-        //     })
+        fetch('/suggestion/reject-adopt', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ adopt: true, suggestion: e._id })
+        }).then(r => r.json())
+            .then(data => {
+                console.log(data);
+            })
     }
 
     function handleXmySug(e) {
         console.log("e: ", e);
         console.log("my Suggestions removed!");
-        // fetch('/suggestion/reject-adopt', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ adopt: true, suggestion: e._id })
-        // }).then(r => r.json())
-        //     .then(data => {
-        //         console.log(data);
-        //     })
+        fetch('/suggestion/reject-adopt', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ adopt: false, suggestion: e._id })
+        }).then(r => r.json())
+            .then(data => {
+                console.log(data);
+            })
     }
 
     function handleVallSug(e) {
         console.log("e: ", e);
         console.log("all Suggestions selected!");
-        // fetch('/suggestion/reject-adopt', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ adopt: true, suggestion: e._id })
-        // }).then(r => r.json())
-        //     .then(data => {
-        //         console.log(data);
-        //     })
+        fetch('/suggestion/reject-adopt', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ adopt: true, suggestion: e._id })
+        }).then(r => r.json())
+            .then(data => {
+                console.log(data);
+            })
     }
 
     function handleXallSug(e) {
         console.log("e: ", e);
         console.log("all Suggestions removed!");
-        // fetch('/suggestion/reject-adopt', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ adopt: true, suggestion: e._id })
-        // }).then(r => r.json())
-        //     .then(data => {
-        //         console.log(data);
-        //     })
+        fetch('/suggestion/reject-adopt', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ adopt: false, suggestion: e._id })
+        }).then(r => r.json())
+            .then(data => {
+                console.log(data);
+            })
     }
 
     function handleSpam(e) {

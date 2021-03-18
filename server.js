@@ -25,11 +25,16 @@ db.once("open", () => {
   console.log("we are connected to DB");
 });
 
+
 //routes
 app.use("/suggestion", SuggestionsRouter);
 app.use("/parliamentaryTools", parliamentaryToolsRouter);
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);
+
+app.get('/*',(req, res)=>{
+  res.sendFile(__dirname + '/client/build/index.html');
+})
 
 // Server run
 const port = process.env.PORT || 3001;

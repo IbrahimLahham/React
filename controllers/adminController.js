@@ -1,5 +1,6 @@
 const user = require("../schema/user");
 const Suggestion = require("../schema/Suggestion");
+const jwt = require("jsonwebtoken");
 
 exports.getAllMembers = async (req, res) => {
     try {
@@ -44,9 +45,10 @@ exports.getActiveMembers = async (req, res) => {
 };
 
 exports.changeStatus = async (req, res) => {
-    const { email, active } = req.body;
+    const { _email, active = false } = req.body;
+    console.log({ _email, active });
     try {
-        user.updateOne({ email: email }, { active: active }, function (err, result) {
+        user.updateOne({ email: _email }, { active: active }, function (err, result) {
             if (err) {
                 console.log("error status!");
                 res.send({ ok: false });
