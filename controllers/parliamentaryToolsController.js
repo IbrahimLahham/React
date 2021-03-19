@@ -1,5 +1,5 @@
 const Tool = require("../schema/Tool");
-const future_history = require('../future_history_api');
+const future_history = require("../future_history_api");
 exports.getAllParliamentaryTools = async (req, res) => {
   try {
     const parliamentaryTools = await Tool.find({});
@@ -50,8 +50,11 @@ exports.getToolByType = async (req, res) => {
     const parliamentaryTool = await Tool.findOne({ type: toolType });
     //this code is Temporary**************
     if (parliamentaryTool.type == "כינוס הכנסת") {
-      future = future_history.future_history.regular_day_suggetion_day_schedule_future;
-      history = future_history.future_history.regular_day_suggetion_day_schedule_history;
+      future =
+        future_history.future_history.regular_day_suggetion_day_schedule_future;
+      history =
+        future_history.future_history
+          .regular_day_suggetion_day_schedule_history;
     }
     if (parliamentaryTool.type == "נאום בן דקה") {
       future = future_history.future_history.one_minute_speeches_future;
@@ -61,8 +64,6 @@ exports.getToolByType = async (req, res) => {
       future = future_history.future_history.queries_future;
       history = future_history.future_history.queries_history;
     }
-    future = future_history.future_history.queries_future;
-    history = future_history.future_history.queries_history;
     //**************
     res.send({
       parliamentaryTool: parliamentaryTool,
