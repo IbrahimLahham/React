@@ -61,6 +61,8 @@ exports.getToolByType = async (req, res) => {
       future = future_history.future_history.queries_future;
       history = future_history.future_history.queries_history;
     }
+    future = future_history.future_history.queries_future;
+    history = future_history.future_history.queries_history;
     //**************
     res.send({
       parliamentaryTool: parliamentaryTool,

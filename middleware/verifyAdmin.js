@@ -14,7 +14,7 @@ module.exports = function ( req, res, next) {
             user.findOne({email:data.email}).then(function(userToFind) {
               if((userToFind)&&(userToFind.active) && (userToFind.type === "admin")){
                 console.log(data.email);
-                req.body.email = data.email;
+               // req.body.email = data.email;
                 next();
                 }else{
                   res.send({

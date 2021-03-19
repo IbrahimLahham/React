@@ -1,6 +1,11 @@
 const user = require("../schema/user");
-const Suggestion = require("../schema/Suggestion");
+const _token = require('../schema/token');
+const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
+
+const Suggestion = require("../schema/Suggestion");
+
 
 exports.getAllMembers = async (req, res) => {
     try {
