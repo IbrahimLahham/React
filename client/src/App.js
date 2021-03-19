@@ -237,7 +237,7 @@ export default function App() {
               user={user}
               show={true}
               connected={connected}
-              pages={[{ text: "admin", url: "adminPage" }]}
+              pages={[{ text: "הנהלה", url: "adminPage" }]}
             />
             <AdminPage />
           </Route>
@@ -247,8 +247,8 @@ export default function App() {
               show={true}
               connected={connected}
               pages={[
-                { text: "admin", url: "adminPage" },
-                { text: "מערכת ח״כ", url: "addKnesset" },
+                { text: "הנהלה", url: "adminPage" },
+                { text: "הוספת חברי כנסת", url: "addKnesset" },
               ]}
             />
             <AddKnesset />
@@ -259,8 +259,8 @@ export default function App() {
               show={true}
               connected={connected}
               pages={[
-                { text: "admin", url: "adminPage" },
-                { text: "מערכת ח״כ", url: "members" },
+                { text: "הנהלה", url: "adminPage" },
+                { text: "משתמשים", url: "members" },
               ]}
             />
             <Members />
@@ -271,8 +271,8 @@ export default function App() {
               show={true}
               connected={connected}
               pages={[
-                { text: "admin", url: "adminPage" },
-                { text: "מערכת ח״כ", url: "spamSuggestions" },
+                { text: "הנהלה", url: "adminPage" },
+                { text: "הצעות", url: "spamSuggestions" },
               ]}
             />
             <SpamSuggestions />
