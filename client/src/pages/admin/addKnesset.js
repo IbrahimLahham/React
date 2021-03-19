@@ -7,12 +7,11 @@ function AddKnesset(props) {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [telephon, setTelephon] = useState("");
-    const [organization, setOrganization] = useState("");
     const [error, setError] = useState("");
     const [registermessage, setRegisterMessage] = useState("");
     function handleRegister(e) {
         e.preventDefault();
-        console.log({ firstName: firstName, lastName: lastName, email: email, organization: organization, telephon: telephon })
+        console.log({ firstName: firstName, lastName: lastName, email: email, telephon: telephon })
 
         // firstName doesn't contrains numbers 
 
@@ -24,7 +23,7 @@ function AddKnesset(props) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ firstName: firstName, lastName: lastName, email: email, company: organization, phone: telephon })
+                body: JSON.stringify({ firstName: firstName, lastName: lastName, email: email, phone: telephon })
             }).then(r => r.json())
                 .then(data => {
                     console.log(data);
@@ -45,10 +44,11 @@ function AddKnesset(props) {
     const changeLanguage = lng => {
         i18n.changeLanguage(lng);
     };
-    
+
     return (
         <div>
-        <form onSubmit={handleRegister} className="user-login-div">
+            <div className="user-container">
+                <form onSubmit={handleRegister} className="user-login-div">
                     <h1 className="title-bold-big">{t('signup')}</h1>
                     <div className="user-login-flex">
                         <label className="title-bold">*{t('firstName')}</label>
@@ -69,12 +69,6 @@ function AddKnesset(props) {
                         }} required></input>
                     </div>
                     <div className="user-login-flex">
-                        <label className="title-bold">{t('company')}</label>
-                        <input type="text" className="input-field" onChange={(e) => {
-                            setOrganization(e.target.value);
-                        }}></input>
-                    </div>
-                    <div className="user-login-flex">
                         <label className="title-bold">{t('phone')}</label>
                         <input type="text" className="input-field" onChange={(e) => {
                             setTelephon(e.target.value);
@@ -84,10 +78,11 @@ function AddKnesset(props) {
                     <button className="user-button" type="submit">{t('buttonSignup')}</button>
                     <label className="message">{registermessage}</label>
                 </form>
-                <a id="forgot-pass" onClick={() => changeLanguage('hb')}>Hb</a>
+            </div>
+            <a id="forgot-pass" onClick={() => changeLanguage('hb')}>Hb</a>
             <lable>|</lable>
             <a id="forgot-pass" onClick={() => changeLanguage('ar')}>ar</a>
-                </div>
+        </div>
 
 
     )
