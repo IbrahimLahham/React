@@ -138,15 +138,6 @@ export default function App() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/">
-            <Header
-              user={user}
-              show={true}
-              connected={connected}
-              pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }]}
-            />
-            <ParliamentaryTool />
-          </Route>
           <Route path="/parliamentaryTool">
             <Header
               user={user}
@@ -287,6 +278,15 @@ export default function App() {
               ]}
             />
             <SpamSuggestions />
+          </Route>
+          <Route path="/">
+            <Header
+              user={user}
+              show={true}
+              connected={connected}
+              pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }]}
+            />
+            <ParliamentaryTool />
           </Route>
         </Switch>
 
