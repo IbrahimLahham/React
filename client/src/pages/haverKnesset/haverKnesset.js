@@ -29,7 +29,7 @@ function HaverKnesset() {
                     console.log("data:", data);
                     let arr = [];
                     data.newSuggestions.map((elem, index) => {
-                        arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, _id: elem._id, files: elem.files }];
+                        arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: "" + elem.submittedBy.firstName + " " + elem.submittedBy.lastName, rejection: "true", description: elem.description, status: elem.status, _id: elem._id, files: elem.files }];
                     })
                     setMyNewSuggestions(arr);
                     arr = [];
@@ -48,14 +48,14 @@ function HaverKnesset() {
                             opt = ["תאריך התכנסות צפוי", "איסוף חתימות", "התכנסה"];
                         }
                         arr = [...arr, {
-                            key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, _id: elem._id, files: elem.files,
+                            key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: "" + elem.submittedBy.firstName + " " + elem.submittedBy.lastName, rejection: "true", description: elem.description, status: elem.status, _id: elem._id, files: elem.files,
                             options: opt
                         }];
                     })
                     setActiveSuggestions(arr);
                     arr = [];
                     data.newGeneralSuggestions.map((elem, index) => {
-                        arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: elem.submittedBy.email, rejection: "true", description: elem.description, status: elem.status, _id: elem._id, files: elem.files }];
+                        arr = [...arr, { key: index, date: elem.date, per: elem.toolType.title, sub: elem.subject, offer: "" + elem.submittedBy.firstName + " " + elem.submittedBy.lastName, rejection: "true", description: elem.description, status: elem.status, _id: elem._id, files: elem.files }];
                     })
                     setAllNewSuggestions(arr);
                 }
@@ -74,7 +74,7 @@ function HaverKnesset() {
         }).then(r => r.json())
             .then(data => {
                 console.log(data);
-                setRefresh(refresh+1);
+                setRefresh(refresh + 1);
             })
     }
 
@@ -90,7 +90,7 @@ function HaverKnesset() {
         }).then(r => r.json())
             .then(data => {
                 console.log(data);
-                setRefresh(refresh+1);
+                setRefresh(refresh + 1);
             })
     }
 
@@ -106,7 +106,7 @@ function HaverKnesset() {
         }).then(r => r.json())
             .then(data => {
                 console.log(data);
-                setRefresh(refresh+1);
+                setRefresh(refresh + 1);
             })
     }
 
@@ -122,7 +122,7 @@ function HaverKnesset() {
         }).then(r => r.json())
             .then(data => {
                 console.log(data);
-                setRefresh(refresh+1);
+                setRefresh(refresh + 1);
             })
     }
 
@@ -138,7 +138,7 @@ function HaverKnesset() {
         }).then(r => r.json())
             .then(data => {
                 console.log(data);
-                setRefresh(refresh+1);
+                setRefresh(refresh + 1);
             })
     }
 
