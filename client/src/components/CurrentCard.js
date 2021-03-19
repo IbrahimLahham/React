@@ -2,7 +2,7 @@ import React from "react";
 import "./CurrentCard.css";
 function CurrentCard(props) {
   if (props.tool === undefined) {
-    return <>Still loading...</>;
+    return <>טוען נתונים...</>;
   }
   return (
     <div className="current-card">

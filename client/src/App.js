@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-// import { useHistory } from "react-router-dom";
+import dotenv from "dotenv";
 import ParliamentaryTool from "./pages/parliamentaryTool/parliamentaryTool";
 import KenosKnesset from "./pages/kenosKnesset/kenosKnesset";
 import Normalquery from "./pages/normalquery/normalquery";
@@ -25,6 +25,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 export default function App() {
   const [connected, setConnected] = useState(false);
   const [user, setUser] = useState({});
+
+  const DEBUG = false;
 
   useEffect(() => {
     fetch("/user/checkConnection", {
@@ -69,7 +71,7 @@ export default function App() {
   return (
     <Router onChange={checkConnection}>
       <div>
-        <nav className="all-tabs">
+        <nav className={DEBUG ? "all-tabs" : "all-tabs-hidden"}>
           <ul>
             <li className="active-nav">
               <Link onClick={checkConnection} to="/parliamentaryTool">
@@ -276,6 +278,15 @@ export default function App() {
               ]}
             />
             <SpamSuggestions />
+          </Route>
+          <Route path="/">
+            <Header
+              user={user}
+              show={true}
+              connected={connected}
+              pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }]}
+            />
+            <ParliamentaryTool />
           </Route>
         </Switch>
 

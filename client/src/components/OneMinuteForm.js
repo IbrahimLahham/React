@@ -18,6 +18,7 @@ function OneMinuteForm() {
   const [allKnessetMembersList, setAllKnessetMembersList] = useState([]);
 
   const [files, setFiles] = useState([]);
+  const multiselectRef = React.createRef();
 
   function handlefile(e) {
     e.preventDefault();
@@ -48,26 +49,6 @@ function OneMinuteForm() {
       });
   }, []);
 
-  const options = [
-    { name: "גפני משה", id: 1 },
-    { name: "גרמל יעל", id: 2 },
-    { name: "דיין עוזי", id: 1 },
-    { name: "דיכנטר אבי", id: 2 },
-    { name: "Srigar", id: 1 },
-    { name: "Sam", id: 2 },
-    { name: "Srigar", id: 1 },
-    { name: "Sam", id: 2 },
-    { name: "Srigar", id: 1 },
-    { name: "Sam", id: 2 },
-    { name: "Srigar", id: 1 },
-    { name: "Sam", id: 2 },
-    { name: "Srigar", id: 1 },
-    { name: "Sam", id: 2 },
-    { name: "Srigar", id: 1 },
-    { name: "Sam", id: 2 },
-    { name: "Srigar", id: 1 },
-    { name: "Sam", id: 2 },
-  ];
   function dummy() {
     console.log("hehe");
   }
@@ -78,6 +59,14 @@ function OneMinuteForm() {
       selectedItem,
     ]);
     console.log("select invoked, state updated: ", selectedKnessetMembersList);
+  }
+
+  async function onRemove(selectedList, removedItem) {
+    const tempList = selectedList.filter((item) => {
+      return item.email !== removedItem.email;
+    });
+    setSelectedKnessetMembersList(tempList);
+    console.log("New list: ", tempList);
   }
 
   function handleForm(e) {
@@ -108,6 +97,8 @@ function OneMinuteForm() {
         }
       });
     setSelectedKnessetMembersList([]);
+    e.target.reset();
+    multiselectRef.current.resetSelectedValues();
   }
   return (
     <div className="recomnde">
@@ -116,9 +107,15 @@ function OneMinuteForm() {
         <div className="recomend__info">
           <div className="reomnde__SecindHalf">
             <h4>נושא הצעה לסדר:</h4>
-            <input type="text" name="subject" />
+            <input type="text" name="subject" required />
             <h4>דברי הסבר:</h4>
-            <textarea name="description" id="" cols="47" rows="12"></textarea>
+            <textarea
+              name="description"
+              id=""
+              cols="47"
+              rows="12"
+              required
+            ></textarea>
           </div>
           <div className="reomnde__FirstHalf">
             <h4>חכ"ים רלוונטיים: </h4>
@@ -155,9 +152,9 @@ function OneMinuteForm() {
                 },
               }}
               options={allKnessetMembersList} // Options to display in the dropdown
-              selectedValues={dummy} // Preselected value to persist in dropdown
+              ref={multiselectRef}
               onSelect={onSelect} // Function will trigger on select event
-              onRemove={dummy} // Function will trigger on remove event
+              onRemove={onRemove} // Function will trigger on remove event
               displayValue="name" // Property name to display in the dropdown options
               placeholder="בחר חבר כנסת"
             />
@@ -171,7 +168,7 @@ function OneMinuteForm() {
               filesSetter={setFiles}
             ></FirebaseFileUpload>
 
-            <button className="btn" type="submit">
+            <button className="submit-form-btn" type="submit">
               שלח
             </button>
           </div>
