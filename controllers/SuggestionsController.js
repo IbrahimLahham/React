@@ -224,14 +224,16 @@ exports.updateSuggestion = async (req, res) => {
 
 exports.rejectOrAdoptSuggestion = async (req, res) => {
   console.log("getAllSuggestions");
-  let { adopt = false, suggestion, email } = req.body;
+  let { adopt = false, suggestion, email, firstName = "",
+    lastName = "" } = req.body;
 
   if (adopt) {
     try {
       const updatedSuggestion = await Suggestion.findOneAndUpdate(
         { _id: suggestion },
         {
-          whoIsWorkingOnIt: { email: email },
+          whoIsWorkingOnIt: { email: email, firstName: firstName,
+            lastName: lastName },
           $pull: { preferredKnessetMembers: { email: email } },
           $push: { status: { status: " תאריך אימוץ : " } },
         }

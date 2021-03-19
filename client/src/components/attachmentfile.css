@@ -5,7 +5,7 @@
     height: 30px;
     width: fit-content;
     line-height: 0px;
-    background-color: white;
+    background: none !important;
     font-size: x-small;
   }
   .attachment > img {
