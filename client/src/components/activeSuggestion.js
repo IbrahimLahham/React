@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
+import AttachmentIcon from '@material-ui/icons/Attachment';
 
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
@@ -11,7 +12,7 @@ function ActiveSuggestions(props) {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
     const [status, setStatus] = useState(props.options[0]);
-    const {refresh, setRefresh} = props;
+    const { refresh, setRefresh } = props;
 
     function test_select(e) {
         setStatus(e.target.value);
@@ -30,7 +31,7 @@ function ActiveSuggestions(props) {
         }).then(r => r.json())
             .then(data => {
                 console.log("data: ", data);
-                setRefresh(status+1);
+                setRefresh(status + 1);
             })
     }
 
@@ -45,15 +46,15 @@ function ActiveSuggestions(props) {
             <td className="title-large">{props.offer}</td>
             <td id="test" className="title-large">
                 <form onChange={test_select}>
-                    <select id="status" className="drop-down-menu" style={{width:"100%"}}>
+                    <select id="status" className="drop-down-menu" style={{ width: "100%" }}>
                         {props.options.map((op, index) => {
                             return (<option key={index} value={op}>{op}</option>);
                         })}
                     </select>
                 </form>
-                <form onSubmit={select_date} style={{marginTop: 5}}>
-                    <input name="suggestion_date" style={{width:"96%"}} type="date" defaultValue={(new Date()).toISOString().substr(0, 10)} />
-                    <button type="submit" style={{marginTop: 5}}>עדכן סטטוס</button>
+                <form onSubmit={select_date} style={{ marginTop: 5 }}>
+                    <input name="suggestion_date" style={{ width: "96%" }} type="date" defaultValue={(new Date()).toISOString().substr(0, 10)} />
+                    <button type="submit" style={{ marginTop: 5 }}>עדכן סטטוס</button>
                 </form>
                 {/* <Popup trigger={<button>בחר תאריך</button>} position="buttom center">
                     <form onSubmit={select_date}>
@@ -66,7 +67,18 @@ function ActiveSuggestions(props) {
         {isOpen === true ?
             <tr className="test">
                 <td><KeyboardReturnIcon /></td>
-                <td></td>
+                <td>
+                    {props.files.map((elem, index) => {
+                        return (
+                            <>
+                                <AttachmentIcon  style={{width: 20, height: 20}}/>
+                                <a key={index} href={elem.url} target="_blank" style={{fontSize: 15}}>{elem.name}</a>
+                                <br />
+                            </>
+                        );
+                    })}
+
+                </td>
                 <td colSpan="2" className="paragraph-regular">
                     <a>תוכן השיאלתה:</a>
                     <p>{props.description}</p>
