@@ -31,8 +31,8 @@ const TrackingBoard = () => {
                   </p>
                   <h1>{suggestion.subject}</h1>
                   <p>תאריך הגשה: {suggestion.date.split("T")[0]}</p>
-                  <p>אומץ על ידי:</p>
-                  <p>הוקרא במליאה: {console.log("Suggestion: ", suggestion)}</p>
+                  <p>אומץ על ידי:{suggestion.whoIsWorkingOnIt?.firstName} {suggestion.whoIsWorkingOnIt?.lastName}</p>
+                  <p>{suggestion.status[suggestion.status.length-1].status} {suggestion.status[suggestion.status.length-1].date.split("T")[0]}  </p>
                   <h1>תוכן:</h1>
                   <p>{suggestion.description}</p>
                 </div>

@@ -2,6 +2,8 @@
   width: 900px;
   table-layout: fixed;
   border-collapse: collapse;
+  max-height:400px;
+  
 }
 
 .fixed_header tbody{
@@ -9,10 +11,12 @@ display:block;
 width: 100%;
 overflow: auto;
 max-height: 400px;
+
 }
 
 .fixed_header thead tr {
  display: block;
+
 }
 
 .fixed_header thead {
@@ -69,8 +73,17 @@ width: 10vw;
 }
 
 .suggestions-container {
-position: relative;
-display: flex;
-flex-wrap: wrap;
-justify-content: center;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: fit-content;
+  max-width: 1000px;
+  margin: auto;
+
+
 }
+.suggestions-container > .fixed_header {
+  flex:70%;
+}
+
