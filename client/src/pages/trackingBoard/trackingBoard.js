@@ -24,43 +24,31 @@ const TrackingBoard = () => {
         {suggestions &&
           suggestions.map((suggestion, index) => {
             return (
-              <div className="board-item-container">
+              <div className="board-item-container" key={index}>
                 <div className="board-item">
                   <p>
                     {suggestion.date.split("T")[0]} {suggestion.toolType.title}
                   </p>
                   <h1>{suggestion.subject}</h1>
                   <p>תאריך הגשה: {suggestion.date.split("T")[0]}</p>
-                  <p>אומץ על ידי:{suggestion.whoIsWorkingOnIt?.firstName} {suggestion.whoIsWorkingOnIt?.lastName}</p>
-                  <p>{suggestion.status[suggestion.status.length-1].status} {suggestion.status[suggestion.status.length-1].date.split("T")[0]}  </p>
+                  <p>
+                    אומץ על ידי: {suggestion.whoIsWorkingOnIt?.firstName}{" "}
+                    {suggestion.whoIsWorkingOnIt?.lastName}
+                  </p>
+                  <p>
+                    {suggestion.status[suggestion.status.length - 1].status}{" "}
+                    {
+                      suggestion.status[
+                        suggestion.status.length - 1
+                      ].date.split("T")[0]
+                    }{" "}
+                  </p>
                   <h1>תוכן:</h1>
                   <p>{suggestion.description}</p>
                 </div>
               </div>
             );
           })}
-        {/* <div className="board-item-container">
-          <div className="board-item">
-            <p>21.11.20 נאום בן דקה</p>
-            <h1>סגירת מרכולים בבני ברק</h1>
-            <p>תאריך הגשה: </p>
-            <p>אומץ על ידי: </p>
-            <p>הוקרא במליאה: </p>
-            <h1>תוכן:</h1>
-            <p>נודע לי כי...</p>
-          </div>
-        </div>
-        <div className="board-item-container">
-          <div className="board-item">
-            <p>21.11.20 נאום בן דקה</p>
-            <h1>סגירת מרכולים בבני ברק</h1>
-            <p>תאריך הגשה: </p>
-            <p>אומץ על ידי: </p>
-            <p>הוקרא במליאה: </p>
-            <h1>תוכן:</h1>
-            <p>נודע לי כי...</p>
-          </div>
-        </div> */}
       </div>
     </div>
   );
