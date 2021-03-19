@@ -6,12 +6,14 @@
   padding-left: 10px;
   padding-bottom: 10px;
 }
+
 .time__info {
   display: flex;
   margin-left: 140px;
   width: 90%;
-  /* line-height: 0px; */
+  /* animation: floatText 15s infinite linear; */
 }
+
 .time__info > h5 {
   /* margin-top:0px; */
   margin-bottom: 0px;
@@ -33,4 +35,10 @@
 .h5-new {
   font-weight: normal;
   font-style: normal;
+}
+
+@keyframes floatText {
+  to {
+    transform: translateY(-100%);
+  }
 }

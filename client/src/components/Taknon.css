@@ -10,11 +10,45 @@
 .taknon__data {
   display: flex;
   position: relative;
-  width: 70%;
+  padding-left: 5px;
+  padding-right: 5px;
+  animation: floatText 45s infinite linear;
 }
+
+.taknon__data:hover {
+  animation-play-state: paused;
+}
+
 .taknon__data > h5 {
   margin-right: 10px;
 }
+
+.taknon-right-col {
+  display: flex;
+  flex-direction: row;
+  margin-left: 5px;
+}
+
+.taknon-left-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.tkanon-section-item {
+  display: flex;
+  flex-direction: row;
+}
+
 .articl {
-  width: 600px !important;
+  margin-right: 5px;
+}
+
+.h5-tkanon-title {
+  margin-left: 5px;
+}
+
+@keyframes floatText {
+  to {
+    transform: translateY(-100%);
+  }
 }

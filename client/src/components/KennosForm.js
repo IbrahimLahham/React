@@ -10,6 +10,7 @@ function KennosForm() {
   const [selectedKnessetMembersList, setSelectedKnessetMembersList] = useState(
     []
   );
+  const multiselectRef = React.createRef();
 
   useEffect(() => {
     fetch("/user/getAllKnessetMembers")
@@ -42,6 +43,14 @@ function KennosForm() {
     console.log("select invoked, state updated: ", selectedKnessetMembersList);
   }
 
+  async function onRemove(selectedList, removedItem) {
+    const tempList = selectedList.filter((item) => {
+      return item.email !== removedItem.email;
+    });
+    setSelectedKnessetMembersList(tempList);
+    console.log("New list: ", tempList);
+  }
+
   function handleForm(e) {
     e.preventDefault();
     const subjectText = e.target.subject.value;
@@ -69,6 +78,8 @@ function KennosForm() {
         }
       });
     setSelectedKnessetMembersList([]);
+    e.target.reset();
+    multiselectRef.current.resetSelectedValues();
   }
   return (
     <div className="recomnde">
@@ -77,9 +88,15 @@ function KennosForm() {
         <div className="recomend__info">
           <div className="reomnde__SecindHalf">
             <h4>נושא הצעה לסדר:</h4>
-            <input type="text" name="subject" />
+            <input type="text" name="subject" required />
             <h4>דברי הסבר:</h4>
-            <textarea name="description" id="" cols="47" rows="12"></textarea>
+            <textarea
+              name="description"
+              id=""
+              cols="47"
+              rows="12"
+              required
+            ></textarea>
           </div>
           <div className="reomnde__FirstHalf">
             <h4>חכ"ים רלוונטיים: </h4>
@@ -116,14 +133,14 @@ function KennosForm() {
                 },
               }}
               options={allKnessetMembersList} // Options to display in the dropdown
-              selectedValues={dummy} // Preselected value to persist in dropdown
+              ref={multiselectRef}
               onSelect={onSelect} // Function will trigger on select event
-              onRemove={dummy} // Function will trigger on remove event
+              onRemove={onRemove} // Function will trigger on remove event
               displayValue="name" // Property name to display in the dropdown options
               placeholder="בחר חבר כנסת"
             />
             <br />
-            <button className="submin-form-btn" type="submit">
+            <button className="submit-form-btn" type="submit">
               שלח
             </button>
           </div>
