@@ -30,7 +30,6 @@
   font-size: 15px;
   font-weight: 900;
   color: black;
-  
 }
 
 .paragraph-regular {
@@ -55,4 +54,15 @@
     url("./font/Alef-regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
+}
+
+.submin-form-btn {
+  position: relative;
+  height: 40px;
+  width: 80px;
+  cursor: pointer;
+  border: 2px solid black;
+  margin-top: 16px;
+  background-color: white;
+  border-radius: 5px;
 }

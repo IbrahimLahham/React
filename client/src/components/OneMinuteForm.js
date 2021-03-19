@@ -171,7 +171,7 @@ function OneMinuteForm() {
               filesSetter={setFiles}
             ></FirebaseFileUpload>
 
-            <button className="btn" type="submit">
+            <button className="submin-form-btn" type="submit">
               שלח
             </button>
           </div>

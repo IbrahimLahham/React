@@ -123,7 +123,7 @@ function KennosForm() {
               placeholder="בחר חבר כנסת"
             />
             <br />
-            <button className="btn" type="submit">
+            <button className="submin-form-btn" type="submit">
               שלח
             </button>
           </div>
