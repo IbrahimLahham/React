@@ -170,7 +170,7 @@ exports.createSuggestions = async (req, res) => {
       question: question,
       governmentOffice: governmentOffice,
       files: files,
-      status: { status: "open" },
+      status: { status: "ממתין לאימוץ" },
       isSpam: false,
     });
     suggestionToAdd.save().then(() => {
