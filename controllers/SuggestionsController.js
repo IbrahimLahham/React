@@ -10,12 +10,17 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
           { "whoIsWorkingOnIt.email": null },
           {
             "preferredKnessetMembers.email": { $in: [email] },
-          },
+          },{
+            isSpam: false,
+          }
         ],
       }),
       Suggestion.find({
         $and: [
           { $or: [{ "whoIsWorkingOnIt.email": null }] },
+          {
+            isSpam: false,
+          },
           {
             $or: [{ "knessetMembersWhoRejected.email": { $nin: [email] } }],
           },
