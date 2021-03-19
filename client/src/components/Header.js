@@ -2,13 +2,13 @@ import "./Header.css";
 import "./Breadcrumb";
 import Breadcrumb from "./Breadcrumb";
 import { useHistory } from "react-router";
-import PersonIcon from '@material-ui/icons/Person';
+import PersonIcon from "@material-ui/icons/Person";
 
 function Header(props) {
   const history = useHistory();
 
   function loginRegisteration() {
-    history.push('loginRegisteration')
+    history.push("loginRegisteration");
   }
 
   return (
@@ -40,20 +40,36 @@ function Header(props) {
           <li id="nav-committees">
             <a href="./parliamentaryTool">כלים פרלמנטריים</a>
           </li>
-          {
-            props.show ? (props.connected ?
+          {props.show ? (
+            props.connected ? (
               <li className="left-nav" id="nav-committees">
-                <PersonIcon style={{ color: 'blue' }} />
-                <label>{(props.user.type==="knessetMember"?"ח״כ":(props.user.type==="admin"?"מנהל":"אזרח")) + " " + props.user.firstName + " " + props.user.lastName}</label>
-              </li> :
+                <PersonIcon style={{ color: "blue" }} />
+                <label>
+                  {(props.user.type === "knessetMember"
+                    ? "ח״כ"
+                    : props.user.type === "admin"
+                    ? "מנהל"
+                    : "אזרח") +
+                    " " +
+                    props.user.firstName +
+                    " " +
+                    props.user.lastName}
+                </label>
+              </li>
+            ) : (
               <li className="left-nav" id="nav-committees">
-                <PersonIcon style={{ color: 'blue' }} />
+                <PersonIcon style={{ color: "blue" }} />
                 <label onClick={loginRegisteration}>התחבר למערכת</label>
-              </li>) : null
-          }
+              </li>
+            )
+          ) : null}
         </ul>
       </div>
-      <Breadcrumb breadcrumbList={props.pages} userType={1} connected={props.connected} />
+      <Breadcrumb
+        breadcrumbList={props.pages}
+        userType={props.user.type}
+        connected={props.connected}
+      />
     </div>
   );
 }

@@ -28,7 +28,7 @@ function Breadcrumb(props) {
           <a href="https://oknesset.org/"> דף הבית </a>
           {props.breadcrumbList.map((title, index) => {
             return (
-              <Link className="current-tab-name" to={title.url}>
+              <Link className="current-tab-name" to={title.url} key={index}>
                 / {title.text}
               </Link>
             );
@@ -41,9 +41,18 @@ function Breadcrumb(props) {
               התנתק{" "}
             </a>
             |
-            <a className="link">
+            <a
+              className="link"
+              href={
+                props.userType === "knessetMember"
+                  ? "haverKnesset"
+                  : "trackingBoard"
+              }
+            >
               {" "}
-              {props.userType ? "לוח מעקב" : "מערכת ח״כ"}{" "}
+              {props.userType === "knessetMember"
+                ? "מערכת ח״כ"
+                : "לוח מעקב"}{" "}
             </a>
           </div>
         ) : (
