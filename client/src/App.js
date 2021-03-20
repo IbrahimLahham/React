@@ -26,7 +26,7 @@ export default function App() {
   const [connected, setConnected] = useState(false);
   const [user, setUser] = useState({});
 
-  const DEBUG = true;
+  const DEBUG = false;
 
   useEffect(() => {
     fetch("/user/checkConnection", {
