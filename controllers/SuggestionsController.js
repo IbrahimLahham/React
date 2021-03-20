@@ -1,4 +1,5 @@
 const Suggestion = require("../schema/Suggestion");
+const nodemailer = require("nodemailer");
 
 exports.getSuggestionsByKnessetMember = async (req, res) => {
   const { email } = req.body;
@@ -198,9 +199,13 @@ exports.createSuggestions = async (req, res) => {
 
 exports.updateSuggestion = async (req, res) => {
   let { newStatus, suggestion, date = new Date() } = req.body;
+
   let suggestionToUpdate = {
     _id: suggestion,
   };
+
+  const suggestionSubmittedBy = await Suggestion.findOne({ _id: suggestion });
+ 
   let update = {
     $push: { status: { status: newStatus, date: date } },
   };
@@ -214,9 +219,30 @@ exports.updateSuggestion = async (req, res) => {
       update
     );
 
-    res.send({
-      ok: true,
-      message: "the suggestion status has ben updated successfully..",
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASS,
+      },
+    });
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: suggestionSubmittedBy.submittedBy.email,
+      subject: "there is an update in your suggestion status",
+      text: `link to knesset website: https://open-knesset.herokuapp.com
+      `,
+    };
+    transporter.sendMail(mailOptions, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.send({ ok: false, msg: "Error occurs" });
+      } else {
+        res.send({
+          ok: true,
+          message: "the suggestion status has ben updated successfully..",
+        });
+      }
     });
   } catch (error) {
     console.log(error);
@@ -232,6 +258,9 @@ exports.rejectOrAdoptSuggestion = async (req, res) => {
   let { adopt = false, suggestion, email, firstName = "",
     lastName = "" } = req.body;
 
+  const suggestionToUpdate = await Suggestion.findOne({ _id: suggestion });
+
+  
   if (adopt) {
     try {
       const updatedSuggestion = await Suggestion.findOneAndUpdate(
@@ -244,9 +273,30 @@ exports.rejectOrAdoptSuggestion = async (req, res) => {
         }
       );
 
-      res.send({
-        ok: true,
-        message: "the suggestion status has ben updated successfully..",
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.PASS,
+        },
+      });
+      const mailOptions = {
+        from: process.env.EMAIL,
+        to: suggestionToUpdate.submittedBy.email,
+        subject: "there is an update in your suggestion status",
+        text: `link to knesset website: https://open-knesset.herokuapp.com
+        `,
+      };
+      transporter.sendMail(mailOptions, (err, data) => {
+        if (err) {
+          console.log(err);
+          res.send({ ok: false, msg: "Error occurs" });
+        } else {
+          res.send({
+            ok: true,
+            message: "the suggestion status has ben updated successfully..",
+          });
+        }
       });
     } catch (error) {
       console.log(error);

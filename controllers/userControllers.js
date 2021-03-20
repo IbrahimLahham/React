@@ -234,7 +234,6 @@ exports.CheckConnection = async (req, res) => {
           console.log(err);
         }
         else {
-          console.log(data.lastName);
           res.send({ ok: true, cookie: flag, type: data.role, firstName: data.firstName, lastName: data.lastName, email: data.email });
         }
       })
