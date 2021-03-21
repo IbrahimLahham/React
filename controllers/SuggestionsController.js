@@ -16,6 +16,8 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
           }
         ],
       }),
+
+      //TAL: should be writen in async
       Suggestion.find({
         $and: [
           { $or: [{ "whoIsWorkingOnIt.email": null }] },
@@ -179,6 +181,8 @@ exports.createSuggestions = async (req, res) => {
       status: { status: "ממתין לאימוץ" },
       isSpam: false,
     });
+
+    //TAL: write as async
     suggestionToAdd.save().then(() => {
       console.log("the suggestion has been saved in th DB successfully");
       console.log("created Suggestion", suggestionToAdd);
@@ -213,6 +217,7 @@ exports.updateSuggestion = async (req, res) => {
   if (newStatus == "done") {
     update["whoIsWorkingOnIt"] = null;
   }
+  //TAL: try should come at the start of the function
   try {
     const suggestionKnessetMemberCanSee = await Suggestion.findOneAndUpdate(
       suggestionToUpdate,
@@ -254,7 +259,7 @@ exports.updateSuggestion = async (req, res) => {
 };
 
 exports.rejectOrAdoptSuggestion = async (req, res) => {
-  console.log("getAllSuggestions");
+ 
   let { adopt = false, suggestion, email, firstName = "",
     lastName = "" } = req.body;
 
@@ -262,6 +267,8 @@ exports.rejectOrAdoptSuggestion = async (req, res) => {
 
   
   if (adopt) {
+
+    //TAL: try should come at the start of the function
     try {
       const updatedSuggestion = await Suggestion.findOneAndUpdate(
         { _id: suggestion },

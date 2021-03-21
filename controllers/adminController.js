@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const Suggestion = require("../schema/Suggestion");
 
 
-//TAL: shouldn't this path be protected?
+
 
 exports.getAllMembers = async (req, res) => {
     try {
@@ -23,7 +23,7 @@ exports.getAllMembers = async (req, res) => {
     }
 };
 
-//TAL: shouldn't this path be protected?
+
 
 exports.getBlockedMembers = async (req, res) => {
     try {
@@ -39,7 +39,7 @@ exports.getBlockedMembers = async (req, res) => {
     }
 };
 
-//TAL: shouldn't this path be protected?
+
 
 exports.getActiveMembers = async (req, res) => {
     try {
@@ -55,11 +55,11 @@ exports.getActiveMembers = async (req, res) => {
     }
 };
 
-//TAL: shouldn't this path be protected?
+
 
 exports.changeStatus = async (req, res) => {
     const { _email, active = false } = req.body;
-    console.log("email: ", _email, "active: ", active === true );
+  
     try {
         user.updateOne({ email: _email }, { active: active }, function (err, result) {
             if (err) {
@@ -82,7 +82,7 @@ exports.changeStatus = async (req, res) => {
 };
 
 
-//TAL: shouldn't this path be protected?
+
 
 exports.checkSpam = async (req, res) => {
     // const { email, active } = req.body;
@@ -99,7 +99,7 @@ exports.checkSpam = async (req, res) => {
     }
 };
 
-//TAL: shouldn't this path be protected?
+
 
 exports.allSuggestions = async (req, res) => {
     // const { email, active } = req.body;
@@ -116,7 +116,7 @@ exports.allSuggestions = async (req, res) => {
     }
 };
 
-//TAL: shouldn't this path be protected?
+
 
 exports.notSpam = async (req, res) => {
     // const { email, active } = req.body;
@@ -133,7 +133,7 @@ exports.notSpam = async (req, res) => {
     }
 };
 
-//TAL: shouldn't this path be protected?
+
 
 exports.changeSpam = async (req, res) => {
     const { _id, isSpam } = req.body;
@@ -159,7 +159,7 @@ exports.changeSpam = async (req, res) => {
 };
 
 
-//TAL: shouldn't this path be protected?
+
 
 exports.addMember = async (req, res) => {
  
