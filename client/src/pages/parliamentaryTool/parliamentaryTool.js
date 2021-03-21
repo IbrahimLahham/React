@@ -9,11 +9,6 @@ function App() {
     fetch("parliamentaryTools/")
       .then((response) => response.json())
       .then((data) => {
-        //TAL: need to delete following lines
-        console.log(data);
-        data.parliamentaryTools.map((tool, index) => {
-          console.log("Tool: ", tool);
-        });
         setData(data.parliamentaryTools);
       });
   }, []);

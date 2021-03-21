@@ -24,7 +24,7 @@ function LoginRegisteration(props) {
     const [error, setError] = useState("");
     const [registermessage, setRegisterMessage] = useState("");
 
-    const {setUser, setConnected} = props;
+    const { setUser, setConnected } = props;
 
     useEffect(() => {
 
@@ -52,7 +52,7 @@ function LoginRegisteration(props) {
                     else if (data.role === "knessetMember") {
                         history.push('/haverKnesset')
                     }
-                    else if(data.role === "admin"){
+                    else if (data.role === "admin") {
                         history.push('/adminPage')
                     }
                 }
@@ -70,7 +70,7 @@ function LoginRegisteration(props) {
         // firstName doesn't contrains numbers 
 
         const validPhone = new RegExp("(00972|0|\\+972)[5][0-9]{8}");
-        if (telephon === ""  || validPhone.test(telephon)) {
+        if (telephon === "" || validPhone.test(telephon)) {
 
             fetch('/user/Registration', {
                 method: 'POST',
@@ -95,7 +95,7 @@ function LoginRegisteration(props) {
             setRegisterMessage("מספר טלפון לא חוקי!")
         }
     }
-    
+
     const changeLanguage = lng => {
         i18n.changeLanguage(lng);
     };
@@ -166,10 +166,11 @@ function LoginRegisteration(props) {
                 </form>
 
             </div>
-            {/* TAL: chage to div */}
-            <a id="forgot-pass" onClick={() => changeLanguage('hb')}>Hb</a>
-            <lable>|</lable>
-            <a id="forgot-pass" onClick={() => changeLanguage('ar')}>ar</a>
+            <div>
+                <a id="forgot-pass" onClick={() => changeLanguage('hb')}>Hb</a>
+                <lable>|</lable>
+                <a id="forgot-pass" onClick={() => changeLanguage('ar')}>ar</a>
+            </div>
         </div>
 
     )

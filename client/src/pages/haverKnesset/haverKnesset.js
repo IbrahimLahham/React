@@ -35,7 +35,6 @@ function HaverKnesset() {
                   elem.submittedBy.firstName +
                   " " +
                   elem.submittedBy.lastName,
-                rejection: "true",
                 description: elem.description,
                 status: elem.status,
                 _id: elem._id,
@@ -68,7 +67,6 @@ function HaverKnesset() {
                   elem.submittedBy.firstName +
                   " " +
                   elem.submittedBy.lastName,
-                rejection: "true",
                 description: elem.description,
                 status: elem.status,
                 _id: elem._id,
@@ -92,7 +90,6 @@ function HaverKnesset() {
                   elem.submittedBy.firstName +
                   " " +
                   elem.submittedBy.lastName,
-                rejection: "true", //TAL: shoudlnt it be boolean?
                 description: elem.description,
                 status: elem.status,
                 _id: elem._id,

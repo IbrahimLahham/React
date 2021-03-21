@@ -21,15 +21,15 @@ router
 
 router
 .route("/checkSpam")
-.post(verifyAdmin, AdminController.checkSpam);
+.get(verifyAdmin, AdminController.checkSpam);
 
 router
 .route("/allSuggestions")
-.post(verifyAdmin, AdminController.allSuggestions);
+.get(verifyAdmin, AdminController.allSuggestions);
 
 router
 .route("/notSpam")
-.post(verifyAdmin, AdminController.notSpam);
+.get(verifyAdmin, AdminController.notSpam);
 
 router
 .route("/changeSpam")
