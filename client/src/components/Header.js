@@ -31,7 +31,6 @@ function Header(props) {
         </div>
 
         <ul className="nav nav-pills">
-          {console.log(props.user.type)}
           <li id="nav-parties">
             <a href={props.user.type === "admin" ? "/members" : "#"}>ח'כים וסיעות</a>
           </li>  

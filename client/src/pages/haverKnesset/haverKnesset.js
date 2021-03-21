@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
-// Table from react-bootstrap
 import "./haverKnesset.css";
 import Suggestion from "./suggestions";
 import ActiveSuggestions from "../../components/activeSuggestion";
 import { useTranslation } from "react-i18next";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function HaverKnesset() {
   const { t, i18n } = useTranslation();
-  const [isOpen, setIsOpen] = useState(false);
   const [myNewSuggestions, setMyNewSuggestions] = useState([]);
   const [activeSuggestions, setActiveSuggestions] = useState([]);
   const [allNewSuggestions, setAllNewSuggestions] = useState([]);
-  const toggle = () => setIsOpen(!isOpen);
   const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
