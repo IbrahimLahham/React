@@ -31,14 +31,15 @@ function Header(props) {
         </div>
 
         <ul className="nav nav-pills">
+          {console.log(props.user.type)}
           <li id="nav-parties">
-            <a href="/members/index.html">ח'כים וסיעות</a>
+            <a href={props.user.type === "admin" ? "/members" : "#"}>ח'כים וסיעות</a>
+          </li>  
+          <li id="nav-committees">
+            <a href={props.user.type === "admin" ? "#" : "#"}>ועדות</a>
           </li>
           <li id="nav-committees">
-            <a href="#">ועדות</a>
-          </li>
-          <li id="nav-committees">
-            <a href="./parliamentaryTool">כלים פרלמנטריים</a>
+            <a href={props.user.type === "admin" ? "#" : "./parliamentaryTool"}>כלים פרלמנטריים</a>
           </li>
           {props.show ? (
             props.connected ? (

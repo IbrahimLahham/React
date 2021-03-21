@@ -133,3 +133,7 @@
   .left-nav{
     margin-right: auto;
   }
+
+  #nav-parties-hidden{
+    display:none;
+  }
