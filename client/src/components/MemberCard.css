@@ -1,0 +1,17 @@
+.member-card{
+    width: fit-content;
+    height: fit-content;
+    padding: 10px;
+    margin: auto;
+}
+
+.members-container{
+    justify-content: center;
+}
+
+.suggestion-member{
+    margin: auto;
+    justify-content: center;
+    width: fit-content;
+    height: fit-content;
+}

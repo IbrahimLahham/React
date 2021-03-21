@@ -39,4 +39,17 @@ router
 .route("/addMember")
 .post(verifyAdmin, AdminController.addMember);
 
+
+router
+.route("/getMemberByEmail")
+.post(verifyAdmin, AdminController.getMemberByEmail);
+
+router
+.route("/getSuggestionsByUserSuggest")
+.post(verifyAdmin, AdminController.getSuggestionsByUserSuggest);
+
+router
+.route("/getMemberByFirstLastName")
+.post(verifyAdmin, AdminController.getMemberByFirstLastName);
+
 module.exports = router;
