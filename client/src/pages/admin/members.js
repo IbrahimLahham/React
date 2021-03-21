@@ -17,6 +17,7 @@ function Members(props) {
     const [email, setEmail] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [suggestions, setSuggestion] = useState([]);
 
     function getAll() {
         fetch('/admin/getAllMembers')
@@ -68,9 +69,10 @@ function Members(props) {
         }).then(r => r.json())
             .then(data => {
                 if (data.ok) {
-                    setUserByEmail(data.users)
+                    setUserByEmail(data.users);
                 }
             })
+
     }
 
     function handleFirstLastName(e) {
@@ -86,23 +88,25 @@ function Members(props) {
             .then(data => {
                 console.log("data from name: ", data);
                 if (data.ok) {
-                    setUserByName(data.users)
+                    setUserByName(data.users);
                 }
             })
     }
 
     return (
         <div>
-            <button onClick={(e) => { setByEmail(true) }}>email</button>
-            <button onClick={(e) => { setByEmail(false) }}>name</button>
-            <button onClick={getAll}>all</button>
+            <div>
+                <button style={{ justifyContent: "center" }} onClick={(e) => { setByEmail(true) }}>email</button>
+                <button style={{ margin: "auto" }} onClick={(e) => { setByEmail(false) }}>name</button>
+                <button style={{ margin: "auto" }} onClick={getAll}>all</button>
+            </div>
             {byEmail ? <><form onSubmit={handleEmail}>
                 <input type="email" placeholder="email" name="email" onChange={(e) => { setEmail(e.target.value) }}></input>
                 <button type="submit">search</button>
-            </form>
+            </form >
                 {userByEmail.map((elem, index) => {
                     return (
-                        <MemberCard key={index} user={elem} handleActive={handleActive} />
+                        <MemberCard key={index} user={elem} handleActive={handleActive} suggestions={suggestions} setSuggestion={setSuggestion} />
                     );
                 })} </> :
                 <><form onSubmit={handleFirstLastName}>

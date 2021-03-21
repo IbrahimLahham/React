@@ -1,10 +1,15 @@
 import { useRadioGroup } from "@material-ui/core";
-import { useEffect, useState } from "react";
+import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import AttachmentIcon from '@material-ui/icons/Attachment';
+import { useState } from "react";
 import "./MemberCard.css";
 
 function MemberCard(props) {
     const { handleActive } = props;
     const [suggestions, setSuggestion] = useState([]);
+    const [isOpen, setIsOpen] = useState(false);
+    const toggle = () => setIsOpen(!isOpen)
 
     function getSuggestions() {
         fetch('/admin/getSuggestionsByUserSuggest', {
@@ -16,7 +21,6 @@ function MemberCard(props) {
         }).then(r => r.json())
             .then(data => {
                 if (data.ok) {
-                    console.log("suggestions: ", data.suggestions);
                     setSuggestion(data.suggestions);
                 }
             })
@@ -40,25 +44,56 @@ function MemberCard(props) {
 
     return (
         <div className="members-container">
-            <div className="member-card">
-                <label>דוא״ל: {props.user.email}</label><br />
-                <label>שם פרטי: {props.user.firstName}</label><br />
-                <label>שם משפחה: {props.user.lastName}</label><br />
-                <label>פעילים: {props.user.active ? "פעיל" : "חסום"}</label>
-                <button onClick={(e) => { handleActive(props) }}>{props.user.active ? " חסימת משתמש" : "ביטול חסימה"}</button><br />
-                <label>טלפון: {"" + props.user.phone}</label><br />
-                <label>סוג: {"" + props.user.type}</label><br />
-                <button onClick={getSuggestions}>suggestions</button><br />
+            <div style={{ marginTop: 20 }} className="user-login-div member">
+                <h1 className="title-bold-big">{props.user.firstName} {props.user.lastName}</h1>
+                <div className="user-login-flex">
+                    <label className="title-bold">דוא״ל: </label>
+                    <label>{props.user.email}</label>
+                </div>
+                <div className="user-login-flex">
+                    <label className="title-bold">פעיל: </label>
+                    <label style={{ color: props.user.active ? "green" : "red", fontWeight: 900, marginLeft: 10 }}>{props.user.active ? "פעיל" : "חסום"}</label>
+                    <button id="member-button" style={{ backgroundColor: props.user.active ? "red" : "green" }} onClick={(e) => { handleActive(props) }}>{props.user.active ? " חסימת משתמש" : "ביטול חסימה"}</button>
+                </div>
+                <div className="user-login-flex">
+                    <label className="title-bold">טלפון: </label>
+                    <label>{props.user.phone}</label>
+                </div>
+                <div className="user-login-flex">
+                    <label className="title-bold">סוג: </label>
+                    <label>{props.user.type === "citizen" ? "אזרח" : (props.user.type === "admin" ? "מנהל" : "חבר כנסת")}</label>
+                </div>
+                <button className="user-button" onClick={getSuggestions}>קבל ההצעות</button>
+                <h1 style={{ margin: "auto", marginTop: 10 }} className="title-bold-big">הצעות</h1>
+                {isOpen === false ?
+                    <ArrowLeftIcon onClick={(e) => { toggle();/* getSuggestions() */ }}></ArrowLeftIcon> :
+                    <><ArrowDropDownIcon onClick={toggle}></ArrowDropDownIcon>
+                        {suggestions.length > 0 ? suggestions.map((elem, index) => {
+                            return (
+                                <div key={index} className="suggestion-member">
+                                    <div className="user-login-flex">
+                                        <label className="title-bold">תוכן: </label>
+                                        <label>{elem.description}</label>
+                                    </div>
+                                    <div className="user-login-flex">
+                                        <label className="title-bold">פעיל: </label>
+                                        <label style={{ color: elem.isSpam ? "red" : "green", fontWeight: 900, marginLeft: 10 }}>{elem.isSpam ? "ספאם" : "לא ספאם"}</label>
+                                        <button id="member-button" style={{ backgroundColor: elem.isSpam ? "green" : "red" }} onClick={(e) => { changeSpam(elem) }}>{props.user.active ? "ספאם" : "לא ספאם"}</button>
+                                    </div>
+                                    {elem.files.map((file, fileIndex) => {
+                                        return (
+                                            <div className="user-login-flex">
+                                                <AttachmentIcon style={{ width: 20, height: 20 }} />
+                                                <a key={fileIndex} href={file.url} target="_blank" style={{ fontSize: 15 }}>{file.name} </a>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            );
+                        }) : <div style={{ textAlign: "center", marginTop: 10, color: "red" }}>אין הצעות עבור המשתמש הזה!</div>}
+                    </>}
             </div>
-            {suggestions.map((elem, index) => {
-                return (
-                    <div className="suggestion-member">
-                        <label key={index}>תוכן: {elem.description}</label><br />
-                        <label>פעיל: {elem.isSpam ? "ספאם" : "לא ספאם"}</label>
-                        <button onClick={(e) => { changeSpam(elem) }}>{elem.isSpam ? "ספאם" : "לא ספאם"}</button><br />
-                    </div>
-                );
-            })}
+
         </div>
     );
 }
