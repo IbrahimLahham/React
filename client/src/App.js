@@ -157,7 +157,7 @@ export default function App() {
                 { text: "שיאלתה רגילה", url: "normalquery" },
               ]}
             />
-            {user.type === "citizen" ? <Normalquery /> : <div>you're not allowed</div>}
+            <Normalquery />
           </Route>
           <Route path="/kenosKnesset">
             <Header
@@ -181,7 +181,7 @@ export default function App() {
                 { text: "נאום בן דקה", url: "oneMinuteSpeech" },
               ]}
             />
-            {user.type === "citizen" ? <OneMinuteSpeech/> : <div>you're not allowed</div>}
+            <OneMinuteSpeech/>
           </Route>
           <Route path="/trackingBoard">
             <Header
