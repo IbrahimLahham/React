@@ -7,6 +7,8 @@ const jwt = require("jsonwebtoken");
 const Suggestion = require("../schema/Suggestion");
 
 
+//TAL: shouldn't this path be protected?
+
 exports.getAllMembers = async (req, res) => {
     try {
         const userToFind = await user.find({});
@@ -20,6 +22,8 @@ exports.getAllMembers = async (req, res) => {
         });
     }
 };
+
+//TAL: shouldn't this path be protected?
 
 exports.getBlockedMembers = async (req, res) => {
     try {
@@ -35,6 +39,8 @@ exports.getBlockedMembers = async (req, res) => {
     }
 };
 
+//TAL: shouldn't this path be protected?
+
 exports.getActiveMembers = async (req, res) => {
     try {
         const userToFind = await user.find({ active: true });
@@ -48,6 +54,8 @@ exports.getActiveMembers = async (req, res) => {
         });
     }
 };
+
+//TAL: shouldn't this path be protected?
 
 exports.changeStatus = async (req, res) => {
     const { _email, active = false } = req.body;
@@ -73,6 +81,9 @@ exports.changeStatus = async (req, res) => {
     }
 };
 
+
+//TAL: shouldn't this path be protected?
+
 exports.checkSpam = async (req, res) => {
     // const { email, active } = req.body;
     try {
@@ -87,6 +98,9 @@ exports.checkSpam = async (req, res) => {
         });
     }
 };
+
+//TAL: shouldn't this path be protected?
+
 exports.allSuggestions = async (req, res) => {
     // const { email, active } = req.body;
     try {
@@ -101,6 +115,8 @@ exports.allSuggestions = async (req, res) => {
         });
     }
 };
+
+//TAL: shouldn't this path be protected?
 
 exports.notSpam = async (req, res) => {
     // const { email, active } = req.body;
@@ -117,6 +133,7 @@ exports.notSpam = async (req, res) => {
     }
 };
 
+//TAL: shouldn't this path be protected?
 
 exports.changeSpam = async (req, res) => {
     const { _id, isSpam } = req.body;
@@ -142,8 +159,10 @@ exports.changeSpam = async (req, res) => {
 };
 
 
+//TAL: shouldn't this path be protected?
+
 exports.addMember = async (req, res) => {
-    console.log("admin added member");
+ 
 
     const {
       firstName,
@@ -155,16 +174,7 @@ exports.addMember = async (req, res) => {
       active,
       language,
     } = req.body;
-    console.log({
-        firstName:firstName,
-        lastName:lastName,
-        email:email,
-        company:company,
-        phone:phone,
-        type:type,
-        active:active,
-        language:language,
-      })
+   
     const searchUser = await user.findOne({ email });
 
   
