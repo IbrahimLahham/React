@@ -6,6 +6,8 @@ router
     .route("/")
     .get(parliamentaryToolsController.getAllParliamentaryTools);
 
+//TAL: shouldn't this path be protected?
+
 router
     .route("/create")
     .post(parliamentaryToolsController.createParliamentaryTool);

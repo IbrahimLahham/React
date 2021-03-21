@@ -20,7 +20,7 @@ function HaverKnesset() {
       .then((r) => r.json())
       .then((data) => {
         if (data.ok) {
-          console.log("data:", data);
+         
           let arr = [];
           data.newSuggestions.map((elem, index) => {
             arr = [
@@ -92,7 +92,7 @@ function HaverKnesset() {
                   elem.submittedBy.firstName +
                   " " +
                   elem.submittedBy.lastName,
-                rejection: "true",
+                rejection: "true", //TAL: shoudlnt it be boolean?
                 description: elem.description,
                 status: elem.status,
                 _id: elem._id,
@@ -302,6 +302,7 @@ function HaverKnesset() {
           </tbody>
         </table>
       </div>
+      {/* TAL: it shouldnt be an "a" but a "div" */}
       <a id="forgot-pass" onClick={() => changeLanguage("hb")}>
         Hb
       </a>

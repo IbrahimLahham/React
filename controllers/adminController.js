@@ -56,6 +56,8 @@ exports.getAllMembers = async (req, res) => {
     }
 };
 
+
+
 exports.getBlockedMembers = async (req, res) => {
     try {
         const userToFind = await user.find({ active: false });
@@ -70,6 +72,8 @@ exports.getBlockedMembers = async (req, res) => {
     }
 };
 
+
+
 exports.getActiveMembers = async (req, res) => {
     try {
         const userToFind = await user.find({ active: true });
@@ -83,6 +87,8 @@ exports.getActiveMembers = async (req, res) => {
         });
     }
 };
+
+
 
 exports.changeStatus = async (req, res) => {
     const { _email, active = false } = req.body;
@@ -108,6 +114,9 @@ exports.changeStatus = async (req, res) => {
     }
 };
 
+
+
+
 exports.checkSpam = async (req, res) => {
     // const { email, active } = req.body;
     try {
@@ -122,6 +131,9 @@ exports.checkSpam = async (req, res) => {
         });
     }
 };
+
+
+
 exports.allSuggestions = async (req, res) => {
     // const { email, active } = req.body;
     try {
@@ -137,6 +149,8 @@ exports.allSuggestions = async (req, res) => {
     }
 };
 
+
+
 exports.notSpam = async (req, res) => {
     // const { email, active } = req.body;
     try {
@@ -151,6 +165,7 @@ exports.notSpam = async (req, res) => {
         });
     }
 };
+
 
 
 exports.changeSpam = async (req, res) => {
@@ -177,8 +192,10 @@ exports.changeSpam = async (req, res) => {
 };
 
 
+
+
 exports.addMember = async (req, res) => {
-    console.log("admin added member");
+ 
 
     const {
         firstName,

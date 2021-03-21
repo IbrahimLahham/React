@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 
 
+// TAL: remove unneeded declarations
 
 
 function SpamSuggestions(props) {
@@ -40,6 +41,9 @@ function SpamSuggestions(props) {
     }
 
     function allSuggestions() {
+        //TAL: use async
+        //TAL: whay do you use post? it looks like get
+        
         fetch('/admin/allSuggestions', {
             method: 'POST',
             headers: {
