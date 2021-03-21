@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './spamSuggestions.css'
-import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import SuggestionCard from '../../components/SuggestionCard';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
-
-
 
 
 function SpamSuggestions(props) {
     const { t, i18n } = useTranslation();
-    const history = useHistory();
     const [spam, setSpam] = useState([]);
 
     useEffect(() => {
@@ -24,13 +14,8 @@ function SpamSuggestions(props) {
 
     function showSpam(e) {
         e.preventDefault();
-        fetch('/admin/checkSpam', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({})
-        }).then(r => r.json())
+        fetch('/admin/checkSpam')
+        .then(r => r.json())
             .then(data => {
                 console.log("data: ", data);
                 if (data.ok) {
@@ -40,13 +25,8 @@ function SpamSuggestions(props) {
     }
 
     function allSuggestions() {
-        fetch('/admin/allSuggestions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({})
-        }).then(r => r.json())
+        
+        fetch('/admin/allSuggestions').then(r => r.json())
             .then(data => {
                 console.log("data: ", data);
                 if (data.ok) {
@@ -56,13 +36,8 @@ function SpamSuggestions(props) {
     }
 
     function notSpam() {
-        fetch('/admin/notSpam', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({})
-        }).then(r => r.json())
+        fetch('/admin/notSpam')
+        .then(r => r.json())
             .then(data => {
                 console.log("data: ", data);
                 if (data.ok) {

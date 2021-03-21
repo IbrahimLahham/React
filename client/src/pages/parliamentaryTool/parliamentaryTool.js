@@ -9,10 +9,6 @@ function App() {
     fetch("parliamentaryTools/")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        data.parliamentaryTools.map((tool, index) => {
-          console.log("Tool: ", tool);
-        });
         setData(data.parliamentaryTools);
       });
   }, []);

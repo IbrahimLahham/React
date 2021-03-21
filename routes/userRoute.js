@@ -3,6 +3,8 @@ const router = express.Router();
 const userController = require("./../controllers/userControllers");
 const  verify = require("../middleware/verifyCookie");
 
+
+//TAL: shouldn't most routes here be protected?
 router
   .route("/login")
   .post(userController.Login);
