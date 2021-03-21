@@ -166,6 +166,7 @@ function LoginRegisteration(props) {
                 </form>
 
             </div>
+            {/* TAL: chage to div */}
             <a id="forgot-pass" onClick={() => changeLanguage('hb')}>Hb</a>
             <lable>|</lable>
             <a id="forgot-pass" onClick={() => changeLanguage('ar')}>ar</a>

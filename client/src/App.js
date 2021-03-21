@@ -1,6 +1,5 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-import dotenv from "dotenv";
 import ParliamentaryTool from "./pages/parliamentaryTool/parliamentaryTool";
 import KenosKnesset from "./pages/kenosKnesset/kenosKnesset";
 import Normalquery from "./pages/normalquery/normalquery";
