@@ -47,7 +47,6 @@ exports.getAllMembers = async (req, res) => {
         const userToFind = await user.find({});
         res.send({ ok: true, users: userToFind });
     } catch (error) {
-        console.log(error);
         res.send({
             ok: false,
             message:
@@ -79,7 +78,6 @@ exports.getActiveMembers = async (req, res) => {
         const userToFind = await user.find({ active: true });
         res.send({ ok: true, users: userToFind });
     } catch (error) {
-        console.log(error);
         res.send({
             ok: false,
             message:
@@ -92,7 +90,6 @@ exports.getActiveMembers = async (req, res) => {
 
 exports.changeStatus = async (req, res) => {
     const { _email, active = false } = req.body;
-    console.log("email: ", _email, "active: ", active === true);
     try {
         user.updateOne({ email: _email }, { active: active }, function (err, result) {
             if (err) {
@@ -105,7 +102,6 @@ exports.changeStatus = async (req, res) => {
             }
         });
     } catch (error) {
-        console.log(error);
         res.send({
             ok: false,
             message:
@@ -123,7 +119,6 @@ exports.checkSpam = async (req, res) => {
         const suggestionToFind = await Suggestion.find({ isSpam: true });
         res.send({ ok: true, isSpam: suggestionToFind });//[0].status[0].isSpam 
     } catch (error) {
-        console.log(error);
         res.send({
             ok: false,
             message:
