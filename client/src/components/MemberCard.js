@@ -2,14 +2,31 @@ import { useRadioGroup } from "@material-ui/core";
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import AttachmentIcon from '@material-ui/icons/Attachment';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./MemberCard.css";
 
 function MemberCard(props) {
-    const { handleActive } = props;
+    const { handleActive, refresh, setRefresh } = props;
     const [suggestions, setSuggestion] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen)
+
+    const [refreshInside, setRefreshInside] = useState(0);
+
+    useEffect(() => {
+        fetch('/admin/getSuggestionsByUserSuggest', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: props.user.email })
+        }).then(r => r.json())
+            .then(data => {
+                if (data.ok) {
+                    setSuggestion(data.suggestions);
+                }
+            })
+    }, [refreshInside]);
 
     function getSuggestions() {
         fetch('/admin/getSuggestionsByUserSuggest', {
@@ -38,6 +55,7 @@ function MemberCard(props) {
         }).then(r => r.json())
             .then(data => {
                 console.log("data: ", data);
+                setRefreshInside(refreshInside+1);
             });
     }
 
@@ -78,7 +96,7 @@ function MemberCard(props) {
                                     <div className="user-login-flex">
                                         <label className="title-bold">פעיל: </label>
                                         <label style={{ color: elem.isSpam ? "red" : "green", fontWeight: 900, marginLeft: 10 }}>{elem.isSpam ? "ספאם" : "לא ספאם"}</label>
-                                        <button id="member-button" style={{ backgroundColor: elem.isSpam ? "green" : "red" }} onClick={(e) => { changeSpam(elem) }}>{props.user.active ? "ספאם" : "לא ספאם"}</button>
+                                        <button id="member-button" style={{ backgroundColor: elem.isSpam ? "green" : "red" }} onClick={(e) => { changeSpam(elem)}}>{elem.isSpam ? "ספאם" : "לא ספאם"}</button>
                                     </div>
                                     {elem.files.map((file, fileIndex) => {
                                         return (
