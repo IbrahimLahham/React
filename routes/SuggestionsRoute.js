@@ -2,29 +2,30 @@ const express = require("express");
 const router = express.Router();
 const SuggestionsController = require("./../controllers/SuggestionsController");
 const verifyCookie = require("../middleware/verifyCookie");
+const verifyMK = require("../middleware/verifyMK");
 
 router
   .route("/byKnessetMemberValidate")
-  .get(verifyCookie,SuggestionsController.getSuggestionsByKnessetMember);
+  .get(verifyMK,verifyCookie,SuggestionsController.getSuggestionsByKnessetMember);
 
 router
   .route("/byUserSuggest")
-  .get(verifyCookie,SuggestionsController.getSuggestionsByUserSuggest);
+  .get(verifyMK,verifyCookie,SuggestionsController.getSuggestionsByUserSuggest);
 
 router
 .route("/createSuggestion")
-.post(verifyCookie,SuggestionsController.createSuggestions);
+.post(verifyMK,verifyCookie,SuggestionsController.createSuggestions);
 
 router
   .route("/updateSuggestion")
-  .patch(verifyCookie,SuggestionsController.updateSuggestion);
+  .patch(verifyMK,verifyCookie,SuggestionsController.updateSuggestion);
 
   router
   .route("/reject-adopt")
-  .post(verifyCookie,SuggestionsController.rejectOrAdoptSuggestion);
+  .post(verifyMK,verifyCookie,SuggestionsController.rejectOrAdoptSuggestion);
 
 router
   .route("/spamSuggestion")
-  .post(verifyCookie,SuggestionsController.spamSuggestion);
+  .post(verifyMK,erifyCookie,SuggestionsController.spamSuggestion);
 
 module.exports = router;
