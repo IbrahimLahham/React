@@ -96,7 +96,7 @@ function MemberCard(props) {
                                     <div className="user-login-flex">
                                         <label className="title-bold">פעיל: </label>
                                         <label style={{ color: elem.isSpam ? "red" : "green", fontWeight: 900, marginLeft: 10 }}>{elem.isSpam ? "ספאם" : "לא ספאם"}</label>
-                                        <button id="member-button" style={{ backgroundColor: elem.isSpam ? "green" : "red" }} onClick={(e) => { changeSpam(elem)}}>{elem.isSpam ? "ספאם" : "לא ספאם"}</button>
+                                        <button id="member-button" style={{ backgroundColor: elem.isSpam ? "green" : "red" }} onClick={(e) => { changeSpam(elem)}}>{elem.isSpam ? "לא ספאם" : "ספאם"}</button>
                                     </div>
                                     {elem.files.map((file, fileIndex) => {
                                         return (

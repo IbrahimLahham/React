@@ -6,11 +6,11 @@ import MemberCard from '../../components/MemberCard';
 
 function Members(props) {
     const [users, setUsers] = useState([]);
-    const [blcokUsers, setBlockUsers] = useState([]);
-    const [activeUsers, setActiveUsers] = useState([]);
+    // const [blcokUsers, setBlockUsers] = useState([]);
+    // const [activeUsers, setActiveUsers] = useState([]);
     const [refresh, setRefresh] = useState(0);
 
-    const [byEmail, setByEmail] = useState(0);
+    const [byEmail, setByEmail] = useState(-1);
 
     const [userByEmail, setUserByEmail] = useState([]);
     const [userByName, setUserByName] = useState([]);
@@ -49,7 +49,7 @@ function Members(props) {
                     }
                 })
         }
-        else {
+        else if(byEmail === 2) {
             fetch('/admin/getAllMembers')
                 .then(r => r.json())
                 .then(data => {
@@ -121,15 +121,15 @@ function Members(props) {
     }
 
     return (
-        <div>
-            <div>
-                <button style={{ justifyContent: "center" }} onClick={(e) => { setByEmail(0) }}>email</button>
-                <button style={{ margin: "auto" }} onClick={(e) => { setByEmail(1) }}>name</button>
-                <button style={{ margin: "auto" }} onClick={(e) => { getAll(); setByEmail(2); }}>all</button>
+        <div className="members-admin-container">
+            <div id="search-choose">
+                <button id="serach-button" onClick={(e) => { setByEmail(0) }}>חיפוש לפי דוא״ל</button>
+                <button id="serach-button" onClick={(e) => { setByEmail(1) }}>חיפוש לפי שם</button>
+                <button id="serach-button" onClick={(e) => { getAll(); setByEmail(2); }}>כל המשתמשים</button>
             </div>
-            {byEmail === 0 ? <><form onSubmit={handleEmail}>
-                <input type="email" placeholder="email" name="email" onChange={(e) => { setEmail(e.target.value) }}></input>
-                <button type="submit">search</button>
+            {byEmail === 0 ? <><form id="input-search" onSubmit={handleEmail}>
+                <input className="input-field" type="email" placeholder="דוא״ל" name="email" onChange={(e) => { setEmail(e.target.value) }}></input>
+                <button id="serach-button" type="submit">חיפוש</button>
             </form >
                 {userByEmail.map((elem, index) => {
                     return (
@@ -143,14 +143,14 @@ function Members(props) {
                         />
                     );
                 })} </> : (byEmail === 1 ?
-                    <><form onSubmit={handleFirstLastName}>
-                        <input type="text" name="firstName" placeholder="firstName" onChange={(e) => {
+                    <><form id="input-search" onSubmit={handleFirstLastName}>
+                        <input className="input-field" type="text" name="firstName" placeholder="שם פרטי" onChange={(e) => {
                             setFirstName(e.target.value)
                         }}></input>
-                        <input type="text" name="lastName" placeholder="lastName" onChange={(e) => {
+                        <input className="input-field" type="text" name="lastName" placeholder="שפ משפחה" onChange={(e) => {
                             setLastName(e.target.value)
                         }}></input>
-                        <button type="submit">search</button>
+                        <button id="serach-button" type="submit">חיפוש</button>
                     </form>
                         {userByName.map((elem, index) => {
                             return (
