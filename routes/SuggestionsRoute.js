@@ -26,6 +26,6 @@ router
 
 router
   .route("/spamSuggestion")
-  .post(verifyMK,erifyCookie,SuggestionsController.spamSuggestion);
+  .post(verifyMK,verifyCookie,SuggestionsController.spamSuggestion);
 
 module.exports = router;
