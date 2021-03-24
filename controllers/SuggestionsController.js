@@ -17,7 +17,7 @@ exports.getSuggestionsByKnessetMember = async (req, res) => {
         ],
       }),
 
-      //TAL: should be writen in async
+      
       Suggestion.find({
         $and: [
           { $or: [{ "whoIsWorkingOnIt.email": null }] },
@@ -182,7 +182,7 @@ exports.createSuggestions = async (req, res) => {
       isSpam: false,
     });
 
-    //TAL: write as async
+    
     suggestionToAdd.save().then(() => {
       console.log("the suggestion has been saved in th DB successfully");
       console.log("created Suggestion", suggestionToAdd);

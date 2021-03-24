@@ -7,7 +7,7 @@ const user = require("../schema/user");
 module.exports = function ( req, res, next) {
  
     const authcookie = req.cookies.cookie;
-    console.log(req.cookies);
+ 
     //TAL: please make it async function
     try {
         jwt.verify(authcookie, process.env.TOKEN_SECRET, (err, data) => {

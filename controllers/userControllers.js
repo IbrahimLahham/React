@@ -17,7 +17,7 @@ exports.Login = async (req, res) => {
     res.send({ ok: false, message: "Login Failed" });
   } else {
 
-    //TAL: to make the code more readable, use middlware "checkUser"
+
     const vaildPass = await bcrypt.compare(password, userToFind.password);
     if (vaildPass) {
       const token = jwt.sign(
@@ -179,7 +179,7 @@ exports.SavePassword = async (req, res) => {
   }
   else if (searchToken.status) {
 
-    //TAL: write as async
+    //TAL: put try at the top
 
     try {
       jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
