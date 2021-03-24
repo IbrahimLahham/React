@@ -38,10 +38,10 @@ function LoginRegisteration(props) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email: loginEmail, password: loginPassword })
+            body: JSON.stringify({ email: loginEmail.toLowerCase(), password: loginPassword })
         }).then(r => r.json())
             .then(data => {
-                console.log("sent data: ", { loginEmail: loginEmail, password: loginPassword });
+                console.log("sent data: ", { loginEmail: loginEmail.toLowerCase(), password: loginPassword });
                 console.log("server data: ", data);
                 // if login true - redirect to forms creation page;
                 if (data.ok === true) {
@@ -65,7 +65,7 @@ function LoginRegisteration(props) {
 
     function handleRegister(e) {
         e.preventDefault();
-        console.log({ firstName: firstName, lastName: lastName, email: email, organization: organization, telephon: telephon })
+        console.log({ firstName: firstName, lastName: lastName, email: email.toLowerCase(), organization: organization, telephon: telephon })
 
         // firstName doesn't contrains numbers 
 

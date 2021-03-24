@@ -62,7 +62,7 @@ exports.Registration = async (req, res) => {
     const userToAdd = new user({
       firstName: firstName,
       lastName: lastName,
-      email: email,
+      email: email.toLowerCase(),
       password: hashPassword,
       company: company,
       phone: phone,
@@ -76,7 +76,7 @@ exports.Registration = async (req, res) => {
 
     const _date = new Date();
     const token = jwt.sign(
-      { email: email, date: _date },
+      { email: email.toLowerCase(), date: _date },
       process.env.TOKEN_SECRET
     );
 
