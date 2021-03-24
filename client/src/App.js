@@ -1,6 +1,5 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-// import { useHistory } from "react-router-dom";
 import ParliamentaryTool from "./pages/parliamentaryTool/parliamentaryTool";
 import KenosKnesset from "./pages/kenosKnesset/kenosKnesset";
 import Normalquery from "./pages/normalquery/normalquery";
@@ -25,6 +24,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 export default function App() {
   const [connected, setConnected] = useState(false);
   const [user, setUser] = useState({});
+
+  const DEBUG = false;
 
   useEffect(() => {
     fetch("/user/checkConnection", {
@@ -69,7 +70,7 @@ export default function App() {
   return (
     <Router onChange={checkConnection}>
       <div>
-        <nav className="all-tabs">
+        <nav className={DEBUG ? "all-tabs" : "all-tabs-hidden"}>
           <ul>
             <li className="active-nav">
               <Link onClick={checkConnection} to="/parliamentaryTool">
@@ -167,7 +168,7 @@ export default function App() {
                 { text: "כינוס הכנסת בזמן הפגרה", url: "kenosKnesset" },
               ]}
             />
-            <KenosKnesset />
+          {user.type === "citizen" ? <KenosKnesset /> : <div>you're not allowed</div>}
           </Route>
           <Route path="/oneMinuteSpeech">
             <Header
@@ -179,7 +180,7 @@ export default function App() {
                 { text: "נאום בן דקה", url: "oneMinuteSpeech" },
               ]}
             />
-            <OneMinuteSpeech />
+            <OneMinuteSpeech/>
           </Route>
           <Route path="/trackingBoard">
             <Header
@@ -188,7 +189,7 @@ export default function App() {
               connected={connected}
               pages={[{ text: "לוח מעקב", url: "trackingBoard" }]}
             />
-            <TrackingBoard />
+              {user.type === "citizen" ?  <TrackingBoard /> : <div>you're not allowed</div>}
           </Route>
           <Route path="/loginRegisteration">
             <Header
@@ -230,16 +231,16 @@ export default function App() {
               connected={connected}
               pages={[{ text: "מערכת ח״כ", url: "haverKnesset" }]}
             />
-            <HaverKnesset />
+            {user.type === "knessetMember" ? <HaverKnesset /> : <div>you're not allowed</div>}
           </Route>
           <Route path="/adminPage">
             <Header
               user={user}
               show={true}
               connected={connected}
-              pages={[{ text: "admin", url: "adminPage" }]}
+              pages={[{ text: "הנהלה", url: "adminPage" }]}
             />
-            <AdminPage />
+              {user.type === "admin" ?  <AdminPage /> : <div>you're not allowed</div>}
           </Route>
           <Route path="/addKnesset">
             <Header
@@ -247,11 +248,11 @@ export default function App() {
               show={true}
               connected={connected}
               pages={[
-                { text: "admin", url: "adminPage" },
-                { text: "מערכת ח״כ", url: "addKnesset" },
+                { text: "הנהלה", url: "adminPage" },
+                { text: "הוספת חברי כנסת", url: "addKnesset" },
               ]}
             />
-            <AddKnesset />
+            {user.type === "admin" ?   <AddKnesset /> : <div>you're not allowed</div>}
           </Route>
           <Route path="/members">
             <Header
@@ -259,11 +260,11 @@ export default function App() {
               show={true}
               connected={connected}
               pages={[
-                { text: "admin", url: "adminPage" },
-                { text: "מערכת ח״כ", url: "members" },
+                { text: "הנהלה", url: "adminPage" },
+                { text: "משתמשים", url: "members" },
               ]}
             />
-            <Members />
+             {user.type === "admin" ?   <Members /> : <div>you're not allowed</div>}
           </Route>
           <Route path="/spamSuggestions">
             <Header
@@ -271,11 +272,20 @@ export default function App() {
               show={true}
               connected={connected}
               pages={[
-                { text: "admin", url: "adminPage" },
-                { text: "מערכת ח״כ", url: "spamSuggestions" },
+                { text: "הנהלה", url: "adminPage" },
+                { text: "הצעות", url: "spamSuggestions" },
               ]}
             />
-            <SpamSuggestions />
+            {user.type === "admin" ?   <SpamSuggestions /> : <div>you're not allowed</div>}
+          </Route>
+          <Route path="/">
+            <Header
+              user={user}
+              show={true}
+              connected={connected}
+              pages={[{ text: "כלים פרלמנטריים", url: "parliamentaryTool" }]}
+            />
+            <ParliamentaryTool />
           </Route>
         </Switch>
 

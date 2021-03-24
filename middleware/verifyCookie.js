@@ -1,10 +1,14 @@
 const jwt = require('jsonwebtoken');
 const user = require("../schema/user");
 
+//TAL: the file should be called verifyUser, because this is what this middlware does
+
+
 module.exports = function ( req, res, next) {
  
     const authcookie = req.cookies.cookie;
-    console.log(req.cookies);
+ 
+    //TAL: please make it async function
     try {
         jwt.verify(authcookie, process.env.TOKEN_SECRET, (err, data) => {
           if (err) {
@@ -18,6 +22,7 @@ module.exports = function ( req, res, next) {
                 req.body.email = data.email;
                 req.body.firstName = data.firstName;
                 req.body.lastName = data.lastName;
+                //TAL: shouldnt you have also the user role?
                 next();
                 }else{
                   res.send({

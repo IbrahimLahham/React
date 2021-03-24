@@ -5,6 +5,8 @@ const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 
 exports.Login = async (req, res) => {
+  //TAL: use try-catch
+
   const { email, password } = req.body;
 
   console.log("Login");
@@ -14,6 +16,8 @@ exports.Login = async (req, res) => {
   if ((userToFind === null)||(!userToFind.active)){
     res.send({ ok: false, message: "Login Failed" });
   } else {
+
+
     const vaildPass = await bcrypt.compare(password, userToFind.password);
     if (vaildPass) {
       const token = jwt.sign(
@@ -34,6 +38,7 @@ exports.Login = async (req, res) => {
 };
 
 exports.Registration = async (req, res) => {
+  //TAL: use try-catch
   console.log("Registration");
 
   const {
@@ -57,7 +62,7 @@ exports.Registration = async (req, res) => {
     const userToAdd = new user({
       firstName: firstName,
       lastName: lastName,
-      email: email,
+      email: email.toLowerCase(),
       password: hashPassword,
       company: company,
       phone: phone,
@@ -71,7 +76,7 @@ exports.Registration = async (req, res) => {
 
     const _date = new Date();
     const token = jwt.sign(
-      { email: email, date: _date },
+      { email: email.toLowerCase(), date: _date },
       process.env.TOKEN_SECRET
     );
 
@@ -110,8 +115,11 @@ exports.Registration = async (req, res) => {
     res.send({ ok: false, message: "The User Is Already Exist" });
   }
 };
+
 exports.ForgetPassword = async (req, res) => {
-  console.log("ForgetPassword");
+ //TAL: use try-catch
+
+  
   const { to } = req.body;
 
   const userToCheck = await user.findOne({ email: to });
@@ -158,7 +166,7 @@ exports.ForgetPassword = async (req, res) => {
 };
 
 exports.SavePassword = async (req, res) => {
-  console.log("SavePassword");
+   //TAL: use try-catch
   const { password } = req.body;
   const { token } = req.query;
 
@@ -170,6 +178,9 @@ exports.SavePassword = async (req, res) => {
     res.send({ ok: false, message: "change password Failed" });
   }
   else if (searchToken.status) {
+
+    //TAL: put try at the top
+
     try {
       jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
         if (err) {
@@ -209,6 +220,8 @@ exports.SavePassword = async (req, res) => {
 };
 
 exports.GetUsersByType = async (req, res) => {
+
+  //TAL: use try-catch
   console.log("GetUsersByType");
 
   const { type } = req.body;
@@ -225,7 +238,7 @@ exports.DeleteCookie = async (req, res) => {
 };
 
 exports.CheckConnection = async (req, res) => {
-  console.log("CheckConnection");
+//TAL: use try-catch from start
   const flag = req.cookies.cookie !== undefined;
   if (flag) {
     try {
@@ -234,7 +247,6 @@ exports.CheckConnection = async (req, res) => {
           console.log(err);
         }
         else {
-          console.log(data.lastName);
           res.send({ ok: true, cookie: flag, type: data.role, firstName: data.firstName, lastName: data.lastName, email: data.email });
         }
       })
@@ -249,7 +261,7 @@ exports.CheckConnection = async (req, res) => {
 
 
 exports.getAllKnessetMembers = async (req, res) => {
-  console.log("getAllKnessetMembers");
+  //TAL: use try-catch
 
   const users = user.find({ type: "knessetMember" }, function (err, result) {
     if (err) {

@@ -21,15 +21,15 @@ router
 
 router
 .route("/checkSpam")
-.post(verifyAdmin, AdminController.checkSpam);
+.get(verifyAdmin, AdminController.checkSpam);
 
 router
 .route("/allSuggestions")
-.post(verifyAdmin, AdminController.allSuggestions);
+.get(verifyAdmin, AdminController.allSuggestions);
 
 router
 .route("/notSpam")
-.post(verifyAdmin, AdminController.notSpam);
+.get(verifyAdmin, AdminController.notSpam);
 
 router
 .route("/changeSpam")
@@ -38,5 +38,18 @@ router
 router
 .route("/addMember")
 .post(verifyAdmin, AdminController.addMember);
+
+
+router
+.route("/getMemberByEmail")
+.post(verifyAdmin, AdminController.getMemberByEmail);
+
+router
+.route("/getSuggestionsByUserSuggest")
+.post(verifyAdmin, AdminController.getSuggestionsByUserSuggest);
+
+router
+.route("/getMemberByFirstLastName")
+.post(verifyAdmin, AdminController.getMemberByFirstLastName);
 
 module.exports = router;

@@ -1,5 +1,8 @@
 const Tool = require("../schema/Tool");
-const future_history = require('../future_history_api');
+const future_history = require("../future_history_api");
+
+
+
 exports.getAllParliamentaryTools = async (req, res) => {
   try {
     const parliamentaryTools = await Tool.find({});
@@ -30,7 +33,7 @@ exports.createParliamentaryTool = async (req, res) => {
       res.send({
         success: true,
         createdSuggestion: req.body,
-        message: "the  parliamentary Tool has been saved in th DB successfully",
+        message: "the  parliamentary Tool has been saved in the DB successfully",
       });
     });
   } catch (error) {
@@ -43,15 +46,18 @@ exports.createParliamentaryTool = async (req, res) => {
   }
 };
 exports.getToolByType = async (req, res) => {
-  var future = [];
-  var history = [];
+  let future = [];
+  let history = [];
   try {
     const { toolType } = req.body;
     const parliamentaryTool = await Tool.findOne({ type: toolType });
     //this code is Temporary**************
     if (parliamentaryTool.type == "כינוס הכנסת") {
-      future = future_history.future_history.regular_day_suggetion_day_schedule_future;
-      history = future_history.future_history.regular_day_suggetion_day_schedule_history;
+      future =
+        future_history.future_history.regular_day_suggetion_day_schedule_future;
+      history =
+        future_history.future_history
+          .regular_day_suggetion_day_schedule_history;
     }
     if (parliamentaryTool.type == "נאום בן דקה") {
       future = future_history.future_history.one_minute_speeches_future;
@@ -61,8 +67,6 @@ exports.getToolByType = async (req, res) => {
       future = future_history.future_history.queries_future;
       history = future_history.future_history.queries_history;
     }
-    future = future_history.future_history.queries_future;
-    history = future_history.future_history.queries_history;
     //**************
     res.send({
       parliamentaryTool: parliamentaryTool,

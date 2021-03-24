@@ -17,6 +17,8 @@ function RegularQueryForm() {
   );
   const [allKnessetMembersList, setAllKnessetMembersList] = useState([]);
 
+  const multiselectRef = React.createRef();
+
   const [files, setFiles] = useState([]);
 
   function handlefile(e) {
@@ -47,26 +49,7 @@ function RegularQueryForm() {
         console.log("allKnessetMembersList: ", allKnessetMembersList);
       });
   }, []);
-  // const options = [
-  //   { name: "גפני משה", id: 1 },
-  //   { name: "גרמל יעל", id: 2 },
-  //   { name: "דיין עוזי", id: 1 },
-  //   { name: "דיכנטר אבי", id: 2 },
-  //   { name: "Srigar", id: 1 },
-  //   { name: "Sam", id: 2 },
-  //   { name: "Srigar", id: 1 },
-  //   { name: "Sam", id: 2 },
-  //   { name: "Srigar", id: 1 },
-  //   { name: "Sam", id: 2 },
-  //   { name: "Srigar", id: 1 },
-  //   { name: "Sam", id: 2 },
-  //   { name: "Srigar", id: 1 },
-  //   { name: "Sam", id: 2 },
-  //   { name: "Srigar", id: 1 },
-  //   { name: "Sam", id: 2 },
-  //   { name: "Srigar", id: 1 },
-  //   { name: "Sam", id: 2 },
-  // ];
+
   function dummy() {
     console.log("hehe");
   }
@@ -77,6 +60,14 @@ function RegularQueryForm() {
       selectedItem,
     ]);
     console.log("select invoked, state updated: ", selectedKnessetMembersList);
+  }
+
+  async function onRemove(selectedList, removedItem) {
+    const tempList = selectedList.filter((item) => {
+      return item.email !== removedItem.email;
+    });
+    setSelectedKnessetMembersList(tempList);
+    console.log("New list: ", tempList);
   }
 
   function handleForm(e) {
@@ -111,6 +102,8 @@ function RegularQueryForm() {
         }
       });
     setSelectedKnessetMembersList([]);
+    e.target.reset();
+    multiselectRef.current.resetSelectedValues();
   }
 
   return (
@@ -120,11 +113,17 @@ function RegularQueryForm() {
         <div className="recomend__info">
           <div className="reomnde__SecindHalf">
             <h4>נושא הצעה לסדר:</h4>
-            <input type="text" name="subject" />
+            <input type="text" name="subject" required />
             <h4>דברי הסבר:</h4>
-            <textarea name="description" id="" cols="47" rows="12"></textarea>
+            <textarea
+              name="description"
+              id=""
+              cols="47"
+              rows="12"
+              required
+            ></textarea>
             <h4>שאלה: (נכלל בספירת 50 מילים)</h4>
-            <input type="text" name="query" />
+            <input type="text" name="query" required />
             <div className="additional-query-div">
               <h4>שאלת המשך: </h4>
               <p>(אופציונלי, תשאל רק במעמד המענה במליאת הכנסת)</p>
@@ -166,9 +165,9 @@ function RegularQueryForm() {
                 },
               }}
               options={allKnessetMembersList} // Options to display in the dropdown
-              selectedValues={dummy} // Preselected value to persist in dropdown
+              ref={multiselectRef}
               onSelect={onSelect} // Function will trigger on select event
-              onRemove={dummy} // Function will trigger on remove event
+              onRemove={onRemove} // Function will trigger on remove event
               displayValue="name" // Property name to display in the dropdown options
               placeholder="בחר חבר כנסת"
             />
@@ -182,7 +181,7 @@ function RegularQueryForm() {
               filesSetter={setFiles}
             ></FirebaseFileUpload>
 
-            <button className="btn" type="submit">
+            <button className="submit-form-btn" type="submit">
               שלח
             </button>
           </div>

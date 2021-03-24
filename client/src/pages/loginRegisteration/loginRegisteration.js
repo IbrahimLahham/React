@@ -24,7 +24,7 @@ function LoginRegisteration(props) {
     const [error, setError] = useState("");
     const [registermessage, setRegisterMessage] = useState("");
 
-    const {setUser, setConnected} = props;
+    const { setUser, setConnected } = props;
 
     useEffect(() => {
 
@@ -38,10 +38,10 @@ function LoginRegisteration(props) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email: loginEmail, password: loginPassword })
+            body: JSON.stringify({ email: loginEmail.toLowerCase(), password: loginPassword })
         }).then(r => r.json())
             .then(data => {
-                console.log("sent data: ", { loginEmail: loginEmail, password: loginPassword });
+                console.log("sent data: ", { loginEmail: loginEmail.toLowerCase(), password: loginPassword });
                 console.log("server data: ", data);
                 // if login true - redirect to forms creation page;
                 if (data.ok === true) {
@@ -52,7 +52,7 @@ function LoginRegisteration(props) {
                     else if (data.role === "knessetMember") {
                         history.push('/haverKnesset')
                     }
-                    else if(data.role === "admin"){
+                    else if (data.role === "admin") {
                         history.push('/adminPage')
                     }
                 }
@@ -65,12 +65,12 @@ function LoginRegisteration(props) {
 
     function handleRegister(e) {
         e.preventDefault();
-        console.log({ firstName: firstName, lastName: lastName, email: email, organization: organization, telephon: telephon })
+        console.log({ firstName: firstName, lastName: lastName, email: email.toLowerCase(), organization: organization, telephon: telephon })
 
         // firstName doesn't contrains numbers 
 
         const validPhone = new RegExp("(00972|0|\\+972)[5][0-9]{8}");
-        if (validPhone.test(telephon)) {
+        if (telephon === "" || validPhone.test(telephon)) {
 
             fetch('/user/Registration', {
                 method: 'POST',
@@ -95,7 +95,7 @@ function LoginRegisteration(props) {
             setRegisterMessage("מספר טלפון לא חוקי!")
         }
     }
-    
+
     const changeLanguage = lng => {
         i18n.changeLanguage(lng);
     };
@@ -166,9 +166,11 @@ function LoginRegisteration(props) {
                 </form>
 
             </div>
-            <a id="forgot-pass" onClick={() => changeLanguage('hb')}>Hb</a>
-            <lable>|</lable>
-            <a id="forgot-pass" onClick={() => changeLanguage('ar')}>ar</a>
+            <div>
+                <a id="forgot-pass" onClick={() => changeLanguage('hb')}>Hb</a>
+                <lable>|</lable>
+                <a id="forgot-pass" onClick={() => changeLanguage('ar')}>ar</a>
+            </div>
         </div>
 
     )

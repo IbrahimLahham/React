@@ -71,8 +71,8 @@ function ActiveSuggestions(props) {
                     {props.files.map((elem, index) => {
                         return (
                             <>
-                                <AttachmentIcon  style={{width: 20, height: 20}}/>
-                                <a key={index} href={elem.url} target="_blank" style={{fontSize: 15}}>{elem.name}</a>
+                                <AttachmentIcon style={{ width: 20, height: 20 }} />
+                                <a key={index} href={elem.url} target="_blank" style={{ fontSize: 15 }}>{elem.name}</a>
                                 <br />
                             </>
                         );
@@ -84,22 +84,18 @@ function ActiveSuggestions(props) {
                     <p>{props.description}</p>
                 </td>
                 <td id="status-lines">
-                    <a>סטטוס מפורט:</a>
+                    <label style={{textDecoration: "underline", fontWeight: 900}}>סטטוס מפורט:</label>
                     {props.status.map((elem, index) => {
-                        return (
-                            <div>
-                                <a>{elem.status}</a>
-                                <br />
-                                <label>{elem.date.split("T")[0]}</label>
-                            </div>
-                        )
+                        if (index > (props.status.length - 4)){
+                            return (
+                                <div>
+                                    <label style={{fontWeight: 900}}>{elem.status}</label>
+                                    <br />
+                                    <label>{elem.date.split("T")[0]}</label>
+                                </div>
+                            )
+                        }
                     })}
-                    {/* <a>תאריך אימוץ:</a>
-                    <label>{props.status[0].date}</label>
-                    <a>תאריך העברה למשרד:</a>
-                    <label>{props.status.status}</label>
-                    <a>תאריך קבלת למשרד:</a>
-                    <label>{props.status.status}</label> */}
                 </td>
             </tr> : null}
 

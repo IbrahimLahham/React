@@ -27,7 +27,7 @@ function TopCards(props) {
   }, []);
 
   if (toolData === undefined) {
-    return <>Still loading...</>;
+    return <>טוען נתונים...</>;
   }
 
   return (

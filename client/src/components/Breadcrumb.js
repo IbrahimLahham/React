@@ -46,7 +46,9 @@ function Breadcrumb(props) {
               href={
                 props.userType === "knessetMember"
                   ? "haverKnesset"
-                  : "trackingBoard"
+                : props.userType === "citizen"
+                  ? "trackingBoard"
+                  : "#"
               }
             >
               {" "}

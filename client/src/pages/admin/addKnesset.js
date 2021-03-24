@@ -16,7 +16,7 @@ function AddKnesset(props) {
         // firstName doesn't contrains numbers 
 
         const validPhone = new RegExp("(00972|0|\\+972)[5][0-9]{8}");
-        if (validPhone.test(telephon)) {
+        if (telephon === "" || validPhone.test(telephon)) {
 
             fetch('/admin/addMember', {
                 method: 'POST',
