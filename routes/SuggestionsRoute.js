@@ -3,6 +3,9 @@ const router = express.Router();
 const SuggestionsController = require("./../controllers/SuggestionsController");
 const verifyCookie = require("../middleware/verifyCookie");
 const verifyMK = require("../middleware/verifyMK");
+const verifyCitizen = require("../middleware/verifyCookie");
+
+
 
 router
   .route("/byKnessetMemberValidate")
@@ -10,11 +13,11 @@ router
 
 router
   .route("/byUserSuggest")
-  .get(verifyMK,verifyCookie,SuggestionsController.getSuggestionsByUserSuggest);
+  .get(verifyCitizen,verifyCookie,SuggestionsController.getSuggestionsByUserSuggest);
 
 router
 .route("/createSuggestion")
-.post(verifyMK,verifyCookie,SuggestionsController.createSuggestions);
+.post(verifyCitizen,verifyCookie,SuggestionsController.createSuggestions);
 
 router
   .route("/updateSuggestion")
